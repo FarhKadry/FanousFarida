@@ -1,0 +1,12 @@
+.primarybtn , .secondarybtn{
+    background-color: transparent;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 76px;
+    width:216px;
+    outline: transparent;
+    border: transparent;
+    background-image: url(./../../assets/primarybtn.png);
+}

@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "MF Etab Plus";
+  src: url('./../assets/MFEtabPlus-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+   font-family: "MF Etab Plus";
+  z-index: 2;
+  position: relative;
+}
+body {
+  background-color: #e8dfdf;
+  overflow-x: auto; 
+}
+
+.fixed-mobile-wrapper {
+  width: 430px; 
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  flex-direction: column;
+  background-color: #3D1F3C;
+  min-height: 932px;
+}
+.splashBg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.top{
+    left: 19px;
+}
+.farida{
+    left: 19px;
+}
+.logo{
+    width: 229.03px;
+    height: 321.45px;
+    animation: splashLogo 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+}
+.bottom{
+    left: 45px;
+}
+.starz1{
+    top: 91px;
+    left: 69px;
+    position: absolute;
+}
+.starz2{
+    top: -29px;
+    left: 74px;
+    z-index: -1;
+    position: absolute;
+}
+.charSplash{
+    width: 233px;
+    height: auto;
+}

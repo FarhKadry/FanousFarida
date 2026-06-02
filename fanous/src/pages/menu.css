@@ -31,3 +31,11 @@ bottom: 20px;
     line-height: 90%;
 
 }
+.btnsFlex{
+    display: flex;
+    width: 100%;
+max-width: 249px;
+height: 56px;
+justify-content: space-between;
+align-items: center;
+}

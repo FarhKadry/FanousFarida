@@ -1,14 +1,20 @@
 import React from 'react';
 import './home.css'
 import './menu.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Links, useNavigate } from 'react-router-dom';
 
 
 import './../animations.css'
 import './../components/layout/header.css'
 
-
 import back from './../assets/back.svg'
+import sound from './../assets/soundon.svg'
+import sound2 from './../assets/soundoff.svg'
+import home from './../assets/home.svg'
+import music from './../assets/musicon.svg'
+import music2 from './../assets/musicoff.svg'
+
+
 
 
 
@@ -33,17 +39,27 @@ const Settings = () => {
         <div className='menuPanel pausePanel floatIn'>
             <Heading heading="الإعدادات" />
             <img className='panelChar scaleIn' src={panelchar} alt="" />
-        
+        <form>
+            <div className="textFlex">
+            <h4 className='h4_2'> اسمي</h4>
+            <input className='input' type="text" placeholder='أدخل اسمك'   />
+        </div>
+        <button className="submitbtn" type='submit'>
+            حفظ
+        </button>
+        </form>
         <div className="btnsFlex">
-            <button style={{ animationDelay: '0.3s' }} className=' iconbtnmian floatIn'>
-        <img src={back} alt="" />
+            <button style={{ animationDelay: '0.3s' }} className=' iconbtnmian iconSettings floatIn'>
+        <img src={sound} alt="" />
     </button>
-    <button style={{ animationDelay: '0.4s' }} className=' iconbtnmian floatIn'>
-        <img src={back} alt="" />
+    <button style={{ animationDelay: '0.4s' }} className=' iconbtnmian iconSettings floatIn'>
+        <img src={music} alt="" />
     </button>
-     <button style={{ animationDelay: '0.5s' }} className=' iconbtnmian floatIn'>
-        <img src={back} alt="" />
+     <Link to="/home">
+     <button style={{ animationDelay: '0.5s' }} className=' iconbtnmian iconSettings floatIn'>
+        <img src={home} alt="" />
     </button>
+     </Link>
         </div>
     </div>
         <img className='splashBg' src={splash} alt="" />

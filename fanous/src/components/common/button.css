@@ -4,7 +4,7 @@
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    height: 65px;
+    height: 72px;
     box-sizing: border-box;
     width: 216px;
     outline: transparent;
@@ -21,10 +21,6 @@
 text-align: center;
 text-shadow: 0 0.949px 0 #FFF;
 font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-letter-spacing: 0.16px;
     background-image: url(./../../assets/primarybtn.svg);
 }
 .secondarybtn{
@@ -32,10 +28,6 @@ letter-spacing: 0.16px;
     text-align: center;
     text-shadow: 0 0.949px 0 #000;
     font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0.16px;
     background-image: url(./../../assets/secondarybtn.svg);
 }
 .homeBtn{

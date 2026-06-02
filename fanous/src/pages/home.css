@@ -77,8 +77,12 @@ h1{
     color: #FFE6CB;
     text-align: center;
     font-size: 46px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0.462px;
+}
+h4{
+    color: #FFE6CB;
+    text-align: center;
+    font-size: 20px;
+}
+.h4_2{
+    color:#D4D8A6;
 }

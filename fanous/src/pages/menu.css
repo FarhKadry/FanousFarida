@@ -8,7 +8,7 @@
     background-size: 100% 100%;
     max-width: 355px;
     gap: 10px;
-    padding: 68px 20px 153px 20px;
+    padding: 68px 20px 134px 20px;
     background-image:url(./../assets/menuPanel.png)
 }
 .menuPanel ul{
@@ -16,7 +16,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 2px;
     list-style-type: none;
 }
 .panelChar{
@@ -29,13 +29,49 @@ bottom: 20px;
 }
 .pausePanel h1{
     line-height: 90%;
-
 }
 .btnsFlex{
     display: flex;
     width: 100%;
-max-width: 249px;
-height: 56px;
-justify-content: space-between;
-align-items: center;
+    max-width: 249px;
+    height: 56px;
+    justify-content: space-between;
+    align-items: center;
+}
+.textFlex{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+input{
+    border: transparent;
+    background-color: transparent;
+    color: #DFD5E2;
+    font-size: 16px;
+    display: flex;
+    width:100px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+}
+.submitbtn{
+    font-size: 18px;
+    text-decoration: underline;
+    align-self: flex-start;
+    color: #DFD5E2;
+    background-color: transparent;
+}
+.iconSettings{
+    width: 53.68px;
+height: 55.481px;
+background-size: 100% 100%;
+
 }

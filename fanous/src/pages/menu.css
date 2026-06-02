@@ -49,18 +49,19 @@ input{
     border: transparent;
     background-color: transparent;
     color: #DFD5E2;
-    font-size: 16px;
+    font-size: 20px;
     display: flex;
-    width:100px;
+        padding: 0 5px;
+    width: 123px;
 }
 form{
     display: flex;
     flex-direction: column;
-    margin: 10px 0;
+    margin: 20px 0;
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 0 20px;
+    max-width:249px;
 }
 .submitbtn{
     font-size: 18px;

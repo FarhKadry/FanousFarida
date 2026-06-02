@@ -15,7 +15,7 @@ import back from './../assets/back.svg'
 
 import splash from './../assets/menuBg.jpg'
 import Button from '../components/common/button';
-import IconBtn from '../components/common/iconbtn';
+import panelchar from './../assets/panelchar.png';
 import Heading from '../components/common/heading';
 
 const Pause = () => {
@@ -32,28 +32,21 @@ const Pause = () => {
     </button>
     </Link>
         </header>
-        <nav className='menuPanel floatIn'>
+        <div className='menuPanel pausePanel floatIn'>
             <Heading heading="اســــــتراحة" />
+            <img className='panelChar scaleIn' src={panelchar} alt="" />
         <ul>
             <li style={{ animationDelay: '0.1s' }} className='floatIn'>
         <Button link="/home" style1="primarybtn secondarybtn" cta="الرئيسية" />
             </li>
             <li style={{ animationDelay: '0.2s' }} className='floatIn'  >
-        <Button link="/settings" style1="primarybtn secondarybtn" cta="الاعدادات " />
+        <Button link="/settings" style1="primarybtn secondarybtn" cta="مهمتي" />
             </li>
-            <li>
-        <Button link="/howto" style1="primarybtn secondarybtn" cta="كيف ألعب" />
-            </li>
-            
-            <li>
-        <Button link="/story" style1="primarybtn secondarybtn" cta="القصة" />
-            </li>
-            
-            <li>
-        <Button link="/levels" style1="primarybtn secondarybtn" cta="الأدوار" />
+            <li style={{ animationDelay: '0.3s' }} className='floatIn'  >
+        <Button link="/howto" style1="primarybtn secondarybtn" cta="العودة" />
             </li>
         </ul>
-    </nav>
+    </div>
         <img className='splashBg' src={splash} alt="" />
         <div className="startBtnCont startBtnAnim">
         </div>

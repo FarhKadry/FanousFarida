@@ -19,3 +19,15 @@
     gap: 10px;
     list-style-type: none;
 }
+.panelChar{
+    width: 188px;
+bottom: 20px;
+}
+.pausePanel{
+    padding-top: 102px;
+    gap:0
+}
+.pausePanel h1{
+    line-height: 90%;
+
+}

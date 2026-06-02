@@ -26,9 +26,8 @@ const Home = () => {
         <header>
     <IconBtn
         icon={menu}
-        style1="iconbtnmian startBtnAnim"
-        link="/menu"
-        />
+        style1="iconbtnmian"
+        link="/menu" />
         </header>
         <img className='splashBg splashScale' src={splash} alt="" />
         <img className='splashBg' src={depth} alt="" />

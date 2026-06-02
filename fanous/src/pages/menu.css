@@ -3,10 +3,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    max-height: 709px;
+    height: 709px;
     width: 100%;
+    background-size: 100% 100%;
     max-width: 355px;
-    gap: 20px;
-    background-image:url(./../assets/menuPanel.svg)
+    gap: 10px;
+    padding: 68px 20px 153px 20px;
+    background-image:url(./../assets/menuPanel.png)
+}
+.menuPanel ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    list-style-type: none;
 }

@@ -1,13 +1,16 @@
 import React from 'react';
 import './home.css'
 import './menu.css'
+import { Link, useNavigate } from 'react-router-dom';
+
 
 import './../animations.css'
 import './../components/layout/header.css'
 
 import menu from './../assets/menu.svg'
 
-import character from './../assets/charsplash2.png'
+import back from './../assets/back.svg'
+
 
 
 import splash from './../assets/menuBg.jpg'
@@ -16,23 +19,38 @@ import IconBtn from '../components/common/iconbtn';
 import Heading from '../components/common/heading';
 
 const Menu = () => {
+      const navigate = useNavigate();
     return ( <>
-    <div className="fixed-mobile-wrapper">
+    
+    <div style={{ paddingTop: '50px' }} className="fixed-mobile-wrapper">
         <header>
-    <IconBtn
-        icon={menu}
-        style1="iconbtnmian startBtnAnim"
-        link="/menu"
-        />
+        <Link  onClick={(e) => {
+        e.preventDefault(); navigate(-1);       
+      }} to="#" >
+    <button className="iconbtnmian ">
+        <img src={back} alt="" />
+    </button>
+    </Link>
         </header>
         <nav className='menuPanel'>
             <Heading heading="القائمة" />
         <ul>
             <li>
-        <Button style1="primarybtn secondarybtn" cta="ألعب الأن" />
-        <Button style1="primarybtn" cta="ألعب الأن" />
-        <Button style1="primarybtn" cta="ألعب الأن" />
-        <Button style1="primarybtn" cta="ألعب الأن" />
+        <Button link="/home" style1="primarybtn secondarybtn" cta="الرئيسية" />
+            </li>
+            <li>
+        <Button link="/settings" style1="primarybtn secondarybtn" cta="الاعدادات " />
+            </li>
+            <li>
+        <Button link="/howto" style1="primarybtn secondarybtn" cta="كيف ألعب" />
+            </li>
+            
+            <li>
+        <Button link="/story" style1="primarybtn secondarybtn" cta="القصة" />
+            </li>
+            
+            <li>
+        <Button link="/levels" style1="primarybtn secondarybtn" cta="الأدوار" />
             </li>
         </ul>
     </nav>

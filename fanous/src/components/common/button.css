@@ -1,23 +1,23 @@
 .primarybtn , .secondarybtn{
-    background-color: transparent;
-       padding: 10px 20px 14px 20px;
+       background-color: transparent;
+    padding: 10px 20px 14px 20px;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    height: 76px;
+    height: 65px;
     box-sizing: border-box;
-    width:234px;
+    width: 216px;
     outline: transparent;
     display: flex;
     justify-content: center;
-    font-size:16px;
+    font-size: 16px;
     align-items: center;
     background-size: cover;
     background-position: center;
     border: transparent;
 }
 .primarybtn{
-    color: ##230E46;
+    color: #230E46;
 text-align: center;
 text-shadow: 0 0.949px 0 #FFF;
 font-size: 16px;

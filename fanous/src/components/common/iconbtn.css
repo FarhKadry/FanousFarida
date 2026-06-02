@@ -1,0 +1,20 @@
+.iconbtnmian{
+    width: 46.442px;
+    height: 48px;
+    background-image: url(./../../assets/iconbtn1.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 10ms ease-in;
+    
+}
+.iconbtnmian img{
+    width: 27px;
+    height: 25px;
+}
+.iconbtnmian:active{
+    background-image: url(./../../assets/iconbtn1press.svg);
+    filter: drop-shadow(0 4px 10.3px 0 rgba(249, 226, 81, 0.80));
+}

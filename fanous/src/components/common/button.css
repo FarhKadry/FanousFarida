@@ -1,12 +1,82 @@
 .primarybtn , .secondarybtn{
     background-color: transparent;
-    padding: 10px 20px;
+       padding: 10px 20px 14px 20px;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
     height: 76px;
-    width:216px;
+    box-sizing: border-box;
+    width:234px;
     outline: transparent;
+    display: flex;
+    justify-content: center;
+    font-size:16px;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
     border: transparent;
-    background-image: url(./../../assets/primarybtn.png);
+}
+.primarybtn{
+    color: ##230E46;
+text-align: center;
+text-shadow: 0 0.949px 0 #FFF;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+letter-spacing: 0.16px;
+    background-image: url(./../../assets/primarybtn.svg);
+}
+.secondarybtn{
+    color: #FFF;
+    text-align: center;
+    text-shadow: 0 0.949px 0 #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.16px;
+    background-image: url(./../../assets/secondarybtn.svg);
+}
+.homeBtn{
+    width: 246px;
+    height: 100px;
+    background-image: url(./../../assets/startbtn.svg);
+    background-size: cover;
+    background-position: center;
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+#link{
+    text-decoration: none;
+    color: inherit;
+}
+button{
+    background-color: transparent;
+    border: transparent;
+}
+
+@keyframes flickerBtn{
+   0%   { 
+   
+        width: 246px;
+    height: 100px;
+  }
+  50%  { 
+    background-image: url(./../../assets/startbtn2.svg);
+   filter: drop-shadow(0 4px 10.3px rgba(249, 226, 81, 0.8));
+  }
+  100%  { 
+    background-image: url(./../../assets/startbtn.svg);
+  }
+}
+.homeBtn{
+    color: #230E46;
+     background-image: url(./../../assets/startbtn.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    text-shadow: 0 1.067px 0 #FFF;
+    animation: flickerBtn 2s ease-in-out infinite;
 }

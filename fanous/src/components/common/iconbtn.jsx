@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './button.css'
+import './iconbtn.css';
 
-const Button = (props) => {
+const IconBtn = (props) => {
     return ( <>
-    <Link id="link" to={props.link}>
+    <Link to={props.link}>
     <button className={props.style1}>
-    {props.cta}
+        <img src={props.icon} alt="" />
     </button>
     </Link>
     </> );
 }
  
-export default Button;
+export default IconBtn;

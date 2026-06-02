@@ -1,0 +1,26 @@
+.headingBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
+.bg3{
+    color: #fae0c3;
+}
+.bg1 , .bg2{
+    color: #8651dceb ;
+    position: absolute;
+    top:0;
+    left:0;
+    transform: translateY(3px);
+}
+.bg2{
+    color: #04000c98 ;
+    position: absolute;
+    top:0;
+    filter: blur(2px);
+    left:0;
+    transform: translateY(6px);
+    z-index: -1;
+}

@@ -230,7 +230,7 @@
     opacity: 1;
     scale: 0.9;
     
-    transform: translateY(-49px) 
+    transform: translateY(44px)
   }
 }
 .fadeIn2{
@@ -262,11 +262,28 @@
   } */
   100%  { 
     opacity: 1;
-    width: 239px;
-    bottom:30px;
+        width: 254px;
+    bottom: 23px;
   }
 }
 .charSplash{
   animation: charSplash 1000ms 2s ease-in-out both ;
 transform-origin: bottom;
+}
+@keyframes startBtnAnim{
+   0%   { 
+    opacity: 0;
+    scale: 0;
+  }
+  /* 91%   { 
+    bottom:120px;
+  } */
+  100%  { 
+    opacity: 1;
+        scale: 1;
+    transform: translateY(0);
+  }
+}
+.startBtnAnim{
+  animation: startBtnAnim 800ms 2s ease-in-out both ;
 }

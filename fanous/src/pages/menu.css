@@ -1,0 +1,12 @@
+.menuPanel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    max-height: 709px;
+    width: 100%;
+    max-width: 355px;
+    gap: 20px;
+    background-image:url(./../assets/menuPanel.svg)
+}

@@ -93,3 +93,14 @@ h4{
 .h4_2{
     color:#D4D8A6;
 }
+li{
+    list-style-type: none;
+}
+p{
+    color: #FFE6CB;
+    text-align: right;
+    font-family: Mirza;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+}

@@ -17,12 +17,13 @@ import splash from './../assets/menuBg.jpg'
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 import Heading from '../components/common/heading';
+import Textbox from '../components/common/textbox';
 const HowTo = () => {
-          const navigate = useNavigate();
-    
+    const navigate = useNavigate();
     return ( <>
-    
         <div style={{ paddingTop: '50px' }} className="fixed-mobile-wrapper">
+        <img className='splashBg' src={splash} alt="" />
+
         <header>
         <Link  onClick={(e) => {
         e.preventDefault(); navigate(-1);       
@@ -32,31 +33,21 @@ const HowTo = () => {
     </button>
     </Link>
         </header>
-        <nav className='menuPanel floatIn'>
-            <Heading heading="القائمة" />
-        <ul>
+        <div className="menuPanel floatIn">
+        <Heading heading="كيف ألعب" />
+        <div className="howtoFlex">
+            <Textbox
+            heading="اللعب"
+            text="تقوم فريدة بالطيران عند لمسك للشاشة"
+            />
+        </div>
             <li style={{ animationDelay: '0.1s' }} className='floatIn'>
-        <Button link="/home" style1="primarybtn secondarybtn" cta="الرئيسية" />
+        <Button link="/home" style1="primarybtn" cta="التالي" />
             </li>
-            <li style={{ animationDelay: '0.2s' }} className='floatIn'>
-        <Button link="/settings" style1="primarybtn secondarybtn" cta="الاعدادات " />
-            </li>
-            <li style={{ animationDelay: '0.3s' }} className='floatIn'>
-        <Button link="/howto" style1="primarybtn secondarybtn" cta="كيف ألعب" />
-            </li>
-            
-            <li style={{ animationDelay: '0.4s' }} className='floatIn'>
-        <Button link="/story" style1="primarybtn secondarybtn" cta="القصة" />
-            </li>
-            
-            <li style={{ animationDelay: '0.5s' }} className='floatIn'>
-        <Button link="/levels" style1="primarybtn secondarybtn" cta="الأدوار" />
-            </li>
-        </ul>
-    </nav>
-        <img className='splashBg' src={splash} alt="" />
         <div className="startBtnCont startBtnAnim">
         </div>
+        </div>
+            
     </div>
     
     

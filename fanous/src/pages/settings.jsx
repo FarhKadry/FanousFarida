@@ -7,14 +7,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import './../animations.css'
 import './../components/layout/header.css'
 
-import menu from './../assets/menu.svg'
 
 import back from './../assets/back.svg'
 
 
 
 import splash from './../assets/menuBg.jpg'
-import Button from '../components/common/button';
 import panelchar from './../assets/panelchar.png';
 import Heading from '../components/common/heading';
 

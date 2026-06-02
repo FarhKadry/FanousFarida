@@ -4,6 +4,8 @@ import Home from './pages/home';
 import Menu from './pages/menu';
 import Pause from './pages/pause';
 import Settings from './pages/settings';
+import Levels from './pages/levels';
+
 
 function Paths() {
     return (
@@ -13,6 +15,8 @@ function Paths() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/pause" element={<Pause />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/levels" element={<Levels/>} />
+
 
 
     </Routes>

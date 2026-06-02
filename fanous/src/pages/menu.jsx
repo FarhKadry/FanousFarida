@@ -32,24 +32,24 @@ const Menu = () => {
     </button>
     </Link>
         </header>
-        <nav className='menuPanel'>
+        <nav className='menuPanel floatIn'>
             <Heading heading="القائمة" />
         <ul>
-            <li>
+            <li style={{ animationDelay: '0.1s' }} className='floatIn'>
         <Button link="/home" style1="primarybtn secondarybtn" cta="الرئيسية" />
             </li>
-            <li>
+            <li style={{ animationDelay: '0.2s' }} className='floatIn'>
         <Button link="/settings" style1="primarybtn secondarybtn" cta="الاعدادات " />
             </li>
-            <li>
+            <li style={{ animationDelay: '0.3s' }} className='floatIn'>
         <Button link="/howto" style1="primarybtn secondarybtn" cta="كيف ألعب" />
             </li>
             
-            <li>
+            <li style={{ animationDelay: '0.4s' }} className='floatIn'>
         <Button link="/story" style1="primarybtn secondarybtn" cta="القصة" />
             </li>
             
-            <li>
+            <li style={{ animationDelay: '0.5s' }} className='floatIn'>
         <Button link="/levels" style1="primarybtn secondarybtn" cta="الأدوار" />
             </li>
         </ul>

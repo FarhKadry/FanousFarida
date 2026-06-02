@@ -10,6 +10,8 @@ import './../components/layout/header.css'
 import menu from './../assets/menu.svg'
 
 import back from './../assets/back.svg'
+import char from './../assets/farida flying.png'
+
 
 
 
@@ -18,6 +20,7 @@ import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 import Heading from '../components/common/heading';
 import Textbox from '../components/common/textbox';
+import TapAnimation from '../components/common/tap';
 const HowTo = () => {
     const navigate = useNavigate();
     return ( <>
@@ -36,11 +39,14 @@ const HowTo = () => {
         <div className="menuPanel floatIn">
         <Heading heading="كيف ألعب" />
         <div className="howtoFlex">
+            <TapAnimation />
+
             <Textbox
             heading="اللعب"
             text="تقوم فريدة بالطيران عند لمسك للشاشة"
             />
         </div>
+        <img className='float' src={char} alt="" />
             <li style={{ animationDelay: '0.1s' }} className='floatIn'>
         <Button link="/home" style1="primarybtn" cta="التالي" />
             </li>

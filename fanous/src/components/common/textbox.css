@@ -1,0 +1,9 @@
+.textBox{
+    diqsplay: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-end;
+}
+.textBox p, .textBox h3{
+   text-align: right;    
+}

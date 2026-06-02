@@ -106,7 +106,6 @@ const Settings = () => {
             </Link>
           </div>
         </div>
-
         <img className='splashBg' src={splash} alt="" />
         <div className="startBtnCont startBtnAnim"></div>
       </div>

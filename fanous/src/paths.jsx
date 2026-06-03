@@ -7,6 +7,7 @@ import Settings from './pages/settings';
 import Levels from './pages/levels';
 import HowTo from './pages/howto';
 import Loading from './pages/loading';
+import Onboarding from './pages/onboarding';
 
 
 function Paths() {
@@ -20,6 +21,7 @@ function Paths() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/levels" element={<Levels/>} />
         <Route path="/howto" element={<HowTo/>} />
+        <Route path="/onboarding" element={<Onboarding />} />
     </Routes>
     </BrowserRouter>
     );

@@ -12,15 +12,16 @@ import starz from './../assets/logo/starz 2.svg'
 import menu from './../assets/menu.svg'
 
 import starshine from './../assets/logo/star shine.svg'
-import character from './../assets/charsplash2.png'
+import character from './../assets/onboardchar.png'
 
 
-import splash from './../assets/splashbg.jpg'
+import splash from './../assets/onboardbg.png'
 import { Link } from 'react-router-dom';
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
+import TapAnimation from '../components/common/tap';
 
-const Home = () => {
+const Onboarding = () => {
     return ( <>
     <div className="fixed-mobile-wrapper">
         <header>
@@ -29,22 +30,16 @@ const Home = () => {
         style1="iconbtnmian"
         link="/menu" />
         </header>
-        <img className='splashBg splashScale' src={splash} alt="" />
+        <img className='splashBg ' src={splash} alt="" />
         <img className='splashBg' src={depth} alt="" />
         {/* <img src={logo} alt='' /> */}
-        <div className="logo">
-        <img className='top scaleIn3' src={top} alt="" />
-        <img className='fanous scaleIn' src={fanous} alt="" />
-        <img className='farida scaleIn2' src={farida} alt="" />
-        <img className='bottom scaleIn4'  src={bottom} alt="" />
-        <img className='starz1 fadeIn2' src={starz} alt="" />
-        <img className='starz2 scaleFade' src={starshine} alt="" />
-        </div>
+        <TapAnimation />
+        <h2> اضغط الشاشة  للبدأ! </h2>
         <img className='charSplash' src={character} alt="" />
         <div className="startBtnCont startBtnAnim">
-        <Button link="/onboarding" style1="primarybtn homeBtn" cta="ألعب الأن" />
+        <Button link="/gameplay1" style1="primarybtn " cta="مهمتي " />
         </div>
     </div>
     </> );
 }
-export default Home;
+export default Onboarding;

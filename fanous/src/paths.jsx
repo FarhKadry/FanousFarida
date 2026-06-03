@@ -6,22 +6,20 @@ import Pause from './pages/pause';
 import Settings from './pages/settings';
 import Levels from './pages/levels';
 import HowTo from './pages/howto';
+import Loading from './pages/loading';
 
 
 function Paths() {
     return (
     <BrowserRouter>
     <Routes>
+        <Route path="/" element={<Loading />} />
         <Route path="/home" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/pause" element={<Pause />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/levels" element={<Levels/>} />
         <Route path="/howto" element={<HowTo/>} />
-
-
-
-
     </Routes>
     </BrowserRouter>
     );

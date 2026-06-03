@@ -24,7 +24,7 @@
 .depth{
    background-color: rgba(10, 21, 15, 0.383);
 background-blend-mode: multiply;
-filter: blur(34.50239944458008px);
+/* filter: blur(34.50239944458008px); */
 width: 100%;
 height: 100%;
 }

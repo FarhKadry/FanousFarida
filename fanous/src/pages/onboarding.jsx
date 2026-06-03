@@ -26,11 +26,12 @@ const Onboarding = () => {
         </header>
         <img className='splashBg ' src={splash} alt="" />
         <img className='splashBg' src={depth} alt="" />
-        {/* <img src={logo} alt='' /> */}
-        <h2 className='onboardText flicker'> اضغط الشاشة  للبدأ! </h2>
+       <div className='floatIn'>
+         <h2 style={{ animationDelay: '0.1s' }} className='onboardText flicker'> اضغط الشاشة  للبدأ! </h2>
         <TapAnimation />
-        <img className='floatIn onboardChar' src={character} alt="" />
-        <div className="missonBtn">
+       </div>
+        <img  style={{ animationDelay: '0.2s' }} className='floatIn onboardChar' src={character} alt="" />
+        <div  style={{ animationDelay: '0.3s' }} className="missonBtn floatIn">
         <Button link="/gameplay1" style1="primarybtn " cta="مهمتي " />
         </div>
     </div>

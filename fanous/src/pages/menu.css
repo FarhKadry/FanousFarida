@@ -97,4 +97,16 @@ background-size: 100% 100%;
     justify-content: center;
     margin-bottom: 20px;
 }
-    
+.howToPanel{
+    justify-content: space-between;
+        padding: 68px 20px 118px 20px
+
+}
+.howToPanel .tap-hand{
+        width: 44.942px;
+    height: 91.018px;
+    margin: 10px 16px 0 0;
+}
+.howToPanel button{
+    margin: 20px 0 10px 0;
+}

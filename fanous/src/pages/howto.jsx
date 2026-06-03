@@ -35,7 +35,7 @@ const HowTo = () => {
     </button>
     </Link>
         </header>
-        <div className="menuPanel floatIn">
+        <div className="menuPanel howToPanel floatIn">
         <Heading heading="كيف ألعب" />
         <div className="howtoFlex">
             <TapAnimation />
@@ -44,14 +44,13 @@ const HowTo = () => {
             text="تقوم فريدة بالطيران عند لمسك للشاشة"
             />
         </div>
-<div className="chacrCont">
-        <img className='float' src={char} alt="" />
-</div>
-            <li style={{ animationDelay: '0.1s' }} className='floatIn'>
-        <Button link="/home" style1="primarybtn" cta="التالي" />
-            </li>
-        <div className="startBtnCont startBtnAnim">
+        <div className="chacrCont">
+                <img className='float' src={char} alt="" />
         </div>
+                    <li style={{ animationDelay: '0.1s' }} className='floatIn'>
+                <Button link="/home" style1="primarybtn" cta="التالي" />
+                    </li>
+       
         </div>
             
     </div>

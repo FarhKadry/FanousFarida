@@ -72,3 +72,8 @@ button{
     text-shadow: 0 1.067px 0 #FFF;
     animation: flickerBtn 2s ease-in-out infinite;
 }
+.missonBtn{
+    align-self: flex-start;
+    justify-self: end;
+    margin: 28px 28px 28px 28px;
+}

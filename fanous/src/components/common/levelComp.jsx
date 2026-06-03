@@ -1,13 +1,19 @@
 import React from 'react';
 import './levelComp.css';
+import { Link } from 'react-router-dom';
 const LevelComp = (props) => {
     return ( <>
-    <div className="levelComp">
-        <h4>{props.name}</h4>
+    <div className={props.cont}>
+        <div className="light float"></div>
+        <Link id="link">
+        <button className={props.stylepos}>
+        <h4 className='h4dropShadow'>{props.name}</h4>
         <div className={props.style1}>
         {props.number}
         </div>
-         </div>
+    </button>
+        </Link>
+    </div>
   </>
         );}
         

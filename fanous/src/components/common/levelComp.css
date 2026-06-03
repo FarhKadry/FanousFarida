@@ -4,10 +4,41 @@
     text-align: center;
     font-size: 27px;
 }
+.h4dropShadow{
+    text-shadow: 0 1px 0 #000;
+}
 .levelComp{
     display: flex;
     width: 95px;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+}
+.light{
+    border-radius: 341px;
+    background: #8651dc26;
+    background-blend-mode: color;
+    mix-blend-mode: plus-lighter;
+    filter: blur(19.649999618530273px);
+    width: 341px;
+    height: 263px;
+    transform: rotate(90deg);
+    position: absolute;
+    left: -100%;
+}
+.current{
+    color: #FFF;
+    text-shadow: 0 0.871px 0 #000;
+    background-image: url(./../../assets/leveliconinactive.svg);
+}
+.inactive{
+    color: #5c5a5c;
+    text-shadow: 0 0.871px 0 #000;
+    background-image: url(./../../assets/leveliconinactive.svg);
+}
+.levelCompInactive h4{
+    color: #BCA8C0;
+}
+.levelCompInactive .light{
+    display: none;
 }

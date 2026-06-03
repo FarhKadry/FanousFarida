@@ -1,0 +1,20 @@
+.lvl1{
+    position: absolute;
+    left: 65px;
+    bottom: 190px;
+}
+.lvl2{
+    position: absolute;
+    right:20px ;
+    bottom: 305px;
+}
+.levelsBg{
+    left: -32px;
+}
+.depth{
+   background-color: rgba(10, 21, 15, 0.383);
+background-blend-mode: multiply;
+filter: blur(34.50239944458008px);
+width: 100%;
+height: 100%;
+}

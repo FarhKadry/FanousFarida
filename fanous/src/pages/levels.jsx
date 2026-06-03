@@ -1,5 +1,6 @@
 import React from 'react';
 import './home.css'
+import './levels.css'
 import './../animations.css'
 import './../components/layout/header.css'
 import top from './../assets/logo/top.svg'
@@ -19,6 +20,7 @@ import splash from './../assets/levelsbg.jpg'
 import { Link } from 'react-router-dom';
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
+import LevelComp from '../components/common/levelComp';
 
 const Levels = () => {
     return ( <>
@@ -29,10 +31,36 @@ const Levels = () => {
         style1="iconbtnmian"
         link="/menu" />
         </header>
-        <img className='splashBg ' src={splash} alt="" />
-        <img className='splashBg' src={depth} alt="" />
-
-
+        <img className='splashBg levelsBg' src={splash} alt="" />
+        <div className="splashBg depth"></div>
+<LevelComp 
+cont="lvlBg lvl1 "
+stylepos="levelComp glow"
+style1="levelCont current"
+name=" ابن طولون"
+number="1"
+/>
+<LevelComp 
+cont="lvlBg lvl2 levelCompInactive"
+stylepos="levelComp  "
+style1="levelCont inactive"
+name=" المرسي ابو العباس "
+number="2"
+/>
+<LevelComp 
+cont="lvlBg lvl3 levelCompInactive"
+stylepos="levelComp  "
+style1="levelCont inactive"
+name=" المرسي ابو العباس "
+number="2"
+/>
+<LevelComp 
+cont="lvlBg lvl3 levelCompInactive"
+stylepos="levelComp  "
+style1="levelCont inactive"
+name=" المرسي ابو العباس "
+number="2"
+/>
     </div>
     </> );
 }

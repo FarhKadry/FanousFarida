@@ -21,7 +21,11 @@ height: 185px;
         background-image: url(./../assets/fanous_full.png);
    
   }
-  
+    /* 15%{
+    transform: rotate(0deg);
+        background-image: url(./../assets/fanous_full.png);
+   
+  } */
   25%{
   
     transform: rotate(90deg);
@@ -29,6 +33,13 @@ height: 185px;
         background-image: url(./../assets/fanous_half.png);
 
   }
+  /* 35%{
+  
+    transform: rotate(90deg);
+
+        background-image: url(./../assets/fanous_half.png);
+
+  } */
   50%{
     transform: rotate(180deg);
 

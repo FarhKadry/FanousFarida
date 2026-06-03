@@ -303,3 +303,19 @@ transform-origin: bottom;
     filter: drop-shadow(0 0px 0px #ffffff00);
   }
 }
+.flicker{
+      animation: flicker 3s ease-in-out infinite;
+
+}
+@keyframes flicker {
+  0%{
+    opacity: 1;
+  }
+  
+  50%{
+   opacity: 0;
+  }
+   100%{
+    opacity: 1;
+  }
+}

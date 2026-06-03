@@ -51,15 +51,23 @@ number="2"
 cont="lvlBg lvl3 levelCompInactive"
 stylepos="levelComp  "
 style1="levelCont inactive"
-name=" المرسي ابو العباس "
-number="2"
+name=" القلعة"
+number="3"
 />
 <LevelComp 
-cont="lvlBg lvl3 levelCompInactive"
+cont="lvlBg lvl4 levelCompInactive"
 stylepos="levelComp  "
 style1="levelCont inactive"
-name=" المرسي ابو العباس "
-number="2"
+name="  ياقوت
+العرش"
+number="4"
+/>
+<LevelComp 
+cont="lvlBg lvl5 levelCompInactive"
+stylepos="levelComp  "
+style1="levelCont inactive"
+name=" الأزهر "
+number="5"
 />
     </div>
     </> );

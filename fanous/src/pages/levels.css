@@ -1,12 +1,22 @@
 .lvl1{
-    position: absolute;
     left: 65px;
     bottom: 190px;
 }
 .lvl2{
-    position: absolute;
     right:20px ;
     bottom: 305px;
+}
+.lvl3{
+    left: 130px;
+    top: 353px;
+}
+.lvl4{
+        right: 19px;
+    top: 156px;
+}
+.lvl5{
+    right: 159px;
+    top: 27px;
 }
 .levelsBg{
     left: -32px;

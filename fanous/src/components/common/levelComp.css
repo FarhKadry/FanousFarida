@@ -32,7 +32,8 @@
     background-image: url(./../../assets/leveliconinactive.svg);
 }
 .inactive{
-    color: #5c5a5c;
+    opacity: 0.8;
+    color: #5a525b;
     text-shadow: 0 0.871px 0 #000;
     background-image: url(./../../assets/leveliconinactive.svg);
 }
@@ -41,4 +42,7 @@
 }
 .levelCompInactive .light{
     display: none;
+}
+.lvlBg{
+    position: absolute;
 }

@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import './../animations.css'
 import './../components/layout/header.css'
 
-import menu from './../assets/menu.svg'
 
 import back from './../assets/back.svg'
 import char from './../assets/farida flying.png'
@@ -40,13 +39,14 @@ const HowTo = () => {
         <Heading heading="كيف ألعب" />
         <div className="howtoFlex">
             <TapAnimation />
-
             <Textbox
             heading="اللعب"
             text="تقوم فريدة بالطيران عند لمسك للشاشة"
             />
         </div>
+<div className="chacrCont">
         <img className='float' src={char} alt="" />
+</div>
             <li style={{ animationDelay: '0.1s' }} className='floatIn'>
         <Button link="/home" style1="primarybtn" cta="التالي" />
             </li>

@@ -1,0 +1,13 @@
+.levelCont{
+    width: 50px;
+    height: 53px;
+    text-align: center;
+    font-size: 27px;
+}
+.levelComp{
+    display: flex;
+    width: 95px;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}

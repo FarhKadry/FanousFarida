@@ -16,105 +16,129 @@ import slide6 from './../assets/story6.jpg'
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
+const buildSlides = (handleNext, isLast) => [
+  {
+        autoDelay: 2000,
+    render: (next, last) => (
+      <>
+        <img key={slide1} className='splashBg slide scaleStory' src={slide1} alt="" />
+        <img className='splashBg' src={depth} alt="" />
+        <div className="narration">
+          كانت تتسحر عائلة فريدة في ليلة من ليال رمضان وسط أضواء الفوانيس 
+          <div className="startBtnCont">
+          <div onClick={next}><Button style1="primarybtn" cta="التالي" /></div>
+        </div>
+        </div>
+        
+      </>
+    ),
+  },
+  {
+    autoDelay: 6000,
+    render: (next) => (
+      <>
+        <img style={{ scale: "2.5" , top:"280px" , left:"-27px"  }} key={slide3} className='splashBg slide' src={slide3} alt="" />
 
-// ─── EDIT SLIDES HERE ───────────────────────────────────────────────
-const slides = [
-  {
-    image: slide1,
-    content: (
-      <div className="narration">
-        كانت تتسحر عائلة فريدة في ليلة من ليال رمضان وسط أضواء الفوانيس ....
-      </div>
+        <img key={slide2} className='splashBg slide scaleStory2' src={slide2} alt="" />
+
+        <img className='splashBg' src={depth} alt="" />
+        <div className=" light2 fadeOut"></div>
+        <div className="narration">
+             حين أطفأت رياح شريرة كل فوانيس 
+
+              ! المحروسة 
+          <div className="startBtnCont">
+          <div onClick={next}><Button style1="primarybtn" cta="التالي" /></div>
+        </div>
+        </div>
+        
+      </>
     ),
   },
   {
-    image: slide2,
-    content: (
-      <div className="narration">
-        حين أطفأت رياح شريرة كل الفوانيس المحروسة !
-      </div>
+    autoDelay: 2500,  
+    render: () => (
+      <>
+        <img key={slide3} className='splashBg slide scaleStory3' src={slide3} alt="" />
+        <img className='splashBg' src={depth} alt="" />
+      </>
     ),
   },
   {
-    image: slide3,
-    content: null,       // no narration — auto-advances after autoDelay ms
-    autoDelay: 2500,
-  },
-  {
-    image: slide4,
-    content: (
-      <div className="narration">
-        ماذا من صلاة الفجر؟ كيف نصل للمساجد في الظلام؟
-      </div>
+    autoDelay: null,
+    render: (next) => (
+      <>
+        <img key={slide4} className='splashBg slide scaleStory' src={slide4} alt="" />
+        <img className='splashBg' src={depth} alt="" />
+        <div className="narration">
+          ماذا من صلاة الفجر؟ كيف نصل للمساجد في الظلام؟
+        </div>
+        <div className="startBtnCont">
+          <div onClick={next}><Button style1="primarybtn" cta="التالي" /></div>
+        </div>
+      </>
     ),
   },
   {
-    image: slide5,
-    content: (
-      <div className="narration">
-        ذبقى فانوس واحد به النور...
-      </div>
+    autoDelay: null,
+    render: (next) => (
+      <>
+        <img key={slide5} className='splashBg slide scaleStory' src={slide5} alt="" />
+        <img className='splashBg' src={depth} alt="" />
+        <div className="narration">
+          ذبقى فانوس واحد به النور...
+        </div>
+        <div className="startBtnCont">
+          <div onClick={next}><Button style1="primarybtn" cta="التالي" /></div>
+        </div>
+      </>
     ),
   },
   {
-    image: slide6,
-    content: (
-      <div className="narration">
-        علينا أن نعيد النور لمساجد المحروسة قبل الفجر....
-      </div>
+    autoDelay: null,
+    render: (next) => (
+      <>
+        <img key={slide6} className='splashBg slide scaleStory' src={slide6} alt="" />
+        <img className='splashBg' src={depth} alt="" />
+        <div className="narration">
+          علينا أن نعيد النور لمساجد المحروسة قبل الفجر....
+        </div>
+        <div className="startBtnCont">
+          <div onClick={next}><Button style1="goldbtn" cta="ألعب الآن!" /></div>
+        </div>
+      </>
     ),
-    isLast: true,
   },
 ];
-// ────────────────────────────────────────────────────────────────────
 
 const Story = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const current = slides[step];
 
   const handleNext = () => {
-    if (current.isLast) {
+    if (step === buildSlides().length - 1) {
       navigate('/onboarding');
     } else {
       setStep(s => s + 1);
     }
   };
 
+  const slides = buildSlides();
+  const current = slides[step];
+
   useEffect(() => {
-    if (current.content === null) {
-      const timer = setTimeout(handleNext, current.autoDelay ?? 2500);
+    if (current.autoDelay !== null) {
+      const timer = setTimeout(handleNext, current.autoDelay);
       return () => clearTimeout(timer);
     }
   }, [step]);
 
   return (
-    <div className="fixed-mobile-wrapper">
+    <div style={{ justifyContent: "end" }} className="fixed-mobile-wrapper">
       <header>
         <IconBtn icon={menu} style1="iconbtnmian" link="/menu" />
       </header>
-
-      <img
-        key={current.image}
-        className='splashBg slide scaleStory'
-        src={current.image}
-        alt=""
-      />
-      <img className='splashBg' src={depth} alt="" />
-
-      {current.content !== null && (
-        <>
-          {current.content}
-          <div className="startBtnCont">
-            <div onClick={handleNext}>
-              <Button
-                style1={current.isLast ? 'goldbtn' : 'primarybtn'}
-                cta={current.isLast ? 'ألعب الآن!' : 'التالي'}
-              />
-            </div>
-          </div>
-        </>
-      )}
+      {current.render(handleNext)}
     </div>
   );
 };

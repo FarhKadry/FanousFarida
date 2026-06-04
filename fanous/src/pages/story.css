@@ -1,9 +1,10 @@
 .slide{
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 .scaleStory{
-  animation: scaleStory 1200ms ease-in-out both ;
+  animation: scaleStory 4000ms ease-in-out both ;
 }
 @keyframes scaleStory{
   0% {
@@ -18,7 +19,7 @@
   }
 }
 .narration{
-    padding: 39px 28px;
+    padding: 28px;
     display: flex;
     flex-direction: column;
     background-position: center;
@@ -31,10 +32,92 @@
     font-family: Mirza;
     font-size: 24px;
     font-weight: 400;
-    
-    line-height: 119.832%; 
+    line-height: 119%; 
+    margin-bottom: 100px;
+    z-index: 999;
 }
 .narration .startBtnCont{
     position: absolute;
     top: 70%;
+    right: 10px;
+}
+.scaleStory2{
+  animation: scaleStory2 6000ms ease-in-out both ;
+}
+@keyframes scaleStory2{
+  0% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+    top: 0;
+  }
+  50% {
+    -webkit-transform: scale(1.4);
+            transform: scale(1.4);
+    opacity: 1;
+     top: 0;
+  }
+  80% {
+    -webkit-transform: scale(3.5);
+            transform: scale(3.5);
+             top: 700px;
+             left: 20px;
+             opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(3.5);
+            transform: scale(3.5);
+             top: 700px;
+             opacity: 0;
+
+             left: 20px;
+  }
+}
+.light2{
+  width: 430px;
+  height: 932px;
+  top: 0;
+  background-color: #100d0dcb;
+mix-blend-mode: multiply;
+filter: blur(3px);
+z-index: 6;
+}
+.fadeOut{
+  animation: fadeOut 800ms cubic-bezier(0.550, 0.085, 0.680, 0.530) both ;
+}
+@keyframes fadeOut{
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.scaleStory3{
+  animation: scaleStory3 2000ms ease-in-out both ;
+}
+@keyframes scaleStory3{
+  0% {
+     scale: 2.5 ;
+      top:280px ;
+      left:-27px 
+  }
+  100% {
+     scale: 1 ;
+      top:0px ;
+      left:0;
+  }
+}
+.scaleStory4{
+  animation: scaleStory3 2000ms ease-in-out both ;
+}
+@keyframes scaleStory4{
+  0% {
+     scale: 2 ;
+  }
+   90% {
+     scale: 1 ;
+  }
+  100% {
+     scale: 1.1 ;
+  }
 }

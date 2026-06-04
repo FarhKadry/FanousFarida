@@ -108,16 +108,59 @@ z-index: 6;
   }
 }
 .scaleStory4{
-  animation: scaleStory3 2000ms ease-in-out both ;
+  animation: scaleStory4 2000ms ease-in-out both ;
 }
 @keyframes scaleStory4{
   0% {
-     scale: 2 ;
-  }
-   90% {
-     scale: 1 ;
+     scale: 1.5;
   }
   100% {
-     scale: 1.1 ;
+     scale: 1 ;
+  }
+}
+.narration2{
+  margin-bottom: 600px;
+  margin-bottom: 600px;
+    height: 580px;
+}
+@keyframes scaleStory5{
+  0% {
+     scale: 1.1;
+  }
+  100% {
+    top: -80px;
+     scale: 1.2 ;
+  }
+}
+.scaleStory5{
+  animation: scaleStory5 2500ms ease-in-out both ;
+}
+.narration3{
+  height: 132px;
+}
+.scaleStory6{
+  animation: scaleStory6 8000ms ease-in-out both ;
+}
+@keyframes scaleStory6{
+  0% {
+     scale: 1.1;
+    top: -50px;
+left: 0;
+  }
+  100% {
+       left: -70px;
+    scale: 2;
+    top: -206px;
+  }
+}
+.scaleStory7{
+  animation: scaleStory7 5000ms ease-in-out both ;
+}
+@keyframes scaleStory7{
+  0% {
+    top: 10px;
+  }
+  100% {
+    top: 80px;
   }
 }

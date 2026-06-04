@@ -12,6 +12,8 @@ import slide3 from './../assets/story3.jpg'
 import slide4 from './../assets/story4.jpg'
 import slide5 from './../assets/story5.jpg'
 import slide6 from './../assets/story6.jpg'
+import slide7 from './../assets/story7.png'
+
 
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/common/button';
@@ -65,17 +67,36 @@ const buildSlides = (handleNext, isLast) => [
     ),
   },
   {
-    autoDelay: null,
+    autoDelay: 2000,
     render: (next) => (
       <>
-        <img key={slide4} className='splashBg slide scaleStory' src={slide4} alt="" />
-        <img className='splashBg' src={depth} alt="" />
-        <div className="narration">
+        <img key={slide4} className='splashBg slide scaleStory4' src={slide4} alt="" />
+        <div className=" light2 fadeOut"></div>
+
+        <div className="narration narration2 moveIn">
           ماذا من صلاة الفجر؟ كيف نصل للمساجد في الظلام؟
-        </div>
-        <div className="startBtnCont">
+
+          <div className="startBtnCont">
           <div onClick={next}><Button style1="primarybtn" cta="التالي" /></div>
         </div>
+        </div>
+      </>
+    ),
+  },
+  {
+    autoDelay: 2500,
+    render: (next) => (
+      <>
+        <img key={slide4} className='splashBg slide' src={slide4} alt="" />
+
+        <img key={slide5} className='splashBg slide scaleStory5' src={slide5} alt="" />
+        <div className="narration narration2 narration3">
+...          تبقى فانوس واحد به النور
+           <div className="startBtnCont">
+          <div onClick={next}><Button style1="primarybtn" cta="التالي" /></div>
+        </div>
+        </div>
+       
       </>
     ),
   },
@@ -83,28 +104,15 @@ const buildSlides = (handleNext, isLast) => [
     autoDelay: null,
     render: (next) => (
       <>
-        <img key={slide5} className='splashBg slide scaleStory' src={slide5} alt="" />
-        <img className='splashBg' src={depth} alt="" />
-        <div className="narration">
-          ذبقى فانوس واحد به النور...
-        </div>
-        <div className="startBtnCont">
-          <div onClick={next}><Button style1="primarybtn" cta="التالي" /></div>
-        </div>
-      </>
-    ),
-  },
-  {
-    autoDelay: null,
-    render: (next) => (
-      <>
-        <img key={slide6} className='splashBg slide scaleStory' src={slide6} alt="" />
+        <img key={slide6} className='splashBg slide scaleStory6' src={slide6} alt="" />
+        <img key={slide6} className='splashBg slide scaleStory7 ' src={slide7} alt="" />
+
         <img className='splashBg' src={depth} alt="" />
         <div className="narration">
           علينا أن نعيد النور لمساجد المحروسة قبل الفجر....
+          <div className="startBtnCont">
+          <div onClick={next}><Button style1="primarybtn homeBtn" cta="ألعب الآن!" /></div>
         </div>
-        <div className="startBtnCont">
-          <div onClick={next}><Button style1="goldbtn" cta="ألعب الآن!" /></div>
         </div>
       </>
     ),

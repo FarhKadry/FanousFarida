@@ -4,13 +4,13 @@ import sound from './../../assets/musicon.svg';
 import sound2 from './../../assets/musicoff.svg';
 
 const Music = ({ className = '', style = {} }) => {
-  const { muted, setMuted } = useMusic();
+  const { muted, toggle } = useMusic();
+
   return (
     <button
       className={`iconbtnmian iconSettings ${className}`}
       style={style}
-      onClick={() => setMuted(prev => !prev)}
-      aria-label={muted ? 'تشغيل الموسيقى' : 'كتم الموسيقى'}
+      onClick={toggle}
     >
       <img src={muted ? sound2 : sound} alt="" />
     </button>

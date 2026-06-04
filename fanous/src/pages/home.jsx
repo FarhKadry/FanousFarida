@@ -19,6 +19,7 @@ import splash from './../assets/splashbg.jpg'
 import { Link } from 'react-router-dom';
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
+import Music from '../components/common/music';
 
 const Home = () => {
     return ( <>
@@ -28,6 +29,7 @@ const Home = () => {
         icon={menu}
         style1="iconbtnmian"
         link="/menu" />
+        <Music />
         </header>
         <img className='splashBg splashScale' src={splash} alt="" />
         <img className='splashBg' src={depth} alt="" />

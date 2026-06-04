@@ -6,5 +6,6 @@ header{
     top: 0;
     padding: 53px 28px 0 28px;
     max-width: 430px;
+    align-items: center;
     box-sizing: border-box;
 }

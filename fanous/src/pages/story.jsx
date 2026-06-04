@@ -15,7 +15,7 @@ import slide6 from './../assets/story6.jpg'
 import slide7 from './../assets/story7.png'
 
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 const buildSlides = (handleNext, isLast) => [
@@ -145,6 +145,11 @@ const Story = () => {
     <div style={{ justifyContent: "end" }} className="fixed-mobile-wrapper">
       <header>
         <IconBtn icon={menu} style1="iconbtnmian" link="/menu" />
+        <Link to="/levels">
+        <button className='submitbtn'>
+          تخطي
+        </button>
+        </Link>
       </header>
       {current.render(handleNext)}
     </div>

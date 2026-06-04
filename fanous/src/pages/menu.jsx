@@ -17,6 +17,7 @@ import splash from './../assets/menuBg.jpg'
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 import Heading from '../components/common/heading';
+import Music from '../components/common/music';
 
 const Menu = () => {
       const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Menu = () => {
         <img src={back} alt="" />
     </button>
     </Link>
+    <Music />
         </header>
         <nav className='menuPanel floatIn'>
             <Heading heading="القائمة" />

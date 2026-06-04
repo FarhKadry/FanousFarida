@@ -18,6 +18,7 @@ import slide7 from './../assets/story7.png'
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
+import Music from '../components/common/music';
 const buildSlides = (handleNext, isLast) => [
   {
         autoDelay: 2000,
@@ -144,7 +145,10 @@ const Story = () => {
   return (
     <div style={{ justifyContent: "end" }} className="fixed-mobile-wrapper">
       <header>
+<div className="flex2">
         <IconBtn icon={menu} style1="iconbtnmian" link="/menu" />
+        <Music />
+</div>
         <Link to="/levels">
         <button className='submitbtn'>
           تخطي

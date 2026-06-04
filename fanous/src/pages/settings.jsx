@@ -16,6 +16,7 @@ import music2 from './../assets/musicoff.svg'
 import splash from './../assets/menuBg.jpg'
 import panelchar from './../assets/panelchar.png';
 import Heading from '../components/common/heading';
+import Music from '../components/common/music';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -96,9 +97,9 @@ const Settings = () => {
             <button style={{ animationDelay: '0.3s' }} className='iconbtnmian iconSettings floatIn'>
               <img src={sound} alt="" />
             </button>
-            <button style={{ animationDelay: '0.4s' }} className='iconbtnmian iconSettings floatIn'>
-              <img src={music} alt="" />
-            </button>
+            <div style={{ animationDelay: '0.4s' }} >
+              <Music />
+            </div>
             <Link to="/home">
               <button style={{ animationDelay: '0.5s' }} className='iconbtnmian iconSettings floatIn'>
                 <img src={home} alt="" />

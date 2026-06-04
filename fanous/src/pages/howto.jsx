@@ -8,6 +8,8 @@ import './../components/layout/header.css'
 import back from './../assets/back.svg'
 import char from './../assets/farida flying.png'
 import splash from './../assets/menuBg.jpg'
+import air from './../assets/wind.gif'
+
 import bat from './../assets/bat1.png'
 import stars from './../assets/fanous progress.png'
 import star from './../assets/shootingstar1.png'
@@ -64,12 +66,12 @@ const slides = [
     content: () => (
       <>
         <div className="howtoFlex" style={{ marginTop: '12px' }}>
-        <img src={fix} alt="" />
+        <img  style={{ width: '97px' }} src={air} alt="" />
 
           <Textbox heading="انتبه !" text="فالرباح تطفئ أنوار الفوانيس!" />
         </div>
         <div className="howtoFlex" style={{ marginTop: '16px' }}>
-        <img src={fix} alt="" />
+        <img style={{ width: '70px' }} src={fix} alt="" />
           <Textbox heading="أصلح" text="بعض الأدوار تطلب منك إصلاح الفانوس!" />
         </div>
       </>

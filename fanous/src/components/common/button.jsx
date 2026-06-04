@@ -1,15 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './button.css'
+import './button.css';
+import popFile from './../../assets/audio/pop.mp3';
+
+const pop = new Audio(popFile);
 
 const Button = (props) => {
-    return ( <>
-    <Link id="link" to={props.link}>
-    <button className={props.style1}>
-    {props.cta}
-    </button>
-    </Link>
-    </> );
-}
- 
+    const handleClick = () => {
+        pop.currentTime = 0;
+        pop.play();
+    };
+
+    return (
+        <Link id="link" to={props.link}>
+            <button className={props.style1} onClick={handleClick}>
+                {props.cta}
+            </button>
+        </Link>
+    );
+};
+
 export default Button;

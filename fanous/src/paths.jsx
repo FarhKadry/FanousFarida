@@ -9,6 +9,7 @@ import HowTo from './pages/howto';
 import Loading from './pages/loading';
 import Onboarding from './pages/onboarding';
 import Story from './pages/story';
+import Win from './pages/win';
 
 
 function Paths() {
@@ -23,8 +24,9 @@ function Paths() {
         <Route path="/levels" element={<Levels/>} />
         <Route path="/howto" element={<HowTo/>} />
         <Route path="/story" element={<Story/>} />
-
         <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/win" element={<Win />} />
+
     </Routes>
     </BrowserRouter>
     );

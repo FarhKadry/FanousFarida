@@ -1,3 +1,8 @@
+.charWin{
+transform-origin: bottom;
+  animation: charSplash2 1000ms ease-in-out both ;
+
+}
 .charWin, .winRays {
     width: 100%;
     position: absolute;
@@ -11,4 +16,17 @@
 }
 .winDepth{
     z-index: 3;
+}
+.winTypo{
+  width: 228.18px;
+height: 158.558px;
+position: relative;
+/* animation: unset; */
+    animation: splashLogo2 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+}
+.winTypo .top{
+  position: absolute;
+  top: 0;
+  left: 0;
 }

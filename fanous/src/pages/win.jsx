@@ -38,10 +38,10 @@ const Win = () => {
         <img className='splashBg winDepth' src={depth} alt="" />
         <img className='charWin ' src={character} alt="" />
 
-        <div className="menuPanel winPanel moveIn">
-<div className="logo">
-        <img className='top scaleIn3' src={top} alt="" />
-        <img className='fanous scaleIn' src={fanous} alt="" />
+        <div className="menuPanel winPanel VerticalScale">
+<div className="logo winTypo">
+        <img className='top scaleIn4' src={top} alt="" />
+        <img className='fanous scaleIn3' src={fanous} alt="" />
         </div>
         <div className="startBtnCont startBtnAnim">
         <Button link="/onboarding" style1="primarybtn homeBtn" cta="ألعب الأن" />

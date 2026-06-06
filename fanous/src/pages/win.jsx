@@ -1,21 +1,23 @@
 import React from 'react';
 import './home.css'
+import './win.css'
+
 import './../animations.css'
 import './../components/layout/header.css'
-import top from './../assets/logo/top.svg'
+import top from './../assets/wintypo2.svg'
 import bottom from './../assets/logo/bottom.svg'
-import fanous from './../assets/logo/fanous.svg'
-import depth from './../assets/depth2.svg'
+import fanous from './../assets/wintypo1.svg'
+import depth from './../assets/gendepth.svg'
 
-import farida from './../assets/logo/farida.svg'
-import starz from './../assets/logo/starz 2.svg'
 import menu from './../assets/menu.svg'
 
 import starshine from './../assets/logo/star shine.svg'
-import character from './../assets/charsplash2.png'
+import character from './../assets/winchar.png'
 
 
-import splash from './../assets/splashbg.jpg'
+import splash from './../assets/win1.jpg'
+import rays from './../assets/win2.png'
+
 import { Link } from 'react-router-dom';
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
@@ -31,21 +33,22 @@ const Win = () => {
         link="/menu" />
         <Music />
         </header>
-        <img className='splashBg splashScale' src={splash} alt="" />
-        <img className='splashBg' src={depth} alt="" />
-        {/* <img src={logo} alt='' /> */}
-        <div className="logo">
+        <img className='splashBg ' src={splash} alt="" />
+        <img className='splashBg winRays' src={rays} alt="" />
+        <img className='splashBg winDepth' src={depth} alt="" />
+        <img className='charWin ' src={character} alt="" />
+
+        <div className="menuPanel winPanel moveIn">
+<div className="logo">
         <img className='top scaleIn3' src={top} alt="" />
         <img className='fanous scaleIn' src={fanous} alt="" />
-        <img className='farida scaleIn2' src={farida} alt="" />
-        <img className='bottom scaleIn4'  src={bottom} alt="" />
-        <img className='starz1 fadeIn2' src={starz} alt="" />
-        <img className='starz2 scaleFade' src={starshine} alt="" />
         </div>
-        <img className='charSplash' src={character} alt="" />
         <div className="startBtnCont startBtnAnim">
         <Button link="/onboarding" style1="primarybtn homeBtn" cta="ألعب الأن" />
         </div>
+        </div>
+        {/* <img src={logo} alt='' /> */}
+        
     </div>
     </> );
 }

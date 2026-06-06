@@ -1,0 +1,14 @@
+.charWin, .winRays {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.winPanel{
+    background-image: url(./../assets/winpanel.png);
+    z-index: 2;
+    top: 16%;
+}
+.winDepth{
+    z-index: 3;
+}

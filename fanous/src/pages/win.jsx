@@ -8,6 +8,9 @@ import top from './../assets/wintypo2.svg'
 import star from './../assets/goldstar.svg'
 import fanous from './../assets/wintypo1.svg'
 import depth from './../assets/gendepth.svg'
+import count1 from './../assets/collectedcount-1.png'
+import count2 from './../assets/collectedcount.png'
+
 
 import menu from './../assets/menu.svg'
 
@@ -47,9 +50,20 @@ const Win = () => {
         <img className='top scaleIn4' src={top} alt="" />
         <img className=' scaleIn3' src={fanous} alt="" />
         </div>
-        
+        <div className="flex2">
+            <div className="flex2 collectionflex1">
+                <img className='collectionicon' src={count1} alt="" />
+                <h2>12</h2>
+            </div>
+            <div className="flex2 collectionflex2">
+                <img className="collectionicon"  src={count2} alt="" />
+                <h2>22</h2>
+
+            </div>
+        </div>
         <div className="startBtnCont startBtnAnim">
-        <Button link="/onboarding" style1="primarybtn homeBtn" cta="ألعب الأن" />
+        <Button link="/onboarding" style1="primarybtn secondarybtn" cta="   العب مجددا" />
+        <Button link="/onboarding" style1="primarybtn" cta="   التالي " />
         </div>
         </div>
         {/* <img src={logo} alt='' /> */}

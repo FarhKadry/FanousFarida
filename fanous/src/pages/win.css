@@ -22,9 +22,9 @@ transform-origin: bottom;
 .winTypo{
   width: 228.18px;
 position: relative;
+height: unset;
 /* animation: unset; */
     animation: splashLogo2 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-
 }
 .winTypo .top{
   position: absolute;
@@ -45,4 +45,12 @@ position: relative;
 .starbig{
   width: 65px;
   height: 65px;
+}
+.collectionflex1, .collectionflex2{
+    align-items: center;
+    justify-content: center;
+}
+.collectionicon{
+    width: 37px;
+    height: 47px;
 }

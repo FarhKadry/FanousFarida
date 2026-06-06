@@ -13,13 +13,14 @@ transform-origin: bottom;
     background-image: url(./../assets/winpanel.png);
     z-index: 2;
     top: 16%;
+    gap: 0;
+    justify-content: start;
 }
 .winDepth{
     z-index: 3;
 }
 .winTypo{
   width: 228.18px;
-height: 158.558px;
 position: relative;
 /* animation: unset; */
     animation: splashLogo2 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -27,6 +28,21 @@ position: relative;
 }
 .winTypo .top{
   position: absolute;
-  top: 0;
+  top: 10px;
   left: 0;
+}
+.winStars{
+  width: 116px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 30px;
+}
+.starsmall{
+  width: 44px;
+  height: 44px;
+}
+.starbig{
+  width: 65px;
+  height: 65px;
 }

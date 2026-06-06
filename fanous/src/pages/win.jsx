@@ -5,7 +5,7 @@ import './win.css'
 import './../animations.css'
 import './../components/layout/header.css'
 import top from './../assets/wintypo2.svg'
-import bottom from './../assets/logo/bottom.svg'
+import star from './../assets/goldstar.svg'
 import fanous from './../assets/wintypo1.svg'
 import depth from './../assets/gendepth.svg'
 
@@ -15,7 +15,7 @@ import starshine from './../assets/logo/star shine.svg'
 import character from './../assets/winchar.png'
 
 
-import splash from './../assets/win1.jpg'
+import splash from './../assets/win11.jpg'
 import rays from './../assets/win2.png'
 
 import { Link } from 'react-router-dom';
@@ -33,16 +33,21 @@ const Win = () => {
         link="/menu" />
         <Music />
         </header>
-        <img className='splashBg ' src={splash} alt="" />
-        <img className='splashBg winRays' src={rays} alt="" />
+        <img className='splashBg winScale ' src={splash} alt="" />
+        <img className='splashBg winRays winRaysScale' src={rays} alt="" />
         <img className='splashBg winDepth' src={depth} alt="" />
         <img className='charWin ' src={character} alt="" />
-
         <div className="menuPanel winPanel VerticalScale">
+            <div className="winStars">
+        <img style={{"left" : "20px", "animationDelay" : "1s"}} className='starsmall rotateIn' src={star} alt="" />
+        <img style={{ "animationDelay" : "0.9s"}} className='starbig rotateIn' src={star} alt="" />
+        <img  style={{"right" : "20px" ,  "animationDelay" : "1s"}}  className='starsmall rotateIn' src={star} alt="" />
+        </div>
 <div className="logo winTypo">
         <img className='top scaleIn4' src={top} alt="" />
-        <img className='fanous scaleIn3' src={fanous} alt="" />
+        <img className=' scaleIn3' src={fanous} alt="" />
         </div>
+        
         <div className="startBtnCont startBtnAnim">
         <Button link="/onboarding" style1="primarybtn homeBtn" cta="ألعب الأن" />
         </div>

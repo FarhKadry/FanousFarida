@@ -3,19 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import './home.css';
 import './../animations.css';
 
-import star from './../assets/shootingstar1.png'
-import bat from './../assets/bat1.png'
+import star from './../assets/shootingstar2.png';
+import bat from './../assets/bat1.png';
 import bgImage from './../assets/environment1.jpg';
 
-const WIN_STARS = 14;
-const GAME_DURATION = 60; // seconds
+const WIN_STARS = 12;
+const GAME_DURATION = 60;
 const BG_WIDTH = 5481;
-const CANVAS_W = 390;
-const CANVAS_H = 700;
-const GRAVITY = 0.45;
+const CANVAS_W = 430;
+const CANVAS_H = 932;
+const GRAVITY = 0.1;
 const FLAP_STRENGTH = -9;
 const SPEED = 3;
 const BG_SPEED = 1.5;
+
+const STAR_W = 216;
+const STAR_H = 113;
 
 export default function Gameplay1() {
     const canvasRef = useRef(null);
@@ -35,7 +38,6 @@ export default function Gameplay1() {
     const [display, setDisplay] = useState({ stars: 0, time: GAME_DURATION });
     const rafRef = useRef(null);
 
-    // Preload images
     const imgs = useRef({});
     useEffect(() => {
         const load = (src) => {
@@ -49,7 +51,7 @@ export default function Gameplay1() {
     }, []);
 
     function collides(a, b) {
-        const pad = 10; // forgiveness padding
+        const pad = 10;
         return a.x + pad < b.x + b.w - pad &&
                a.x + a.w - pad > b.x + pad &&
                a.y + pad < b.y + b.h - pad &&
@@ -64,9 +66,9 @@ export default function Gameplay1() {
     }
 
     function spawnStar() {
-        const size = 36;
-        const y = 60 + Math.random() * (CANVAS_H - size - 120);
-        gameState.current.stars.push({ x: CANVAS_W + 20, y, w: size, h: size, active: true });
+        // vertical range keeps star fully inside canvas
+        const y = 60 + Math.random() * (CANVAS_H - STAR_H - 120);
+        gameState.current.stars.push({ x: CANVAS_W + 20, y, w: STAR_W, h: STAR_H, active: true });
     }
 
     function handleInput() {
@@ -84,7 +86,6 @@ export default function Gameplay1() {
             const gs = gameState.current;
             if (!gs.started || gs.over) return;
 
-            // Timer
             const delta = (now - gs.lastTick) / 1000;
             gs.lastTick = now;
             gs.timeLeft = Math.max(0, gs.timeLeft - delta);
@@ -97,11 +98,9 @@ export default function Gameplay1() {
 
             gs.frameCount++;
 
-            // Bird physics
             gs.bird.vy += GRAVITY;
             gs.bird.y += gs.bird.vy;
 
-            // Boundaries
             if (gs.bird.y <= 0) { gs.bird.y = 0; gs.bird.vy = 0; }
             if (gs.bird.y + gs.bird.h >= CANVAS_H - 50) {
                 gs.over = true;
@@ -109,15 +108,12 @@ export default function Gameplay1() {
                 return;
             }
 
-            // Scroll background
             gs.bgX -= BG_SPEED;
             if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
 
-            // Spawn
             if (gs.frameCount % 95 === 0) spawnBat();
             if (gs.frameCount % 65 === 30) spawnStar();
 
-            // Bats
             for (const b of gs.bats) {
                 b.x -= SPEED;
                 if (collides(gs.bird, b)) {
@@ -128,7 +124,6 @@ export default function Gameplay1() {
             }
             gs.bats = gs.bats.filter(b => b.x + b.w > -10);
 
-            // Stars
             for (const s of gs.stars) {
                 s.x -= SPEED;
                 if (s.active && collides(gs.bird, s)) {
@@ -150,21 +145,17 @@ export default function Gameplay1() {
             const gs = gameState.current;
             ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
 
-            // Scrolling background
             const bgImg = imgs.current.bg;
             if (bgImg) {
                 ctx.drawImage(bgImg, gs.bgX, 0, BG_WIDTH, CANVAS_H);
-                // wrap-around second copy
                 if (gs.bgX < 0) {
                     ctx.drawImage(bgImg, gs.bgX + BG_WIDTH, 0, BG_WIDTH, CANVAS_H);
                 }
             }
 
-            // Ground
             ctx.fillStyle = 'rgba(0,0,0,0.25)';
             ctx.fillRect(0, CANVAS_H - 50, CANVAS_W, 50);
 
-            // Stars
             for (const s of gs.stars) {
                 if (!s.active) continue;
                 if (imgs.current.star?.complete) {
@@ -175,7 +166,6 @@ export default function Gameplay1() {
                 }
             }
 
-            // Bats
             for (const b of gs.bats) {
                 if (imgs.current.bat?.complete) {
                     ctx.drawImage(imgs.current.bat, b.x, b.y, b.w, b.h);
@@ -185,11 +175,9 @@ export default function Gameplay1() {
                 }
             }
 
-            // Bird (character placeholder — swap drawImage if you have a bird asset)
             ctx.fillStyle = '#111';
             ctx.fillRect(gs.bird.x, gs.bird.y, gs.bird.w, gs.bird.h);
 
-            // Not started overlay
             if (!gs.started) {
                 ctx.fillStyle = 'rgba(0,0,0,0.4)';
                 ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
@@ -212,7 +200,6 @@ export default function Gameplay1() {
 
     return (
         <div className="fixed-mobile-wrapper" style={{ position: 'relative', userSelect: 'none' }}>
-            {/* HUD */}
             <div style={{
                 position: 'absolute', top: 16, right: 16,
                 zIndex: 10, display: 'flex', alignItems: 'center', gap: 6,
@@ -231,7 +218,7 @@ export default function Gameplay1() {
                 padding: '4px 14px', color: '#fff', fontFamily: 'Courier New',
                 fontWeight: 'bold', fontSize: 18,
             }}>
-                ⏱ {display.time}s
+                {display.time}s
             </div>
 
             <canvas

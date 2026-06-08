@@ -21,7 +21,7 @@ import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 const buildSlides = (handleNext, isLast) => [
   {
-        autoDelay: 2000,
+        autoDelay: 4000,
     render: (next, last) => (
       <>
         <img key={slide1} className='splashBg slide scaleStory' src={slide1} alt="" />
@@ -68,7 +68,7 @@ const buildSlides = (handleNext, isLast) => [
     ),
   },
   {
-    autoDelay: 2000,
+    autoDelay: 4000,
     render: (next) => (
       <>
         <img key={slide4} className='splashBg slide scaleStory4' src={slide4} alt="" />
@@ -85,7 +85,7 @@ const buildSlides = (handleNext, isLast) => [
     ),
   },
   {
-    autoDelay: 2500,
+    autoDelay: 4000,
     render: (next) => (
       <>
         <img key={slide4} className='splashBg slide' src={slide4} alt="" />

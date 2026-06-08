@@ -1,0 +1,247 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './home.css';
+import './../animations.css';
+
+import star from './../assets/shootingstar1.png'
+import bat from './../assets/bat1.png'
+import bgImage from './../assets/environment1.jpg';
+
+const WIN_STARS = 14;
+const GAME_DURATION = 60; // seconds
+const BG_WIDTH = 5481;
+const CANVAS_W = 390;
+const CANVAS_H = 700;
+const GRAVITY = 0.45;
+const FLAP_STRENGTH = -9;
+const SPEED = 3;
+const BG_SPEED = 1.5;
+
+export default function Gameplay1() {
+    const canvasRef = useRef(null);
+    const navigate = useNavigate();
+    const gameState = useRef({
+        bird: { x: 80, y: CANVAS_H / 2, w: 48, h: 48, vy: 0 },
+        bats: [],
+        stars: [],
+        bgX: 0,
+        frameCount: 0,
+        starsCollected: 0,
+        timeLeft: GAME_DURATION,
+        over: false,
+        started: false,
+        lastTick: null,
+    });
+    const [display, setDisplay] = useState({ stars: 0, time: GAME_DURATION });
+    const rafRef = useRef(null);
+
+    // Preload images
+    const imgs = useRef({});
+    useEffect(() => {
+        const load = (src) => {
+            const img = new Image();
+            img.src = src;
+            return img;
+        };
+        imgs.current.star = load(star);
+        imgs.current.bat = load(bat);
+        imgs.current.bg = load(bgImage);
+    }, []);
+
+    function collides(a, b) {
+        const pad = 10; // forgiveness padding
+        return a.x + pad < b.x + b.w - pad &&
+               a.x + a.w - pad > b.x + pad &&
+               a.y + pad < b.y + b.h - pad &&
+               a.y + a.h - pad > b.y + pad;
+    }
+
+    function spawnBat() {
+        const h = 48 + Math.random() * 32;
+        const w = 56;
+        const y = 60 + Math.random() * (CANVAS_H - h - 120);
+        gameState.current.bats.push({ x: CANVAS_W + 20, y, w, h });
+    }
+
+    function spawnStar() {
+        const size = 36;
+        const y = 60 + Math.random() * (CANVAS_H - size - 120);
+        gameState.current.stars.push({ x: CANVAS_W + 20, y, w: size, h: size, active: true });
+    }
+
+    function handleInput() {
+        const gs = gameState.current;
+        if (gs.over) return;
+        if (!gs.started) { gs.started = true; gs.lastTick = performance.now(); }
+        gs.bird.vy = FLAP_STRENGTH;
+    }
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+
+        function update(now) {
+            const gs = gameState.current;
+            if (!gs.started || gs.over) return;
+
+            // Timer
+            const delta = (now - gs.lastTick) / 1000;
+            gs.lastTick = now;
+            gs.timeLeft = Math.max(0, gs.timeLeft - delta);
+
+            if (gs.timeLeft <= 0) {
+                gs.over = true;
+                navigate('/lose');
+                return;
+            }
+
+            gs.frameCount++;
+
+            // Bird physics
+            gs.bird.vy += GRAVITY;
+            gs.bird.y += gs.bird.vy;
+
+            // Boundaries
+            if (gs.bird.y <= 0) { gs.bird.y = 0; gs.bird.vy = 0; }
+            if (gs.bird.y + gs.bird.h >= CANVAS_H - 50) {
+                gs.over = true;
+                navigate('/lose');
+                return;
+            }
+
+            // Scroll background
+            gs.bgX -= BG_SPEED;
+            if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
+
+            // Spawn
+            if (gs.frameCount % 95 === 0) spawnBat();
+            if (gs.frameCount % 65 === 30) spawnStar();
+
+            // Bats
+            for (const b of gs.bats) {
+                b.x -= SPEED;
+                if (collides(gs.bird, b)) {
+                    gs.over = true;
+                    navigate('/lose');
+                    return;
+                }
+            }
+            gs.bats = gs.bats.filter(b => b.x + b.w > -10);
+
+            // Stars
+            for (const s of gs.stars) {
+                s.x -= SPEED;
+                if (s.active && collides(gs.bird, s)) {
+                    s.active = false;
+                    gs.starsCollected++;
+                    if (gs.starsCollected >= WIN_STARS) {
+                        gs.over = true;
+                        navigate('/win');
+                        return;
+                    }
+                }
+            }
+            gs.stars = gs.stars.filter(s => s.x + s.w > -10);
+
+            setDisplay({ stars: gs.starsCollected, time: Math.ceil(gs.timeLeft) });
+        }
+
+        function draw() {
+            const gs = gameState.current;
+            ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
+
+            // Scrolling background
+            const bgImg = imgs.current.bg;
+            if (bgImg) {
+                ctx.drawImage(bgImg, gs.bgX, 0, BG_WIDTH, CANVAS_H);
+                // wrap-around second copy
+                if (gs.bgX < 0) {
+                    ctx.drawImage(bgImg, gs.bgX + BG_WIDTH, 0, BG_WIDTH, CANVAS_H);
+                }
+            }
+
+            // Ground
+            ctx.fillStyle = 'rgba(0,0,0,0.25)';
+            ctx.fillRect(0, CANVAS_H - 50, CANVAS_W, 50);
+
+            // Stars
+            for (const s of gs.stars) {
+                if (!s.active) continue;
+                if (imgs.current.star?.complete) {
+                    ctx.drawImage(imgs.current.star, s.x, s.y, s.w, s.h);
+                } else {
+                    ctx.fillStyle = '#ffd700';
+                    ctx.fillRect(s.x, s.y, s.w, s.h);
+                }
+            }
+
+            // Bats
+            for (const b of gs.bats) {
+                if (imgs.current.bat?.complete) {
+                    ctx.drawImage(imgs.current.bat, b.x, b.y, b.w, b.h);
+                } else {
+                    ctx.fillStyle = '#222';
+                    ctx.fillRect(b.x, b.y, b.w, b.h);
+                }
+            }
+
+            // Bird (character placeholder — swap drawImage if you have a bird asset)
+            ctx.fillStyle = '#111';
+            ctx.fillRect(gs.bird.x, gs.bird.y, gs.bird.w, gs.bird.h);
+
+            // Not started overlay
+            if (!gs.started) {
+                ctx.fillStyle = 'rgba(0,0,0,0.4)';
+                ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 22px Courier New';
+                ctx.textAlign = 'center';
+                ctx.fillText('اضغط للبدأ!', CANVAS_W / 2, CANVAS_H / 2);
+            }
+        }
+
+        function loop(now) {
+            update(now);
+            draw();
+            rafRef.current = requestAnimationFrame(loop);
+        }
+
+        rafRef.current = requestAnimationFrame(loop);
+        return () => cancelAnimationFrame(rafRef.current);
+    }, [navigate]);
+
+    return (
+        <div className="fixed-mobile-wrapper" style={{ position: 'relative', userSelect: 'none' }}>
+            {/* HUD */}
+            <div style={{
+                position: 'absolute', top: 16, right: 16,
+                zIndex: 10, display: 'flex', alignItems: 'center', gap: 6,
+                background: 'rgba(0,0,0,0.45)', borderRadius: 20,
+                padding: '4px 12px', color: '#ffd700', fontFamily: 'Courier New',
+                fontWeight: 'bold', fontSize: 18,
+            }}>
+                <img src={star} alt="star" style={{ width: 22, height: 22 }} />
+                <span>{display.stars} / {WIN_STARS}</span>
+            </div>
+
+            <div style={{
+                position: 'absolute', bottom: 70, left: 16,
+                zIndex: 10,
+                background: 'rgba(0,0,0,0.45)', borderRadius: 20,
+                padding: '4px 14px', color: '#fff', fontFamily: 'Courier New',
+                fontWeight: 'bold', fontSize: 18,
+            }}>
+                ⏱ {display.time}s
+            </div>
+
+            <canvas
+                ref={canvasRef}
+                width={CANVAS_W}
+                height={CANVAS_H}
+                style={{ display: 'block', width: '100%', height: '100%', touchAction: 'none' }}
+                onClick={handleInput}
+                onTouchStart={e => { e.preventDefault(); handleInput(); }}
+            />
+        </div>
+    );
+}

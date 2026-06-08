@@ -11,6 +11,7 @@ import Onboarding from './pages/onboarding';
 import Story from './pages/story';
 import Win from './pages/win';
 import Lose from './pages/lose';
+import Gameplay1 from './pages/gameplay';
 
 
 function Paths() {
@@ -28,6 +29,8 @@ function Paths() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/win" element={<Win />} />
         <Route path="/lose" element={<Lose />} />
+        <Route path="/gameplay1" element={<Gameplay1 />} />
+
 
     </Routes>
     </BrowserRouter>

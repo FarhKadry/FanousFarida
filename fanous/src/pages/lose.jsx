@@ -4,9 +4,9 @@ import './win.css'
 
 import './../animations.css'
 import './../components/layout/header.css'
-import top from './../assets/wintypo2.svg'
-import star from './../assets/goldstar.svg'
-import fanous from './../assets/wintypo1.svg'
+import top from './../assets/losetypo2.svg'
+import star from './../assets/silverstar.svg'
+import fanous from './../assets/losetypo1.svg'
 import depth from './../assets/gendepth.svg'
 import count1 from './../assets/collectedcount-1.png'
 import count2 from './../assets/collectedcount.png'
@@ -14,11 +14,11 @@ import count2 from './../assets/collectedcount.png'
 import menu from './../assets/menu.svg'
 
 import starshine from './../assets/logo/star shine.svg'
-import character from './../assets/winchar.png'
+import character from './../assets/losechar.png'
 
 
-import splash from './../assets/win11.jpg'
-import rays from './../assets/win2.png'
+import splash from './../assets/lose1.png'
+import rays from './../assets/lose2.png'
 
 import { Link } from 'react-router-dom';
 import Button from '../components/common/button';
@@ -26,7 +26,7 @@ import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import WinCounter from '../components/common/winCounter';
 
-const Win = () => {
+const Lose = () => {
     return ( <>
     <div className="fixed-mobile-wrapper">
         <header>
@@ -40,7 +40,7 @@ const Win = () => {
         <img className='splashBg winRays winRaysScale' src={rays} alt="" />
         <img className='splashBg winDepth' src={depth} alt="" />
         <img className='charWin ' src={character} alt="" />
-        <div className="menuPanel winPanel VerticalScale">
+        <div className="menuPanel winPanel losePanel VerticalScale">
             <div className="winStars">
         <img style={{"left" : "20px", "animationDelay" : "1s"}} className='starsmall rotateIn' src={star} alt="" />
         <img style={{ "animationDelay" : "0.9s"}} className='starbig rotateIn' src={star} alt="" />
@@ -66,4 +66,4 @@ const Win = () => {
     </div>
     </> );
 }
-export default Win;
+export default Lose;

@@ -1,0 +1,8 @@
+.collectionflex1, .collectionflex2{
+    align-items: center;
+    justify-content: center;
+}
+.collectionicon{
+    width: 37px;
+    height: 47px;
+}

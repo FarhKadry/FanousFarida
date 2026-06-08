@@ -10,6 +10,7 @@ import Loading from './pages/loading';
 import Onboarding from './pages/onboarding';
 import Story from './pages/story';
 import Win from './pages/win';
+import Lose from './pages/lose';
 
 
 function Paths() {
@@ -26,6 +27,7 @@ function Paths() {
         <Route path="/story" element={<Story/>} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/win" element={<Win />} />
+        <Route path="/lose" element={<Lose />} />
 
     </Routes>
     </BrowserRouter>

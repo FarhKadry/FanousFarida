@@ -22,7 +22,7 @@ transform-origin: bottom;
 .winTypo{
   width: 228.18px;
 position: relative;
-height: unset;
+height: 145px;
 /* animation: unset; */
     animation: splashLogo2 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
@@ -46,11 +46,16 @@ height: unset;
   width: 65px;
   height: 65px;
 }
-.collectionflex1, .collectionflex2{
-    align-items: center;
-    justify-content: center;
+.winCounters{
+    margin: 20px 0 25px  0;
 }
-.collectionicon{
-    width: 37px;
-    height: 47px;
+.winBtnFlex{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0 0 0;
+}
+.losePanel{
+  top: 12%;
+  background-image: url(./../assets/losepanel2.png);
 }

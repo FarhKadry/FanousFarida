@@ -27,7 +27,7 @@ export default function Gameplay1() {
     const canvasRef = useRef(null);
     const navigate = useNavigate();
     const gameState = useRef({
-        bird: { x: 40, y: CANVAS_H / 2, w: 200, h: 300, vy: 0, hbOffX: 40, hbOffY: 50, hbW: 120, hbH: 140 },
+        bird: { x: 40, y: CANVAS_H / 2, w: 200, h: 260, vy: 0, hbOffX: 40, hbOffY: 50, hbW: 120, hbH: 140 },
         bats: [],
         stars: [],
         bgX: 0,
@@ -132,6 +132,7 @@ export default function Gameplay1() {
 
             if (gs.timeLeft <= 0) {
                 gs.over = true;
+                localStorage.setItem('lastStarsCollected', gs.starsCollected);
                 navigate('/lose');
                 return;
             }
@@ -145,6 +146,7 @@ export default function Gameplay1() {
             if (gs.bird.y <= 0) { gs.bird.y = 0; gs.bird.vy = 0; }
             if (hb.y + hb.h >= CANVAS_H - 50) {
                 gs.over = true;
+                localStorage.setItem('lastStarsCollected', gs.starsCollected);
                 navigate('/lose');
                 return;
             }
@@ -159,6 +161,7 @@ export default function Gameplay1() {
                 b.x -= SPEED;
                 if (collides(getBirdHitbox(), b)) {
                     gs.over = true;
+                    localStorage.setItem('lastStarsCollected', gs.starsCollected);
                     navigate('/lose');
                     return;
                 }
@@ -176,6 +179,7 @@ export default function Gameplay1() {
                     }
                     if (gs.starsCollected >= WIN_STARS) {
                         gs.over = true;
+                        localStorage.setItem('lastStarsCollected', gs.starsCollected);
                         navigate('/win');
                         return;
                     }

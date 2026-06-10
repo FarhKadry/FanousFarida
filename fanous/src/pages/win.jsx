@@ -13,9 +13,7 @@ import count2 from './../assets/collectedcount.png'
 
 import menu from './../assets/menu.svg'
 
-import starshine from './../assets/logo/star shine.svg'
 import character from './../assets/winchar.png'
-
 
 import splash from './../assets/win11.jpg'
 import rays from './../assets/win2.png'
@@ -27,6 +25,8 @@ import Music from '../components/common/music';
 import WinCounter from '../components/common/winCounter';
 
 const Win = () => {
+    const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0', 10);
+
     return ( <>
     <div className="fixed-mobile-wrapper">
         <header>
@@ -51,8 +51,8 @@ const Win = () => {
         <img className=' scaleIn3' src={fanous} alt="" />
         </div>
         <div className="flex2 winCounters">
-            <WinCounter icon={count1} number={11} />
-            <WinCounter icon={count2} number={12} />
+            <WinCounter icon={count2} number={starsCollected} />
+            <WinCounter icon={count1} number={12} />
         </div>
         <div className="startBtnCont startBtnAnim">
             <div className="winBtnFlex">
@@ -61,8 +61,6 @@ const Win = () => {
             </div>
         </div>
         </div>
-        {/* <img src={logo} alt='' /> */}
-        
     </div>
     </> );
 }

@@ -20,14 +20,14 @@ const FLAP_STRENGTH = -9;
 const SPEED = 3;
 const BG_SPEED = 1.5;
 
-const STAR_W = 194;
-const STAR_H = 102;
+const STAR_W = 130;
+const STAR_H = 68;
 
 export default function Gameplay1() {
     const canvasRef = useRef(null);
     const navigate = useNavigate();
     const gameState = useRef({
-        bird: { x: 80, y: CANVAS_H / 2, w: 293, h: 178, vy: 0 },
+        bird: { x: 40, y: CANVAS_H / 2, w: 200, h: 300, vy: 0, hbOffX: 40, hbOffY: 50, hbW: 120, hbH: 140 },
         bats: [],
         stars: [],
         bgX: 0,
@@ -43,6 +43,7 @@ export default function Gameplay1() {
     const isPressedRef = useRef(false);
     const pressTimerRef = useRef(null);
     const popAudio = useRef(null);
+    const collectAudio = useRef(null);
 
     const imgs = useRef({});
     useEffect(() => {
@@ -58,10 +59,17 @@ export default function Gameplay1() {
         imgs.current.charPress = load(charPress);
         popAudio.current = new Audio(popSfx);
         popAudio.current.preload = 'auto';
+        collectAudio.current = new Audio(popSfx);
+        collectAudio.current.preload = 'auto';
     }, []);
 
+    function getBirdHitbox() {
+        const b = gameState.current.bird;
+        return { x: b.x + b.hbOffX, y: b.y + b.hbOffY, w: b.hbW, h: b.hbH };
+    }
+
     function collides(a, b) {
-        const pad = 10;
+        const pad = 4;
         return a.x + pad < b.x + b.w - pad &&
                a.x + a.w - pad > b.x + pad &&
                a.y + pad < b.y + b.h - pad &&
@@ -133,8 +141,9 @@ export default function Gameplay1() {
             gs.bird.vy += GRAVITY;
             gs.bird.y += gs.bird.vy;
 
+            const hb = getBirdHitbox();
             if (gs.bird.y <= 0) { gs.bird.y = 0; gs.bird.vy = 0; }
-            if (gs.bird.y + gs.bird.h >= CANVAS_H - 50) {
+            if (hb.y + hb.h >= CANVAS_H - 50) {
                 gs.over = true;
                 navigate('/lose');
                 return;
@@ -148,7 +157,7 @@ export default function Gameplay1() {
 
             for (const b of gs.bats) {
                 b.x -= SPEED;
-                if (collides(gs.bird, b)) {
+                if (collides(getBirdHitbox(), b)) {
                     gs.over = true;
                     navigate('/lose');
                     return;
@@ -158,9 +167,13 @@ export default function Gameplay1() {
 
             for (const s of gs.stars) {
                 s.x -= SPEED;
-                if (s.active && collides(gs.bird, s)) {
+                if (s.active && collides(getBirdHitbox(), s)) {
                     s.active = false;
                     gs.starsCollected++;
+                    if (collectAudio.current) {
+                        collectAudio.current.currentTime = 0;
+                        collectAudio.current.play().catch(() => {});
+                    }
                     if (gs.starsCollected >= WIN_STARS) {
                         gs.over = true;
                         navigate('/win');
@@ -207,7 +220,7 @@ export default function Gameplay1() {
                 }
             }
 
-            // Character — swap image on press, preserve aspect ratio
+            // Character — swap image on press, lock to height and derive width from aspect ratio
             const charImg = isPressedRef.current
                 ? imgs.current.charPress
                 : imgs.current.charNormal;

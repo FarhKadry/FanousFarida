@@ -6,6 +6,8 @@ import './../animations.css'
 import './../components/layout/header.css'
 import top from './../assets/losetypo2.svg'
 import star from './../assets/silverstar.svg'
+import bats from './../assets/bats2.gif'
+
 import fanous from './../assets/losetypo1.svg'
 import depth from './../assets/gendepth.svg'
 import count1 from './../assets/collectedcount-1.png'
@@ -38,6 +40,8 @@ const Lose = () => {
         </header>
         <img className='splashBg winScale ' src={splash} alt="" />
         <img className='splashBg winRays winRaysScale' src={rays} alt="" />
+        <img className='splashBg ' src={bats} alt="" />
+
         <img className='splashBg winDepth' src={depth} alt="" />
         <img className='charWin ' src={character} alt="" />
         <div className="menuPanel winPanel losePanel VerticalScale">

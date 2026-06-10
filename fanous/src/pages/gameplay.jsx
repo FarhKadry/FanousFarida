@@ -8,6 +8,8 @@ import bat from './../assets/bat1.png';
 import bgImage from './../assets/environment1.jpg';
 import charNormal from './../assets/gameplaychar.png';
 import charPress from './../assets/gameplaycharpress.png';
+import charFall from './../assets/gameplaycharfall.png';
+
 import popSfx from './../assets/audio/pop.mp3';
 
 const WIN_STARS = 8;
@@ -23,6 +25,9 @@ const BG_SPEED = 1.5;
 const STAR_W = 130;
 const STAR_H = 68;
 
+// How many px from the bottom the "near ground" state triggers
+const NEAR_GROUND_THRESHOLD = 100;
+
 export default function Gameplay1() {
     const canvasRef = useRef(null);
     const navigate = useNavigate();
@@ -35,15 +40,18 @@ export default function Gameplay1() {
         starsCollected: 0,
         timeLeft: GAME_DURATION,
         over: false,
-        started: false,
+        started: true,
         lastTick: null,
     });
     const [display, setDisplay] = useState({ stars: 0, time: GAME_DURATION });
     const rafRef = useRef(null);
     const isPressedRef = useRef(false);
+    const isNearGroundRef = useRef(false);
     const pressTimerRef = useRef(null);
     const popAudio = useRef(null);
     const collectAudio = useRef(null);
+    const fallAudio = useRef(null);
+    const fallAudioPlayingRef = useRef(false);
 
     const imgs = useRef({});
     useEffect(() => {
@@ -57,10 +65,14 @@ export default function Gameplay1() {
         imgs.current.bg = load(bgImage);
         imgs.current.charNormal = load(charNormal);
         imgs.current.charPress = load(charPress);
+        imgs.current.charFall = load(charFall);
+
         popAudio.current = new Audio(popSfx);
         popAudio.current.preload = 'auto';
         collectAudio.current = new Audio(popSfx);
         collectAudio.current.preload = 'auto';
+        fallAudio.current = new Audio(popSfx);
+        fallAudio.current.preload = 'auto';
     }, []);
 
     function getBirdHitbox() {
@@ -81,7 +93,6 @@ export default function Gameplay1() {
         const w = 56;
         const y = 60 + Math.random() * (CANVAS_H - h - 120);
         const gs = gameState.current;
-        // prevent overlap with existing stars and bats
         const tooClose = [...gs.stars, ...gs.bats].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
@@ -91,7 +102,6 @@ export default function Gameplay1() {
     function spawnStar() {
         const y = 60 + Math.random() * (CANVAS_H - STAR_H - 120);
         const gs = gameState.current;
-        // prevent overlap with existing stars and bats
         const tooClose = [...gs.stars, ...gs.bats].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
@@ -101,16 +111,17 @@ export default function Gameplay1() {
     function handleInput() {
         const gs = gameState.current;
         if (gs.over) return;
-        if (!gs.started) { gs.started = true; gs.lastTick = performance.now(); }
         gs.bird.vy = FLAP_STRENGTH;
 
-        // Play pop sound
         if (popAudio.current) {
             popAudio.current.currentTime = 0;
             popAudio.current.play().catch(() => {});
         }
 
-        // Switch to press image, revert after 200ms
+        // Leave near-ground state when player flaps away
+        isNearGroundRef.current = false;
+        fallAudioPlayingRef.current = false;
+
         isPressedRef.current = true;
         clearTimeout(pressTimerRef.current);
         pressTimerRef.current = setTimeout(() => {
@@ -121,6 +132,9 @@ export default function Gameplay1() {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
+
+        // Start the timer now
+        gameState.current.lastTick = performance.now();
 
         function update(now) {
             const gs = gameState.current;
@@ -149,6 +163,23 @@ export default function Gameplay1() {
                 localStorage.setItem('lastStarsCollected', gs.starsCollected);
                 navigate('/lose');
                 return;
+            }
+
+            // Near-ground detection: bottom of bird sprite within threshold of the ground
+            const distFromGround = (CANVAS_H - 50) - (gs.bird.y + gs.bird.h);
+            const nearGround = distFromGround <= NEAR_GROUND_THRESHOLD;
+
+            if (nearGround && !isNearGroundRef.current) {
+                // Just entered near-ground zone — play fall audio once
+                isNearGroundRef.current = true;
+                if (fallAudio.current && !fallAudioPlayingRef.current) {
+                    fallAudioPlayingRef.current = true;
+                    fallAudio.current.currentTime = 0;
+                    fallAudio.current.play().catch(() => {});
+                }
+            } else if (!nearGround) {
+                isNearGroundRef.current = false;
+                fallAudioPlayingRef.current = false;
             }
 
             gs.bgX -= BG_SPEED;
@@ -224,10 +255,13 @@ export default function Gameplay1() {
                 }
             }
 
-            // Character — swap image on press, lock to height and derive width from aspect ratio
-            const charImg = isPressedRef.current
-                ? imgs.current.charPress
-                : imgs.current.charNormal;
+            // Priority: near-ground > pressed > normal
+            const charImg = isNearGroundRef.current
+                ? imgs.current.charFall
+                : isPressedRef.current
+                    ? imgs.current.charFall
+                    : imgs.current.charNormal;
+
             if (charImg?.complete && charImg.naturalWidth > 0) {
                 const aspect = charImg.naturalWidth / charImg.naturalHeight;
                 const drawH = gs.bird.h;
@@ -236,15 +270,6 @@ export default function Gameplay1() {
             } else {
                 ctx.fillStyle = '#111';
                 ctx.fillRect(gs.bird.x, gs.bird.y, gs.bird.w, gs.bird.h);
-            }
-
-            if (!gs.started) {
-                ctx.fillStyle = 'rgba(0,0,0,0.4)';
-                ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-                ctx.fillStyle = '#fff';
-                ctx.font = 'bold 22px Courier New';
-                ctx.textAlign = 'center';
-                ctx.fillText('اضغط للبدأ!', CANVAS_W / 2, CANVAS_H / 2);
             }
         }
 

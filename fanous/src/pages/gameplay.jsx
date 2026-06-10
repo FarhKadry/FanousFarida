@@ -9,8 +9,11 @@ import bgImage from './../assets/environment1.jpg';
 import charNormal from './../assets/gameplaychar.png';
 import charPress from './../assets/gameplaycharpress.png';
 import charFall from './../assets/gameplaycharfall.png';
-
 import popSfx from './../assets/audio/pop.mp3';
+import fallSfx from './../assets/audio/grunt.m4a';
+
+import collectSfx from './../assets/audio/collect.mp3';
+
 
 const WIN_STARS = 8;
 const GAME_DURATION = 60;
@@ -25,7 +28,6 @@ const BG_SPEED = 1.5;
 const STAR_W = 130;
 const STAR_H = 68;
 
-// How many px from the bottom the "near ground" state triggers
 const NEAR_GROUND_THRESHOLD = 100;
 
 export default function Gameplay1() {
@@ -66,12 +68,11 @@ export default function Gameplay1() {
         imgs.current.charNormal = load(charNormal);
         imgs.current.charPress = load(charPress);
         imgs.current.charFall = load(charFall);
-
         popAudio.current = new Audio(popSfx);
         popAudio.current.preload = 'auto';
-        collectAudio.current = new Audio(popSfx);
+        collectAudio.current = new Audio(collectSfx);
         collectAudio.current.preload = 'auto';
-        fallAudio.current = new Audio(popSfx);
+        fallAudio.current = new Audio(fallSfx);
         fallAudio.current.preload = 'auto';
     }, []);
 
@@ -102,6 +103,7 @@ export default function Gameplay1() {
     function spawnStar() {
         const y = 60 + Math.random() * (CANVAS_H - STAR_H - 120);
         const gs = gameState.current;
+        // prevent overlap with existing stars and bats
         const tooClose = [...gs.stars, ...gs.bats].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
@@ -113,15 +115,15 @@ export default function Gameplay1() {
         if (gs.over) return;
         gs.bird.vy = FLAP_STRENGTH;
 
+        // Play pop sound
         if (popAudio.current) {
             popAudio.current.currentTime = 0;
             popAudio.current.play().catch(() => {});
         }
 
-        // Leave near-ground state when player flaps away
+        // Switch to press image, revert after 200ms
         isNearGroundRef.current = false;
         fallAudioPlayingRef.current = false;
-
         isPressedRef.current = true;
         clearTimeout(pressTimerRef.current);
         pressTimerRef.current = setTimeout(() => {
@@ -133,7 +135,6 @@ export default function Gameplay1() {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
 
-        // Start the timer now
         gameState.current.lastTick = performance.now();
 
         function update(now) {
@@ -165,12 +166,10 @@ export default function Gameplay1() {
                 return;
             }
 
-            // Near-ground detection: bottom of bird sprite within threshold of the ground
+            // Near-ground detection
             const distFromGround = (CANVAS_H - 50) - (gs.bird.y + gs.bird.h);
             const nearGround = distFromGround <= NEAR_GROUND_THRESHOLD;
-
             if (nearGround && !isNearGroundRef.current) {
-                // Just entered near-ground zone — play fall audio once
                 isNearGroundRef.current = true;
                 if (fallAudio.current && !fallAudioPlayingRef.current) {
                     fallAudioPlayingRef.current = true;
@@ -254,22 +253,32 @@ export default function Gameplay1() {
                     ctx.fillRect(b.x, b.y, b.w, b.h);
                 }
             }
+            const FALL_H_CORRECTION = 203 / 307;
 
-            // Priority: near-ground > pressed > normal
-            const charImg = isNearGroundRef.current
-                ? imgs.current.charFall
+            const charKey = isNearGroundRef.current
+                ? 'charFall'
                 : isPressedRef.current
-                    ? imgs.current.charFall
-                    : imgs.current.charNormal;
+                    ? 'charPress'
+                    : 'charNormal';
 
-            if (charImg?.complete && charImg.naturalWidth > 0) {
-                const aspect = charImg.naturalWidth / charImg.naturalHeight;
-                const drawH = gs.bird.h;
-                const drawW = drawH * aspect;
+            const charImg = imgs.current[charKey];
+            const baseImg = imgs.current.charNormal;
+            const baseAspect = baseImg?.naturalWidth && baseImg?.naturalHeight
+                ? baseImg.naturalWidth / baseImg.naturalHeight
+                : 0.811;
+
+            const drawH = charKey === 'charFall'
+                ? gs.bird.h * FALL_H_CORRECTION
+                : gs.bird.h;
+            const drawW = charKey === 'charFall'
+                ? drawH * (249 / 203)  //CHARFALLRATIO
+                : drawH * baseAspect;
+
+            if (charImg?.complete) {
                 ctx.drawImage(charImg, gs.bird.x, gs.bird.y, drawW, drawH);
             } else {
                 ctx.fillStyle = '#111';
-                ctx.fillRect(gs.bird.x, gs.bird.y, gs.bird.w, gs.bird.h);
+                ctx.fillRect(gs.bird.x, gs.bird.y, drawW, drawH);
             }
         }
 

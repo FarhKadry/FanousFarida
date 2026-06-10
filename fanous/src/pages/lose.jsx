@@ -59,7 +59,7 @@ const Lose = () => {
             <WinCounter icon={count1} number={12} />
         </div>
         <div className="startBtnCont startBtnAnim">
-            <div className="winBtnFlex">
+            <div style={ {'zIndex' : '9'}} className="winBtnFlex">
          <Button link="/onboarding" style1="primarybtn secondarybtn" cta="   العب مجددا" />
         <Button link="/levels" style1="primarybtn" cta="   التالي " />
             </div>

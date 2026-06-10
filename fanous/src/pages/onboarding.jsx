@@ -2,6 +2,8 @@ import React from 'react';
 import './home.css'
 import './../animations.css'
 import './../components/layout/header.css'
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import depth from './../assets/onboardDepth.svg'
 
@@ -16,8 +18,28 @@ import IconBtn from '../components/common/iconbtn';
 import TapAnimation from '../components/common/tap';
 
 const Onboarding = () => {
+       const navigate = useNavigate();
+    const [started, setStarted] = useState(false);
+
+    const handleStart = () => {
+        setStarted(true);
+    };
+
+    useEffect(() => {
+        if (!started) return;
+        const timer = setTimeout(() => {
+            navigate('/gameplay1');
+        }, null);
+        return () => clearTimeout(timer);
+    }, [started, navigate]);
+
     return ( <>
-    <div className="fixed-mobile-wrapper">
+     <div onClick={handleStart} className="fixed-mobile-wrapper">
+             {!started && (
+                            <div className="tapOverlay" onClick={handleStart}>
+                            اضغط للبدء
+                            </div>
+                        )}
         <header>
     <IconBtn
         icon={menu}

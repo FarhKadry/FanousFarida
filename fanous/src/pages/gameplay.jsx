@@ -282,7 +282,6 @@ export default function Gameplay1() {
                 ctx.fillRect(gs.bird.x, gs.bird.y, drawW, drawH);
             }
         }
-
         function loop(now) {
             update(now);
             draw();
@@ -304,16 +303,6 @@ export default function Gameplay1() {
             }}>
                 <img src={star} alt="star" style={{ width: 22, height: 22 }} />
                 <span>{display.stars} / {WIN_STARS}</span>
-            </div>
-
-            <div style={{
-                position: 'absolute', bottom: 70, left: 16,
-                zIndex: 10,
-                background: 'rgba(0,0,0,0.45)', borderRadius: 20,
-                padding: '4px 14px', color: '#fff', fontFamily: 'Courier New',
-                fontWeight: 'bold', fontSize: 18,
-            }}>
-                {display.time}s
             </div>
 <Timer time={display.time} />
             <canvas

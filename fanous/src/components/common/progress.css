@@ -1,0 +1,26 @@
+.progress{
+        width: 134px;
+    height: 63px;
+background-image: url(./../../assets/progress.png);
+    
+    background-position: center;
+    background-size: 100% 100%;
+    color: #FFF;
+    text-align: center;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.22px;
+    display: flex;
+    align-items: center;
+    padding-left: 56px;
+    justify-content: space-between;
+    padding-bottom: 7px;
+}
+.progress img{
+       width: 30px;
+    height: 70px;
+    object-fit: cover;
+    right: -10px
+}

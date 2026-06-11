@@ -8,5 +8,5 @@ header{
     max-width: 430px;
     align-items: center;
     box-sizing: border-box;
-    z-index: 999;
+    z-index: 999999999;
 }

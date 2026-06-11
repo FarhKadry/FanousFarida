@@ -13,6 +13,7 @@ import popSfx from './../assets/audio/pop.mp3';
 import fallSfx from './../assets/audio/grunt.m4a';
 
 import collectSfx from './../assets/audio/collect.mp3';
+import Timer from './timer';
 
 
 const WIN_STARS = 8;
@@ -314,7 +315,7 @@ export default function Gameplay1() {
             }}>
                 {display.time}s
             </div>
-
+<Timer time={display.time} />
             <canvas
                 ref={canvasRef}
                 width={CANVAS_W}

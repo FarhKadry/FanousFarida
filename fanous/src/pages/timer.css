@@ -1,0 +1,23 @@
+.timer{
+    display: flex;
+    flex-direction: column;
+    width: 94.5px;
+    height: 48px;
+    color: #FFF;
+    text-align: center;
+    font-size: 46.5px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    position: fixed;
+    bottom:89px ;
+    right: 23px;
+    z-index: 999;
+}
+.timer span{
+    color: #D9D9D9;
+font-size: 24.706px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}

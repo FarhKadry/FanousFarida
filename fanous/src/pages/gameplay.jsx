@@ -11,10 +11,15 @@ import charPress from './../assets/gameplaycharpress.png';
 import charFall from './../assets/gameplaycharfall.png';
 import popSfx from './../assets/audio/pop.mp3';
 import fallSfx from './../assets/audio/grunt.m4a';
-
+import batSfx from './../assets/audio/bat1.mp3';
+import flapSfx from './../assets/audio/flap.mp3';
+import fanous from './../assets/fanous_empty.png';
+import pause from './../assets/pause.svg';
 import collectSfx from './../assets/audio/collect.mp3';
-import Timer from './timer';
-
+import Timer from '../components/common/timer';
+import IconBtn from '../components/common/iconbtn';
+import Music from '../components/common/music';
+import Progress from '../components/common/progress';
 
 const WIN_STARS = 8;
 const GAME_DURATION = 60;
@@ -54,6 +59,8 @@ export default function Gameplay1() {
     const popAudio = useRef(null);
     const collectAudio = useRef(null);
     const fallAudio = useRef(null);
+    const batAudio = useRef(null);
+    const flapAudio = useRef(null);
     const fallAudioPlayingRef = useRef(false);
 
     const imgs = useRef({});
@@ -75,6 +82,10 @@ export default function Gameplay1() {
         collectAudio.current.preload = 'auto';
         fallAudio.current = new Audio(fallSfx);
         fallAudio.current.preload = 'auto';
+        batAudio.current = new Audio(batSfx);
+        batAudio.current.preload = 'auto';
+        flapAudio.current = new Audio(flapSfx);
+        flapAudio.current.preload = 'auto';
     }, []);
 
     function getBirdHitbox() {
@@ -104,7 +115,6 @@ export default function Gameplay1() {
     function spawnStar() {
         const y = 60 + Math.random() * (CANVAS_H - STAR_H - 120);
         const gs = gameState.current;
-        // prevent overlap with existing stars and bats
         const tooClose = [...gs.stars, ...gs.bats].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
@@ -116,13 +126,18 @@ export default function Gameplay1() {
         if (gs.over) return;
         gs.bird.vy = FLAP_STRENGTH;
 
-        // Play pop sound
+        // Flap sound
+        if (flapAudio.current) {
+            flapAudio.current.currentTime = 0;
+            flapAudio.current.play().catch(() => {});
+        }
+
+        // Pop sound
         if (popAudio.current) {
             popAudio.current.currentTime = 0;
             popAudio.current.play().catch(() => {});
         }
 
-        // Switch to press image, revert after 200ms
         isNearGroundRef.current = false;
         fallAudioPlayingRef.current = false;
         isPressedRef.current = true;
@@ -160,14 +175,16 @@ export default function Gameplay1() {
 
             const hb = getBirdHitbox();
             if (gs.bird.y <= 0) { gs.bird.y = 0; gs.bird.vy = 0; }
-            if (hb.y + hb.h >= CANVAS_H - 50) {
+
+            //LOSE STATE
+            if (gs.bird.y >= CANVAS_H) {
                 gs.over = true;
                 localStorage.setItem('lastStarsCollected', gs.starsCollected);
                 navigate('/lose');
                 return;
             }
 
-            // Near-ground detection
+            // NEAR GROUND
             const distFromGround = (CANVAS_H - 50) - (gs.bird.y + gs.bird.h);
             const nearGround = distFromGround <= NEAR_GROUND_THRESHOLD;
             if (nearGround && !isNearGroundRef.current) {
@@ -192,6 +209,11 @@ export default function Gameplay1() {
                 b.x -= SPEED;
                 if (collides(getBirdHitbox(), b)) {
                     gs.over = true;
+                    // Play bat collision sound before navigating
+                    if (batAudio.current) {
+                        batAudio.current.currentTime = 0;
+                        batAudio.current.play().catch(() => {});
+                    }
                     localStorage.setItem('lastStarsCollected', gs.starsCollected);
                     navigate('/lose');
                     return;
@@ -254,6 +276,7 @@ export default function Gameplay1() {
                     ctx.fillRect(b.x, b.y, b.w, b.h);
                 }
             }
+
             const FALL_H_CORRECTION = 203 / 307;
 
             const charKey = isNearGroundRef.current
@@ -272,7 +295,7 @@ export default function Gameplay1() {
                 ? gs.bird.h * FALL_H_CORRECTION
                 : gs.bird.h;
             const drawW = charKey === 'charFall'
-                ? drawH * (249 / 203)  //CHARFALLRATIO
+                ? drawH * (249 / 203)
                 : drawH * baseAspect;
 
             if (charImg?.complete) {
@@ -282,6 +305,7 @@ export default function Gameplay1() {
                 ctx.fillRect(gs.bird.x, gs.bird.y, drawW, drawH);
             }
         }
+
         function loop(now) {
             update(now);
             draw();
@@ -294,17 +318,14 @@ export default function Gameplay1() {
 
     return (
         <div className="fixed-mobile-wrapper" style={{ position: 'relative', userSelect: 'none' }}>
-            <div style={{
-                position: 'absolute', top: 16, right: 16,
-                zIndex: 10, display: 'flex', alignItems: 'center', gap: 6,
-                background: 'rgba(0,0,0,0.45)', borderRadius: 20,
-                padding: '4px 12px', color: '#ffd700', fontFamily: 'Courier New',
-                fontWeight: 'bold', fontSize: 18,
-            }}>
-                <img src={star} alt="star" style={{ width: 22, height: 22 }} />
-                <span>{display.stars} / {WIN_STARS}</span>
-            </div>
-<Timer time={display.time} />
+            <header>
+                <div className="flex2">
+                    <IconBtn icon={pause} style1="iconbtnmian" link="/pause" />
+                    <Music />
+                </div>
+                <Progress counter={display.stars} counter2={WIN_STARS} fanous={fanous} />
+            </header>
+            <Timer time={display.time} />
             <canvas
                 ref={canvasRef}
                 width={CANVAS_W}

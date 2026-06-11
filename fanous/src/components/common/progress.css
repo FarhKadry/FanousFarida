@@ -16,6 +16,7 @@ background-image: url(./../../assets/progress.png);
     align-items: center;
     padding-left: 56px;
     justify-content: space-between;
+    text-wrap: nowrap;
     padding-bottom: 7px;
 }
 .progress img{

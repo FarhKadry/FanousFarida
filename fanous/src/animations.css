@@ -406,3 +406,24 @@ transform-origin: bottom;
         transform: scale(1.5)  rotate(0deg);
   }
 }
+
+@keyframes mosque1Anim {
+  0%   { 
+    transform: translateX(0px) }
+  50%  { 
+    transform:  translateX(-1000px)
+  
+  }
+     56%  { 
+    transform: translateX(-1000px) translateY(-150px);
+  }
+  100%{
+        transform: translateX(-1000px) translateY(-150px);
+
+    scale: 1.1;
+  }
+}
+.mosque1Anim{
+  transform-origin: right;
+  animation: mosque1Anim 8s cubic-bezier(0.550, 0.085, 0.680, 0.530) both  ;
+}

@@ -1,0 +1,23 @@
+.prewinChar{
+        width: auto;
+    /* height: auto; */
+    /* height: 338px; */
+    /* margin: 20px 0 110px 0; */
+    top: 5px;
+    display: block;
+    justify-self: flex-end;
+    align-self: flex-start;
+}
+.prewinNarration{
+    width: 238px;
+height: 99.571px;
+padding: unset;
+justify-content: center;
+align-items: center;
+margin-bottom: 20px;
+line-height: 90%;
+padding-bottom: 10px;
+}
+.mosqueBg{
+    transform: translateX(0px);
+}

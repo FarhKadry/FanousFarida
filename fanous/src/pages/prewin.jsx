@@ -9,7 +9,7 @@ import depth from './../assets/onboardDepth.svg'
 
 import menu from './../assets/menu.svg'
 
-import character from './../assets/gameplaychar.png'
+import character from './../assets/gameplaycharpress.png'
 import character2 from './../assets/onboardchar.png'
 
 

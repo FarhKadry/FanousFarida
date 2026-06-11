@@ -11,7 +11,7 @@ import splash from './../assets/menuBg.jpg'
 import air from './../assets/wind.gif'
 
 import bat from './../assets/bat1.png'
-import stars from './../assets/fanous progress.png'
+import stars from './../assets/fanousprogress.png'
 import star from './../assets/shootingstar1.png'
 import fix from './../assets/fixframe.png'
 
@@ -22,66 +22,56 @@ import Button from '../components/common/button';
 import Heading from '../components/common/heading';
 import Textbox from '../components/common/textbox';
 import TapAnimation from '../components/common/tap';
+import Timer from '../components/common/timer';
 
 const slides = [
-  {
-    key: 'play',
-    content: (char) => (
-      <>
-        <div className="howtoFlex">
-          <TapAnimation />
-          <Textbox heading="اللعب" text="تقوم فريدة بالطيران عند لمسك للشاشة" />
-        </div>
-        <div className="chacrCont">
-          <img className='float' src={char} alt="" />
-        </div>
-      </>
-    ),
-    btnStyle: 'primarybtn',
-    btnCta: 'التالي',
-  },
   {
     key: 'collect',
     content: () => (
       <>
-        <div className="howtoFlex">
-          <Textbox heading="! جمع  " text="عليك أن تجمع الشهب لتكمل ثلاث نجوم مضيئة لفانوس فريدة" />
+        <div className="howtoFlex ">
+          <div className="flex2">
+            {/* <img style={{ objectFit: 'contain', width: '100px' }} src={star} alt="" /> */}
+             
+          <Textbox heading="! جمع  " text="   جمع ثمان شهب في 60 ثانية" />
+          </div>
         </div>
         <div className="flex2">
-            <img src={star} alt="" />
-            <img src={stars} alt="" />
-
+<div style={{ position: 'relative' , bottom: 'unset' , right: 'unset' , fontSize: '40px' }} className="timer">
+            60 <span>ثانية</span>
           </div>
-        <div className="howtoFlex floatIn" style={{ marginTop: '16px' }}>
+            <img src={stars} alt="" />
+          </div>
+        <div className="howtoFlex floatIn" style={{ margin: '16px 0 26px 0' }}>
           <img  style={{ marginRight: '10px' }} className='float' src={bat} alt="" />
           <Textbox heading="! انتبه  " text="الوطاويط تحب الظلام." />
         </div>
       </>
     ),
-    btnStyle: 'primarybtn',
-    btnCta: 'التالي',
+    btnStyle: 'secondarybtn',
+    btnCta: 'عودة للعب',
   },
-  {
-    key: 'fix',
-    content: () => (
-      <>
-        <div className="howtoFlex" style={{ marginTop: '12px' }}>
-        <img  style={{ width: '97px' }} src={air} alt="" />
+  // {
+  //   key: 'fix',
+  //   content: () => (
+  //     <>
+  //       <div className="howtoFlex" style={{ marginTop: '12px' }}>
+  //       <img  style={{ width: '97px' }} src={air} alt="" />
 
-          <Textbox heading="انتبه !" text="فالرباح تطفئ أنوار الفوانيس!" />
-        </div>
-        <div className="howtoFlex" style={{ marginTop: '16px' }}>
-        <img style={{ width: '70px' }} src={fix} alt="" />
-          <Textbox heading="أصلح" text="بعض الأدوار تطلب منك إصلاح الفانوس!" />
-        </div>
-      </>
-    ),
-    btnStyle: 'primaryBtn homeBtn',
-    btnCta: 'ألعب الآن!',
-  },
+  //         <Textbox heading="انتبه !" text="فالرباح تطفئ أنوار الفوانيس!" />
+  //       </div>
+  //       <div className="howtoFlex" style={{ marginTop: '16px' }}>
+  //       <img style={{ width: '70px' }} src={fix} alt="" />
+  //         <Textbox heading="أصلح" text="بعض الأدوار تطلب منك إصلاح الفانوس!" />
+  //       </div>
+  //     </>
+  //   ),
+  //   btnStyle: 'primaryBtn homeBtn',
+  //   btnCta: 'ألعب الآن!',
+  // },
 ];
 
-const HowTo = () => {
+const Mission = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const currentSlide = slides[step];
@@ -89,7 +79,7 @@ const HowTo = () => {
 
   const handleNext = () => {
     if (isLast) {
-      navigate('/home');
+      navigate('/onboarding');
     } else {
       setStep(s => s + 1);
     }
@@ -108,8 +98,8 @@ const HowTo = () => {
             </button>
           </Link>
         </header>
-        <div className="menuPanel howToPanel floatIn">
-          <Heading heading="كيف ألعب" />
+        <div className="menuPanel  floatIn">
+          <Heading heading="مهمتي " />
           {currentSlide.content(char)}
   <div style={{ animationDelay: '0.1s' }} className='floatIn' onClick={handleNext}>
     <Button
@@ -123,4 +113,4 @@ const HowTo = () => {
   );
 };
 
-export default HowTo;
+export default Mission;

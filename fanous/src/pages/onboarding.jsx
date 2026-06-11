@@ -54,9 +54,13 @@ const Onboarding = () => {
         <TapAnimation />
        </div>
         <img  style={{ animationDelay: '0.2s' }} className='floatIn onboardChar' src={character} alt="" />
-        <div  style={{ animationDelay: '0.3s' }} className="missonBtn floatIn">
-        <Button link="/gameplay1" style1="primarybtn " cta="مهمتي " />
-        </div>
+        <div
+    style={{ animationDelay: '0.3s', zIndex: '999999999' }}
+    className="missonBtn floatIn"
+    onClick={(e) => e.stopPropagation()}
+>
+    <Button link="/mission" style1="primarybtn" cta="مهمتي" />
+</div>
     </div>
     </> );
 }

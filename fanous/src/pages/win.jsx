@@ -3,6 +3,7 @@ import './home.css'
 import './win.css'
 
 import './../animations.css'
+import  { useEffect } from 'react';
 import './../components/layout/header.css'
 import top from './../assets/wintypo2.svg'
 import star from './../assets/goldstar.svg'
@@ -10,7 +11,7 @@ import fanous from './../assets/wintypo1.svg'
 import depth from './../assets/gendepth.svg'
 import count1 from './../assets/collectedcount-1.png'
 import count2 from './../assets/collectedcount.png'
-
+import winAudio from './../assets/win.mp3';
 import menu from './../assets/menu.svg'
 
 import character from './../assets/winchar.png'
@@ -25,10 +26,27 @@ import Music from '../components/common/music';
 import WinCounter from '../components/common/winCounter';
 
 const Win = () => {
-    const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0', 10);
+const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0', 10);
+
+    useEffect(() => {
+        const audio = new Audio(winAudio);
+
+        const timer = setTimeout(() => {
+            audio.play().catch(err => {
+                console.log('Audio playback failed:', err);
+            });
+        },1);
+
+        return () => {
+            clearTimeout(timer);
+            audio.pause();
+            audio.currentTime = 0;
+        };
+    }, []); 
 
     return ( <>
     <div className="fixed-mobile-wrapper">
+        
         <header>
     <IconBtn
         icon={menu}

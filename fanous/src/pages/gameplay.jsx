@@ -11,6 +11,8 @@ import charPress from './../assets/gameplaycharpress.png';
 import charFall from './../assets/gameplaycharfall.png';
 import popSfx from './../assets/audio/pop.mp3';
 import fallSfx from './../assets/audio/grunt.m4a';
+import fallSfx2 from './../assets/audio/grunt.m4a';
+
 import batSfx from './../assets/audio/bat1.mp3';
 import flapSfx from './../assets/audio/flap.mp3';
 import fanous from './../assets/fanous_empty.png';
@@ -62,6 +64,8 @@ export default function Gameplay1() {
     const batAudio = useRef(null);
     const flapAudio = useRef(null);
     const fallAudioPlayingRef = useRef(false);
+    const fallAudio2 = useRef(null);
+    const fallAudio2PlayingRef = useRef(false);
 
     const imgs = useRef({});
     useEffect(() => {
@@ -82,6 +86,8 @@ export default function Gameplay1() {
         collectAudio.current.preload = 'auto';
         fallAudio.current = new Audio(fallSfx);
         fallAudio.current.preload = 'auto';
+        fallAudio2.current = new Audio(fallSfx2);
+        fallAudio2.current.preload = 'auto';
         batAudio.current = new Audio(batSfx);
         batAudio.current.preload = 'auto';
         flapAudio.current = new Audio(flapSfx);
@@ -92,7 +98,6 @@ export default function Gameplay1() {
         const b = gameState.current.bird;
         return { x: b.x + b.hbOffX, y: b.y + b.hbOffY, w: b.hbW, h: b.hbH };
     }
-
     function collides(a, b) {
         const pad = 4;
         return a.x + pad < b.x + b.w - pad &&
@@ -132,7 +137,11 @@ export default function Gameplay1() {
             flapAudio.current.play().catch(() => {});
         }
 
-        
+        // grunt sound
+        if (fallAudio.current) {
+            fallAudio.current.currentTime = 0;
+            fallAudio.current.play().catch(() => {});
+        }
 
         isNearGroundRef.current = false;
         fallAudioPlayingRef.current = false;
@@ -148,7 +157,6 @@ export default function Gameplay1() {
         const ctx = canvas.getContext('2d');
 
         gameState.current.lastTick = performance.now();
-
         function update(now) {
             const gs = gameState.current;
             if (!gs.started || gs.over) return;

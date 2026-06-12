@@ -33,45 +33,45 @@ const Levels = () => {
         </header>
         <img className='splashBg levelsBg' src={splash} alt="" />
         <div className="splashBg depth"></div>
-<LevelComp 
-link="/gameplay1"
-cont="lvlBg lvl1 floatIn"
-stylepos="levelComp"
-style1="levelCont current"
-name=" ابن طولون"
-number="1"
-/>
-<LevelComp 
-link="/gameplay2"
-cont="lvlBg lvl2 "
-stylepos="levelComp  floatIn glow"
-style1="levelCont  current"
-name=" المرسي ابو العباس "
-number="2"
-/>
-<LevelComp 
-cont="lvlBg lvl3 levelCompInactive"
-stylepos="levelComp floatIn "
-style1="levelCont inactive"
-name=" القلعة"
-number="3"
-/>
-<LevelComp 
-cont="lvlBg lvl4 levelCompInactive"
-stylepos="levelComp  floatIn"
-style1="levelCont inactive"
-name="  ياقوت
-العرش"
-number="4"
-/>
-<LevelComp 
-cont="lvlBg lvl5 levelCompInactive"
-stylepos="levelComp floatIn "
-style1="levelCont inactive"
-name=" الأزهر "
-number="5"
-/>
-    </div>
-    </> );
-}
+    <LevelComp 
+    link="/gameplay1"
+    cont="lvlBg lvl1 floatIn"
+    stylepos="levelComp"
+    style1="levelCont current"
+    name=" ابن طولون"
+    number="1"
+    />
+    <LevelComp 
+    link="/onboarding2"
+    cont="lvlBg lvl2 "
+    stylepos="levelComp floatIn glow"
+    style1="levelCont  current"
+    name=" المرسي ابو العباس "
+    number="2"
+    />
+    <LevelComp 
+    cont="lvlBg lvl3 levelCompInactive"
+    stylepos="levelComp floatIn "
+    style1="levelCont inactive"
+    name=" القلعة"
+    number="3"
+    />
+    <LevelComp 
+    cont="lvlBg lvl4 levelCompInactive"
+    stylepos="levelComp  floatIn"
+    style1="levelCont inactive"
+    name="  ياقوت
+    العرش"
+    number="4"
+    />
+    <LevelComp 
+    cont="lvlBg lvl5 levelCompInactive"
+    stylepos="levelComp floatIn "
+    style1="levelCont inactive"
+    name=" الأزهر "
+    number="5"
+    />
+        </div>
+        </> );
+    }
 export default Levels;

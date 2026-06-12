@@ -22,6 +22,7 @@ import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
 const PreWin = () => {
+    
     const navigate = useNavigate();
 
     const starsCollected = parseInt(
@@ -30,7 +31,7 @@ const PreWin = () => {
     );
 
     const [scene, setScene] = useState(0);
-
+const [hideDepth, setHideDepth] = useState(false);
     const audioRef = useRef(null);
 
     const narrations = [
@@ -39,36 +40,43 @@ const PreWin = () => {
     ];
 
     useEffect(() => {
-        const timers = [];
+    const timers = [];
 
-        // Mosque reached
-        timers.push(
-            setTimeout(() => {
-                setScene(1);
-
-                if (audioRef.current) {
-                    audioRef.current.play().catch(() => {});
-                }
-            }, 8000)
-        );
-
-        // Navigate after adhan finishes
-        timers.push(
-            setTimeout(() => {
-                navigate('/win');
-            }, 22000)
-        );
-
-        return () => {
-            timers.forEach(clearTimeout);
+    // Reach the mosque
+    timers.push(
+        setTimeout(() => {
+            setScene(1);
 
             if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
+                audioRef.current.play().catch(() => {});
             }
-        };
-    }, [navigate]);
 
+            // Fade out the depth layer 1 second later
+            timers.push(
+                setTimeout(() => {
+                    setHideDepth(true);
+                }, 1000)
+            );
+
+        }, 8000)
+    );
+
+    // Navigate after adhan finishes
+    timers.push(
+        setTimeout(() => {
+            navigate('/win');
+        }, 22000)
+    );
+
+    return () => {
+        timers.forEach(clearTimeout);
+
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+        }
+    };
+}, [navigate]);
     return (
         <>
             <div className="fixed-mobile-wrapper">
@@ -96,12 +104,13 @@ const PreWin = () => {
                     alt=""
                 />
 
-                <img
-                    className="splashBg"
-                    src={depth}
-                    alt=""
-                />
-
+               <img
+            className={`splashBg depthOverlay ${
+                hideDepth ? 'depthFadeOut' : ''
+            }`}
+            src={depth}
+            alt=""
+        />
                 <div
                     key={scene}
                     className="floatIn narration prewinNarration"

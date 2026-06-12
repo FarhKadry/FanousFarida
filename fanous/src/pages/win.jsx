@@ -19,7 +19,7 @@ import character from './../assets/winchar.png'
 import splash from './../assets/win11.jpg'
 import rays from './../assets/win2.png'
 
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
@@ -27,6 +27,7 @@ import WinCounter from '../components/common/winCounter';
 
 const Win = () => {
 const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0', 10);
+      const navigate = useNavigate();
 
     useEffect(() => {
         const audio = new Audio(winAudio);
@@ -74,7 +75,14 @@ const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0
         </div>
         <div className="startBtnCont startBtnAnim">
             <div className="winBtnFlex">
-         <Button link="/onboarding" style1="primarybtn secondarybtn" cta="   العب مجددا" />
+                <Link onClick={(e) => {
+        e.preventDefault(); navigate(-3);       
+      }} to="#" id="link" >
+                            <button className="primarybtn secondarybtn" >
+                                العب مجددا
+                            </button>
+                        </Link>
+         {/* <Button link="/onboarding" style1="primarybtn secondarybtn" cta="  العب  مجددا" /> */}
         <Button link="/levels" style1="primarybtn" cta="   التالي " />
             </div>
         </div>

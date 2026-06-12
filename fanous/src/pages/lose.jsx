@@ -20,7 +20,7 @@ import character from './../assets/losechar.png'
 import splash from './../assets/lose1.png'
 import rays from './../assets/lose2.png'
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import  { useEffect } from 'react';
 
 import Button from '../components/common/button';
@@ -31,6 +31,8 @@ import winAudio from './../assets/audio/bat2.mp3';
 
 const Lose = () => {
     const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0', 10);
+    const navigate = useNavigate();
+
  useEffect(() => {
         const audio = new Audio(winAudio);
 
@@ -78,7 +80,13 @@ const Lose = () => {
         </div>
         <div className="startBtnCont startBtnAnim">
             <div style={ {'zIndex' : '9'}} className="winBtnFlex">
-         <Button link="/onboarding" style1="primarybtn secondarybtn" cta="   العب مجددا" />
+                <Link onClick={(e) => {
+        e.preventDefault(); navigate(-2);       
+      }} to="#" id="link" >
+                            <button className="primarybtn secondarybtn" >
+                                العب مجددا
+                            </button>
+                        </Link>
         <Button link="/levels" style1="primarybtn" cta="   التالي " />
             </div>
         </div>

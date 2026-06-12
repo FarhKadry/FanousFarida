@@ -34,6 +34,7 @@ const Levels = () => {
         <img className='splashBg levelsBg' src={splash} alt="" />
         <div className="splashBg depth"></div>
 <LevelComp 
+link="/gameplay1"
 cont="lvlBg lvl1 floatIn"
 stylepos="levelComp glow"
 style1="levelCont current"
@@ -41,6 +42,7 @@ name=" ابن طولون"
 number="1"
 />
 <LevelComp 
+link="/gameplay2"
 cont="lvlBg lvl2 levelCompInactive"
 stylepos="levelComp  floatIn"
 style1="levelCont inactive"

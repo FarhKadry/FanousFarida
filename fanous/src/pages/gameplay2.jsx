@@ -5,7 +5,8 @@ import './../animations.css';
 
 import star from './../assets/shootingstar2.png';
 import bat from './../assets/bat1.png';
-import bgImage from './../assets/environment1.jpg';
+import wind from './../assets/wind.gif';
+import bgImage from './../assets/environment2.jpg';
 import charNormal from './../assets/gameplaychar.png';
 import charPress from './../assets/gameplaycharpress.png';
 import charFall from './../assets/gameplaycharfall.png';
@@ -13,6 +14,7 @@ import popSfx from './../assets/audio/pop.mp3';
 import fallSfx from './../assets/audio/grunt.m4a';
 import batSfx from './../assets/audio/bat1.mp3';
 import flapSfx from './../assets/audio/flap.mp3';
+import windSfx from './../assets/audio/flap.mp3';
 import fanous from './../assets/fanous_empty.png';
 import pause from './../assets/pause.svg';
 import collectSfx from './../assets/audio/collect.mp3';
@@ -36,12 +38,13 @@ const STAR_H = 68;
 
 const NEAR_GROUND_THRESHOLD = 100;
 
-export default function Gameplay1() {
+export default function Gameplay2() {
     const canvasRef = useRef(null);
     const navigate = useNavigate();
     const gameState = useRef({
         bird: { x: 40, y: CANVAS_H / 2, w: 200, h: 260, vy: 0, hbOffX: 40, hbOffY: 50, hbW: 120, hbH: 140 },
         bats: [],
+        winds: [],
         stars: [],
         bgX: 0,
         frameCount: 0,
@@ -61,6 +64,7 @@ export default function Gameplay1() {
     const fallAudio = useRef(null);
     const batAudio = useRef(null);
     const flapAudio = useRef(null);
+    const windAudio = useRef(null);
     const fallAudioPlayingRef = useRef(false);
 
     const imgs = useRef({});
@@ -72,6 +76,7 @@ export default function Gameplay1() {
         };
         imgs.current.star = load(star);
         imgs.current.bat = load(bat);
+        imgs.current.wind = load(wind);
         imgs.current.bg = load(bgImage);
         imgs.current.charNormal = load(charNormal);
         imgs.current.charPress = load(charPress);
@@ -86,6 +91,8 @@ export default function Gameplay1() {
         batAudio.current.preload = 'auto';
         flapAudio.current = new Audio(flapSfx);
         flapAudio.current.preload = 'auto';
+        windAudio.current = new Audio(windSfx);
+        windAudio.current.preload = 'auto';
     }, []);
 
     function getBirdHitbox() {
@@ -106,16 +113,27 @@ export default function Gameplay1() {
         const w = 56;
         const y = 60 + Math.random() * (CANVAS_H - h - 120);
         const gs = gameState.current;
-        const tooClose = [...gs.stars, ...gs.bats].some(o =>
+        const tooClose = [...gs.stars, ...gs.bats, ...gs.winds].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
         if (!tooClose) gs.bats.push({ x: CANVAS_W + 20, y, w, h });
     }
 
+    function spawnWind() {
+        const h = 80 + Math.random() * 40;
+        const w = 100;
+        const y = 60 + Math.random() * (CANVAS_H - h - 120);
+        const gs = gameState.current;
+        const tooClose = [...gs.stars, ...gs.bats, ...gs.winds].some(o =>
+            Math.abs(o.x - (CANVAS_W + 20)) < 140 && Math.abs(o.y - y) < 100
+        );
+        if (!tooClose) gs.winds.push({ x: CANVAS_W + 20, y, w, h });
+    }
+
     function spawnStar() {
         const y = 60 + Math.random() * (CANVAS_H - STAR_H - 120);
         const gs = gameState.current;
-        const tooClose = [...gs.stars, ...gs.bats].some(o =>
+        const tooClose = [...gs.stars, ...gs.bats, ...gs.winds].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
         if (!tooClose) gs.stars.push({ x: CANVAS_W + 20, y, w: STAR_W, h: STAR_H, active: true });
@@ -126,13 +144,14 @@ export default function Gameplay1() {
         if (gs.over) return;
         gs.bird.vy = FLAP_STRENGTH;
 
-        // Flap sound
         if (flapAudio.current) {
             flapAudio.current.currentTime = 0;
             flapAudio.current.play().catch(() => {});
         }
-
-        
+        if (popAudio.current) {
+            popAudio.current.currentTime = 0;
+            popAudio.current.play().catch(() => {});
+        }
 
         isNearGroundRef.current = false;
         fallAudioPlayingRef.current = false;
@@ -169,10 +188,8 @@ export default function Gameplay1() {
             gs.bird.vy += GRAVITY;
             gs.bird.y += gs.bird.vy;
 
-            const hb = getBirdHitbox();
             if (gs.bird.y <= 0) { gs.bird.y = 0; gs.bird.vy = 0; }
 
-            //LOSE STATE
             if (gs.bird.y >= CANVAS_H) {
                 gs.over = true;
                 localStorage.setItem('lastStarsCollected', gs.starsCollected);
@@ -180,7 +197,6 @@ export default function Gameplay1() {
                 return;
             }
 
-            // NEAR GROUND
             const distFromGround = (CANVAS_H - 50) - (gs.bird.y + gs.bird.h);
             const nearGround = distFromGround <= NEAR_GROUND_THRESHOLD;
             if (nearGround && !isNearGroundRef.current) {
@@ -198,14 +214,15 @@ export default function Gameplay1() {
             gs.bgX -= BG_SPEED;
             if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
 
+            // Spawn: bats every 95f, winds every 80f (offset), stars every 65f
             if (gs.frameCount % 95 === 0) spawnBat();
+            if (gs.frameCount % 80 === 40) spawnWind();
             if (gs.frameCount % 65 === 30) spawnStar();
 
             for (const b of gs.bats) {
                 b.x -= SPEED;
                 if (collides(getBirdHitbox(), b)) {
                     gs.over = true;
-                    // Play bat collision sound before navigating
                     if (batAudio.current) {
                         batAudio.current.currentTime = 0;
                         batAudio.current.play().catch(() => {});
@@ -216,6 +233,21 @@ export default function Gameplay1() {
                 }
             }
             gs.bats = gs.bats.filter(b => b.x + b.w > -10);
+
+            for (const w of gs.winds) {
+                w.x -= SPEED;
+                if (collides(getBirdHitbox(), w)) {
+                    gs.over = true;
+                    if (windAudio.current) {
+                        windAudio.current.currentTime = 0;
+                        windAudio.current.play().catch(() => {});
+                    }
+                    localStorage.setItem('lastStarsCollected', gs.starsCollected);
+                    navigate('/lose');
+                    return;
+                }
+            }
+            gs.winds = gs.winds.filter(w => w.x + w.w > -10);
 
             for (const s of gs.stars) {
                 s.x -= SPEED;
@@ -273,6 +305,15 @@ export default function Gameplay1() {
                 }
             }
 
+            for (const w of gs.winds) {
+                if (imgs.current.wind?.complete) {
+                    ctx.drawImage(imgs.current.wind, w.x, w.y, w.w, w.h);
+                } else {
+                    ctx.fillStyle = '#88ccff';
+                    ctx.fillRect(w.x, w.y, w.w, w.h);
+                }
+            }
+
             const FALL_H_CORRECTION = 203 / 307;
 
             const charKey = isNearGroundRef.current
@@ -322,7 +363,6 @@ export default function Gameplay1() {
                 <Progress counter={display.stars} counter2={WIN_STARS} fanous={fanous} />
             </header>
             <Timer time={display.time} />
-            <div className="splashBg depth"></div>
             <canvas
                 ref={canvasRef}
                 width={CANVAS_W}

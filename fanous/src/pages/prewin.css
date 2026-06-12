@@ -21,3 +21,25 @@ padding-bottom: 10px;
 .mosqueBg{
     transform: translateX(0px);
 }
+@keyframes mosque1Anim {
+  0%   { 
+    transform: translateX(0px) }
+  50%  { 
+    transform:  translateX(-1000px)
+  
+  }
+     56%  { 
+    transform: translateX(-1000px) translateY(-150px);
+    scale: 1.2;
+
+  }
+  100%{
+        transform: translateX(-1000px) translateY(-150px);
+
+    scale: 1;
+  }
+}
+.mosque1Anim{
+  scale: 1.2;
+  animation: mosque1Anim 10s cubic-bezier(0.550, 0.085, 0.680, 0.530) both  ;
+}

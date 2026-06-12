@@ -74,7 +74,7 @@ const Lose = () => {
         </div>
         <div className="flex2 winCounters">
             <WinCounter icon={count2} number={starsCollected} />
-            <WinCounter icon={count1} number={12} />
+            {/* <WinCounter icon={count1} number={12} /> */}
         </div>
         <div className="startBtnCont startBtnAnim">
             <div style={ {'zIndex' : '9'}} className="winBtnFlex">

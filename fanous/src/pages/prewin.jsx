@@ -1,60 +1,142 @@
-import React from 'react';
-import './home.css'
-import './../animations.css'
-import './prewin.css'
+import React, { useEffect, useRef, useState,  } from 'react';
+import './home.css';
+import './../animations.css';
+import './prewin.css';
 
-import './../components/layout/header.css'
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import './../components/layout/header.css';
 
-import depth from './../assets/onboardDepth.svg'
+import depth from './../assets/onboardDepth.svg';
 import fanous from './../assets/fanous_empty.png';
 import pause from './../assets/pause.svg';
 
-import menu from './../assets/menu.svg'
 
-import character from './../assets/gameplaycharpress.png'
-import character2 from './../assets/onboardchar.png'
+import splash from './../assets/mosque1bg.jpg';
 
+import characterFlying from './../assets/gameplaycharpress.png';
+import characterStanding from './../assets/charsplash2.png';
 
+import adhan from './../assets/audio/adhan.mp3';
 
-
-import splash from './../assets/mosque1bg.jpg'
-import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
-import TapAnimation from '../components/common/tap';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
+import { Navigate , useNavigate  } from 'react-router-dom';
 
 const PreWin = () => {
-    const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0', 10);
+       const navigate = useNavigate();
 
-    return ( <>
-     <div className="fixed-mobile-wrapper">
-            
-       <header>
-                <div className="flex2">
-                    <IconBtn icon={pause} style1="iconbtnmian" link="/pause" />
-                    <Music />
+    const starsCollected = parseInt(
+        localStorage.getItem('lastStarsCollected') ?? '0',
+        10
+    );
+
+    const [scene, setScene] = useState(0);
+
+    const audioRef = useRef(null);
+
+    const narrations = [
+        'لقد اقتربنا من ابن طولون',
+        'استمع... لقد بدأ الأذان'
+    ];
+
+    useEffect(() => {
+    const timers = [];
+
+    // MOSQUE
+    timers.push(
+        setTimeout(() => {
+            setScene(1);
+
+            if (audioRef.current) {
+                audioRef.current.play().catch(() => {});
+            }
+        }, 8000)
+    );
+
+    // NAVIGATION
+    timers.push(
+        setTimeout(() => {
+            Navigate('/win');
+        }, 22000)
+    );
+
+    return () => {
+        timers.forEach(clearTimeout);
+
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+        }
+    };
+}, [navigate]);
+
+    return (
+        <>
+            <div className="fixed-mobile-wrapper">
+
+                <header>
+                    <div className="flex2">
+                        <IconBtn
+                            icon={pause}
+                            style1="iconbtnmian"
+                            link="/pause"
+                        />
+
+                        <Music />
+                    </div>
+
+                    <Progress
+                        counter={starsCollected}
+                        fanous={fanous}
+                    />
+                </header>
+
+                <img
+                    className="splashBg mosqueBg mosque1Anim"
+                    src={splash}
+                    alt=""
+                />
+
+                <img
+                    className="splashBg"
+                    src={depth}
+                    alt=""
+                />
+
+                <div
+                    key={scene}
+                    className="floatIn narration prewinNarration"
+                >
+                    {narrations[scene]}
                 </div>
-                <Progress counter={starsCollected} fanous={fanous} />
-            </header>
-        <img className='splashBg mosqueBg mosque1Anim' src={splash} alt="" />
-        <img className='splashBg' src={depth} alt="" />
-       <div className="floatIn narration prewinNarration">
-            لقد اقتربنا من ابن طولون  
 
-          <div className="startBtnCont">
-        </div>
-        </div>
-        <img className='float prewinChar' src={character} alt="" />
-        <div
-    style={{ animationDelay: '0.3s', zIndex: '999999999' }}
-    className="missonBtn floatIn"
-    onClick={(e) => e.stopPropagation()}
->
-</div>
-    </div>
-    </> );
-}
+                <img
+                    className={`prewinChar ${
+                        scene === 0
+                            ? 'flyingCharacter'
+                            : 'standingCharacter'
+                    }`}
+                    src={
+                        scene === 0
+                            ? characterFlying
+                            : characterStanding
+                    }
+                    alt=""
+                />
+
+                <audio
+                    ref={audioRef}
+                    preload="auto"
+                >
+                    <source
+                        src={adhan}
+                        type="audio/mpeg"
+                    />
+                </audio>
+
+            </div>
+        </>
+    );
+};
+
 export default PreWin;

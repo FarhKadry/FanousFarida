@@ -1,45 +1,132 @@
-.prewinChar{
-        width: auto;
-    /* height: auto; */
-    /* height: 338px; */
-    /* margin: 20px 0 110px 0; */
-    top: 5px;
-    display: block;
-    justify-self: flex-end;
-    align-self: flex-start;
+.prewinChar {
+    position: absolute;
+    z-index: 5;
 }
-.prewinNarration{
+
+.prewinNarration {
     width: 238px;
-height: 99.571px;
-padding: unset;
-justify-content: center;
-align-items: center;
-margin-bottom: 20px;
-line-height: 90%;
-padding-bottom: 10px;
-}
-.mosqueBg{
-    transform: translateX(0px);
-}
-@keyframes mosque1Anim {
-  0%   { 
-    transform: translateX(0px) }
-  50%  { 
-    transform:  translateX(-1000px)
-  
-  }
-     56%  { 
-    transform: translateX(-1000px) translateY(-150px);
-    scale: 1.2;
+    height: 99px;
 
-  }
-  100%{
-        transform: translateX(-1000px) translateY(-150px);
+    padding: 0 18px 10px;
+justify-self: start;
+    justify-content: center;
+    align-items: center;
 
-    scale: 1;
-  }
+    line-height: 90%;
+    position: absolute;
+    top: 170px;
+    transition: opacity 0.5s ease;
 }
-.mosque1Anim{
-  scale: 1.2;
-  animation: mosque1Anim 10s cubic-bezier(0.550, 0.085, 0.680, 0.530) both  ;
+
+/* ===========================
+   CHARACTER STATES
+=========================== */
+
+.flyingCharacter {
+    /* bottom: 180px;
+    left: -120px; */
+
+    width: 220px;
+
+    animation:
+        /* flyAcross 3s ease-in-out forwards, */
+        float 2s ease-in-out infinite;
+}
+
+.standingCharacter {
+    /* bottom: 160px;
+    left: 40px; */
+
+    width: 160px;
+    animation:
+        characterAppear 0.8s ease forwards,
+        float 2.5s ease-in-out infinite;
+}
+
+/* ===========================
+   CHARACTER ANIMATIONS
+=========================== */
+
+@keyframes flyAcross {
+    from {
+        transform: translate(0, 40px) rotate(-12deg);
+    }
+
+    to {
+        transform: translate(130px, -40px) rotate(0deg);
+    }
+}
+
+@keyframes characterAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* ===========================
+   MOSQUE ANIMATION
+=========================== */
+
+.mosqueBg {
+    transform: translateX(0);
+}
+
+@keyframes mosqueJourney {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform:
+            translateX(-1000px)
+            translateY(-150px);
+    }
+}
+
+@keyframes mosqueBreathing {
+    0% {
+        transform:
+            translateX(-1000px)
+            translateY(-150px)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateX(-1000px)
+            translateY(-150px)
+            scale(1.08);
+    }
+
+    100% {
+        transform:
+            translateX(-1000px)
+            translateY(-150px)
+            scale(1);
+    }
+}
+.mosque1Anim {
+    animation:
+        mosqueJourney 8s ease-in-out forwards,
+        mosqueBreathing 14s ease-in-out 8s forwards;
 }

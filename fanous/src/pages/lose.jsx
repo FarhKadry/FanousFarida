@@ -21,13 +21,31 @@ import splash from './../assets/lose1.png'
 import rays from './../assets/lose2.png'
 
 import { Link } from 'react-router-dom';
+import  { useEffect } from 'react';
+
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import WinCounter from '../components/common/winCounter';
+import winAudio from './../assets/audio/bat2.mp3';
 
 const Lose = () => {
     const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0', 10);
+ useEffect(() => {
+        const audio = new Audio(winAudio);
+
+        const timer = setTimeout(() => {
+            audio.play().catch(err => {
+                console.log('Audio playback failed:', err);
+            });
+        },1);
+
+        return () => {
+            clearTimeout(timer);
+            audio.pause();
+            audio.currentTime = 0;
+        };
+    }, []); 
 
     return ( <>
     <div className="fixed-mobile-wrapper">

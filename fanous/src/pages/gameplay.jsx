@@ -2,140 +2,338 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
 import './../animations.css';
-import './prewin.css';
 
-import './../components/layout/header.css';
-
-import depth from './../assets/onboardDepth.svg';
+import star from './../assets/shootingstar2.png';
+import bat from './../assets/bat1.png';
+import bgImage from './../assets/environment1.jpg';
+import charNormal from './../assets/gameplaychar.png';
+import charPress from './../assets/gameplaycharpress.png';
+import charFall from './../assets/gameplaycharfall.png';
+import popSfx from './../assets/audio/pop.mp3';
+import fallSfx from './../assets/audio/grunt.m4a';
+import batSfx from './../assets/audio/bat1.mp3';
+import flapSfx from './../assets/audio/flap.mp3';
 import fanous from './../assets/fanous_empty.png';
 import pause from './../assets/pause.svg';
-
-import splash from './../assets/mosque1bg.jpg';
-
-import characterFlying from './../assets/gameplaycharpress.png';
-import characterStanding from './../assets/charsplash2.png';
-
-import adhan from './../assets/audio/adhan.mp3';
-
+import collectSfx from './../assets/audio/collect.mp3';
+import Timer from '../components/common/timer';
 import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
-const PreWin = () => {
+const WIN_STARS = 8;
+const GAME_DURATION = 60;
+const BG_WIDTH = 5481;
+const CANVAS_W = 430;
+const CANVAS_H = 932;
+const GRAVITY = 0.1;
+const FLAP_STRENGTH = -9;
+const SPEED = 3;
+const BG_SPEED = 1.5;
+
+const STAR_W = 130;
+const STAR_H = 68;
+
+const NEAR_GROUND_THRESHOLD = 100;
+
+export default function Gameplay1() {
+    const canvasRef = useRef(null);
     const navigate = useNavigate();
+    const gameState = useRef({
+        bird: { x: 40, y: CANVAS_H / 2, w: 200, h: 260, vy: 0, hbOffX: 40, hbOffY: 50, hbW: 120, hbH: 140 },
+        bats: [],
+        stars: [],
+        bgX: 0,
+        frameCount: 0,
+        starsCollected: 0,
+        timeLeft: GAME_DURATION,
+        over: false,
+        started: true,
+        lastTick: null,
+    });
+    const [display, setDisplay] = useState({ stars: 0, time: GAME_DURATION });
+    const rafRef = useRef(null);
+    const isPressedRef = useRef(false);
+    const isNearGroundRef = useRef(false);
+    const pressTimerRef = useRef(null);
+    const popAudio = useRef(null);
+    const collectAudio = useRef(null);
+    const fallAudio = useRef(null);
+    const batAudio = useRef(null);
+    const flapAudio = useRef(null);
+    const fallAudioPlayingRef = useRef(false);
 
-    const starsCollected = parseInt(
-        localStorage.getItem('lastStarsCollected') ?? '0',
-        10
-    );
+    const imgs = useRef({});
+    useEffect(() => {
+        const load = (src) => {
+            const img = new Image();
+            img.src = src;
+            return img;
+        };
+        imgs.current.star = load(star);
+        imgs.current.bat = load(bat);
+        imgs.current.bg = load(bgImage);
+        imgs.current.charNormal = load(charNormal);
+        imgs.current.charPress = load(charPress);
+        imgs.current.charFall = load(charFall);
+        popAudio.current = new Audio(popSfx);
+        popAudio.current.preload = 'auto';
+        collectAudio.current = new Audio(collectSfx);
+        collectAudio.current.preload = 'auto';
+        fallAudio.current = new Audio(fallSfx);
+        fallAudio.current.preload = 'auto';
+        batAudio.current = new Audio(batSfx);
+        batAudio.current.preload = 'auto';
+        flapAudio.current = new Audio(flapSfx);
+        flapAudio.current.preload = 'auto';
+    }, []);
 
-    const [scene, setScene] = useState(0);
+    function getBirdHitbox() {
+        const b = gameState.current.bird;
+        return { x: b.x + b.hbOffX, y: b.y + b.hbOffY, w: b.hbW, h: b.hbH };
+    }
 
-    const audioRef = useRef(null);
+    function collides(a, b) {
+        const pad = 4;
+        return a.x + pad < b.x + b.w - pad &&
+               a.x + a.w - pad > b.x + pad &&
+               a.y + pad < b.y + b.h - pad &&
+               a.y + a.h - pad > b.y + pad;
+    }
 
-    const narrations = [
-        'لقد اقتربنا من ابن طولون',
-        'استمع... لقد بدأ الأذان'
-    ];
+    function spawnBat() {
+        const h = 48 + Math.random() * 32;
+        const w = 56;
+        const y = 60 + Math.random() * (CANVAS_H - h - 120);
+        const gs = gameState.current;
+        const tooClose = [...gs.stars, ...gs.bats].some(o =>
+            Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
+        );
+        if (!tooClose) gs.bats.push({ x: CANVAS_W + 20, y, w, h });
+    }
+
+    function spawnStar() {
+        const y = 60 + Math.random() * (CANVAS_H - STAR_H - 120);
+        const gs = gameState.current;
+        const tooClose = [...gs.stars, ...gs.bats].some(o =>
+            Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
+        );
+        if (!tooClose) gs.stars.push({ x: CANVAS_W + 20, y, w: STAR_W, h: STAR_H, active: true });
+    }
+
+    function handleInput() {
+        const gs = gameState.current;
+        if (gs.over) return;
+        gs.bird.vy = FLAP_STRENGTH;
+
+        // Flap sound
+        if (flapAudio.current) {
+            flapAudio.current.currentTime = 0;
+            flapAudio.current.play().catch(() => {});
+        }
+
+        // Pop sound
+        if (popAudio.current) {
+            popAudio.current.currentTime = 0;
+            popAudio.current.play().catch(() => {});
+        }
+
+        isNearGroundRef.current = false;
+        fallAudioPlayingRef.current = false;
+        isPressedRef.current = true;
+        clearTimeout(pressTimerRef.current);
+        pressTimerRef.current = setTimeout(() => {
+            isPressedRef.current = false;
+        }, 200);
+    }
 
     useEffect(() => {
-        const timers = [];
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
 
-        // Mosque reached
-        timers.push(
-            setTimeout(() => {
-                setScene(1);
+        gameState.current.lastTick = performance.now();
 
-                if (audioRef.current) {
-                    audioRef.current.play().catch(() => {});
-                }
-            }, 8000)
-        );
+        function update(now) {
+            const gs = gameState.current;
+            if (!gs.started || gs.over) return;
 
-        // Navigate after adhan finishes
-        timers.push(
-            setTimeout(() => {
-                navigate('/win');
-            }, 22000)
-        );
+            const delta = (now - gs.lastTick) / 1000;
+            gs.lastTick = now;
+            gs.timeLeft = Math.max(0, gs.timeLeft - delta);
 
-        return () => {
-            timers.forEach(clearTimeout);
-
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
+            if (gs.timeLeft <= 0) {
+                gs.over = true;
+                localStorage.setItem('lastStarsCollected', gs.starsCollected);
+                navigate('/lose');
+                return;
             }
-        };
+
+            gs.frameCount++;
+
+            gs.bird.vy += GRAVITY;
+            gs.bird.y += gs.bird.vy;
+
+            const hb = getBirdHitbox();
+            if (gs.bird.y <= 0) { gs.bird.y = 0; gs.bird.vy = 0; }
+
+            // Only lose when character is completely out of frame (top of bird past canvas bottom)
+            if (gs.bird.y >= CANVAS_H) {
+                gs.over = true;
+                localStorage.setItem('lastStarsCollected', gs.starsCollected);
+                navigate('/lose');
+                return;
+            }
+
+            // Near-ground detection — triggers fall state + audio but NOT lose
+            const distFromGround = (CANVAS_H - 50) - (gs.bird.y + gs.bird.h);
+            const nearGround = distFromGround <= NEAR_GROUND_THRESHOLD;
+            if (nearGround && !isNearGroundRef.current) {
+                isNearGroundRef.current = true;
+                if (fallAudio.current && !fallAudioPlayingRef.current) {
+                    fallAudioPlayingRef.current = true;
+                    fallAudio.current.currentTime = 0;
+                    fallAudio.current.play().catch(() => {});
+                }
+            } else if (!nearGround) {
+                isNearGroundRef.current = false;
+                fallAudioPlayingRef.current = false;
+            }
+
+            gs.bgX -= BG_SPEED;
+            if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
+
+            if (gs.frameCount % 95 === 0) spawnBat();
+            if (gs.frameCount % 65 === 30) spawnStar();
+
+            for (const b of gs.bats) {
+                b.x -= SPEED;
+                if (collides(getBirdHitbox(), b)) {
+                    gs.over = true;
+                    // Play bat collision sound before navigating
+                    if (batAudio.current) {
+                        batAudio.current.currentTime = 0;
+                        batAudio.current.play().catch(() => {});
+                    }
+                    localStorage.setItem('lastStarsCollected', gs.starsCollected);
+                    navigate('/lose');
+                    return;
+                }
+            }
+            gs.bats = gs.bats.filter(b => b.x + b.w > -10);
+
+            for (const s of gs.stars) {
+                s.x -= SPEED;
+                if (s.active && collides(getBirdHitbox(), s)) {
+                    s.active = false;
+                    gs.starsCollected++;
+                    if (collectAudio.current) {
+                        collectAudio.current.currentTime = 0;
+                        collectAudio.current.play().catch(() => {});
+                    }
+                    if (gs.starsCollected >= WIN_STARS) {
+                        gs.over = true;
+                        localStorage.setItem('lastStarsCollected', gs.starsCollected);
+                        navigate('/prewin');
+                        return;
+                    }
+                }
+            }
+            gs.stars = gs.stars.filter(s => s.x + s.w > -10);
+
+            setDisplay({ stars: gs.starsCollected, time: Math.ceil(gs.timeLeft) });
+        }
+
+        function draw() {
+            const gs = gameState.current;
+            ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
+
+            const bgImg = imgs.current.bg;
+            if (bgImg) {
+                ctx.drawImage(bgImg, gs.bgX, 0, BG_WIDTH, CANVAS_H);
+                if (gs.bgX < 0) {
+                    ctx.drawImage(bgImg, gs.bgX + BG_WIDTH, 0, BG_WIDTH, CANVAS_H);
+                }
+            }
+
+            ctx.fillStyle = 'rgba(0,0,0,0.25)';
+            ctx.fillRect(0, CANVAS_H - 50, CANVAS_W, 50);
+
+            for (const s of gs.stars) {
+                if (!s.active) continue;
+                if (imgs.current.star?.complete) {
+                    ctx.drawImage(imgs.current.star, s.x, s.y, s.w, s.h);
+                } else {
+                    ctx.fillStyle = '#ffd700';
+                    ctx.fillRect(s.x, s.y, s.w, s.h);
+                }
+            }
+
+            for (const b of gs.bats) {
+                if (imgs.current.bat?.complete) {
+                    ctx.drawImage(imgs.current.bat, b.x, b.y, b.w, b.h);
+                } else {
+                    ctx.fillStyle = '#222';
+                    ctx.fillRect(b.x, b.y, b.w, b.h);
+                }
+            }
+
+            const FALL_H_CORRECTION = 203 / 307;
+
+            const charKey = isNearGroundRef.current
+                ? 'charFall'
+                : isPressedRef.current
+                    ? 'charPress'
+                    : 'charNormal';
+
+            const charImg = imgs.current[charKey];
+            const baseImg = imgs.current.charNormal;
+            const baseAspect = baseImg?.naturalWidth && baseImg?.naturalHeight
+                ? baseImg.naturalWidth / baseImg.naturalHeight
+                : 0.811;
+
+            const drawH = charKey === 'charFall'
+                ? gs.bird.h * FALL_H_CORRECTION
+                : gs.bird.h;
+            const drawW = charKey === 'charFall'
+                ? drawH * (249 / 203)
+                : drawH * baseAspect;
+
+            if (charImg?.complete) {
+                ctx.drawImage(charImg, gs.bird.x, gs.bird.y, drawW, drawH);
+            } else {
+                ctx.fillStyle = '#111';
+                ctx.fillRect(gs.bird.x, gs.bird.y, drawW, drawH);
+            }
+        }
+
+        function loop(now) {
+            update(now);
+            draw();
+            rafRef.current = requestAnimationFrame(loop);
+        }
+
+        rafRef.current = requestAnimationFrame(loop);
+        return () => cancelAnimationFrame(rafRef.current);
     }, [navigate]);
 
     return (
-        <>
-            <div className="fixed-mobile-wrapper">
-
-                <header>
-                    <div className="flex2">
-                        <IconBtn
-                            icon={pause}
-                            style1="iconbtnmian"
-                            link="/pause"
-                        />
-
-                        <Music />
-                    </div>
-
-                    <Progress
-                        counter={starsCollected}
-                        fanous={fanous}
-                    />
-                </header>
-
-                <img
-                    className="splashBg mosqueBg mosque1Anim"
-                    src={splash}
-                    alt=""
-                />
-
-                <img
-                    className="splashBg"
-                    src={depth}
-                    alt=""
-                />
-
-                <div
-                    key={scene}
-                    className="floatIn narration prewinNarration"
-                >
-                    {narrations[scene]}
+        <div className="fixed-mobile-wrapper" style={{ position: 'relative', userSelect: 'none' }}>
+            <header>
+                <div className="flex2">
+                    <IconBtn icon={pause} style1="iconbtnmian" link="/pause" />
+                    <Music />
                 </div>
-
-                <img
-                    className={`prewinChar ${
-                        scene === 0
-                            ? 'flyingCharacter'
-                            : 'standingCharacter'
-                    }`}
-                    src={
-                        scene === 0
-                            ? characterFlying
-                            : characterStanding
-                    }
-                    alt=""
-                />
-
-                <audio
-                    ref={audioRef}
-                    preload="auto"
-                >
-                    <source
-                        src={adhan}
-                        type="audio/mpeg"
-                    />
-                </audio>
-
-            </div>
-        </>
+                <Progress counter={display.stars} counter2={WIN_STARS} fanous={fanous} />
+            </header>
+            <Timer time={display.time} />
+            <canvas
+                ref={canvasRef}
+                width={CANVAS_W}
+                height={CANVAS_H}
+                style={{ display: 'block', width: '100%', height: '100%', touchAction: 'none' }}
+                onClick={handleInput}
+                onTouchStart={e => { e.preventDefault(); handleInput(); }}
+            />
+        </div>
     );
-};
-
-export default PreWin;
+}

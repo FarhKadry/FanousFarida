@@ -15,6 +15,7 @@ import Gameplay1 from './pages/gameplay';
 import Mission from './pages/mission';
 import PreWin from './pages/prewin';
 import Gameplay2 from './pages/gameplay2';
+import PreWin2 from './pages/prewin2';
 
 
 function Paths() {
@@ -33,9 +34,11 @@ function Paths() {
 
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/win" element={<Win />} />
-        <Route path="/prewin" element={<PreWin />} />
 
         <Route path="/lose" element={<Lose />} />
+        <Route path="/prewin" element={<PreWin />} />
+        <Route path="/prewin2" element={<PreWin2 />} />
+        
         <Route path="/gameplay1" element={<Gameplay1 />} />
         <Route path="/gameplay2" element={<Gameplay2 />} />
 

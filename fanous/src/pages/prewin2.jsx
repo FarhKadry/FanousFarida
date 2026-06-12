@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState,  } from 'react';
 import './home.css';
 import './../animations.css';
 import './prewin.css';
@@ -10,7 +9,8 @@ import depth from './../assets/onboardDepth.svg';
 import fanous from './../assets/fanous_empty.png';
 import pause from './../assets/pause.svg';
 
-import splash from './../assets/mosque1bg.jpg';
+
+import splash from './../assets/mosque2bg.jpg';
 
 import characterFlying from './../assets/gameplaycharpress.png';
 import characterStanding from './../assets/charsplash2.png';
@@ -20,9 +20,10 @@ import adhan from './../assets/audio/adhan.mp3';
 import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
+import { Navigate , useNavigate  } from 'react-router-dom';
 
-const PreWin = () => {
-    const navigate = useNavigate();
+const PreWin2 = () => {
+       const navigate = useNavigate();
 
     const starsCollected = parseInt(
         localStorage.getItem('lastStarsCollected') ?? '0',
@@ -34,40 +35,41 @@ const PreWin = () => {
     const audioRef = useRef(null);
 
     const narrations = [
-        'لقد اقتربنا من ابن طولون',
-        'استمع... لقد بدأ الأذان'
+        ' لقد اقتربنا من ابي  العباس المرسي!  '
+        ,
+        ' أحسنت! بفضلك سيمكن للمصلين دخول بيت الله   '
     ];
 
     useEffect(() => {
-        const timers = [];
+    const timers = [];
 
-        // Mosque reached
-        timers.push(
-            setTimeout(() => {
-                setScene(1);
-
-                if (audioRef.current) {
-                    audioRef.current.play().catch(() => {});
-                }
-            }, 8000)
-        );
-
-        // Navigate after adhan finishes
-        timers.push(
-            setTimeout(() => {
-                navigate('/win');
-            }, 22000)
-        );
-
-        return () => {
-            timers.forEach(clearTimeout);
+    // MOSQUE
+    timers.push(
+        setTimeout(() => {
+            setScene(1);
 
             if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
+                audioRef.current.play().catch(() => {});
             }
-        };
-    }, [navigate]);
+        }, 8000)
+    );
+
+    // NAVIGATION
+    timers.push(
+        setTimeout(() => {
+            Navigate('/win');
+        }, 22000)
+    );
+
+    return () => {
+        timers.forEach(clearTimeout);
+
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+        }
+    };
+}, [navigate]);
 
     return (
         <>
@@ -138,4 +140,4 @@ const PreWin = () => {
     );
 };
 
-export default PreWin;
+export default PreWin2;

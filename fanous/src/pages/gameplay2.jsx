@@ -261,7 +261,7 @@ export default function Gameplay2() {
                     if (gs.starsCollected >= WIN_STARS) {
                         gs.over = true;
                         localStorage.setItem('lastStarsCollected', gs.starsCollected);
-                        navigate('/win');
+                        navigate('/prewin2');
                         return;
                     }
                 }

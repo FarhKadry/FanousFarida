@@ -36,16 +36,16 @@ const Levels = () => {
 <LevelComp 
 link="/gameplay1"
 cont="lvlBg lvl1 floatIn"
-stylepos="levelComp glow"
+stylepos="levelComp"
 style1="levelCont current"
 name=" ابن طولون"
 number="1"
 />
 <LevelComp 
 link="/gameplay2"
-cont="lvlBg lvl2 levelCompInactive"
-stylepos="levelComp  floatIn"
-style1="levelCont inactive"
+cont="lvlBg lvl2 "
+stylepos="levelComp  floatIn glow"
+style1="levelCont  current"
 name=" المرسي ابو العباس "
 number="2"
 />

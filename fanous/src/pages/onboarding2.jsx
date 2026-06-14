@@ -29,7 +29,7 @@ const Onboarding2 = () => {
     useEffect(() => {
         if (!started) return;
         const timer = setTimeout(() => {
-            navigate('/gameplay1');
+            navigate('/gameplay2');
         }, null);
         return () => clearTimeout(timer);
     }, [started, navigate]);

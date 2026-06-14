@@ -15,65 +15,120 @@ import stars from './../assets/fanousprogress.png'
 import star from './../assets/shootingstar1.png'
 import fix from './../assets/fixframe.png'
 
-
-
-
 import Button from '../components/common/button';
 import Heading from '../components/common/heading';
 import Textbox from '../components/common/textbox';
 import TapAnimation from '../components/common/tap';
 import Timer from '../components/common/timer';
+import { getSelectedLevel } from '../utils/progress';
 
-const slides = [
-  {
-    key: 'collect',
-    content: () => (
-      <>
-        <div className="howtoFlex ">
+// one slides array per level, same shape as before: { key, content(), btnStyle, btnCta }
+const missionsByLevel = [
+  // Level 1 — ابن طولون
+  [
+    {
+      key: 'collect',
+      content: () => (
+        <>
+          <div className="howtoFlex ">
+            <div className="flex2">
+              <Textbox heading="! جمع  " text="   جمع ثمان شهب في 60 ثانية" />
+            </div>
+          </div>
           <div className="flex2">
-            {/* <img style={{ objectFit: 'contain', width: '100px' }} src={star} alt="" /> */}
-             
-          <Textbox heading="! جمع  " text="   جمع ثمان شهب في 60 ثانية" />
-          </div>
-        </div>
-        <div className="flex2">
-<div style={{ position: 'relative' , bottom: 'unset' , right: 'unset' , fontSize: '40px' }} className="timer">
-            60 <span>ثانية</span>
-          </div>
+            <div style={{ position: 'relative', bottom: 'unset', right: 'unset', fontSize: '40px' }} className="timer">
+              60 <span>ثانية</span>
+            </div>
             <img src={stars} alt="" />
           </div>
-        <div className="howtoFlex floatIn" style={{ margin: '16px 0 26px 0' }}>
-          <img  style={{ marginRight: '10px' }} className='float' src={bat} alt="" />
-          <Textbox heading="! انتبه  " text="الوطاويط تحب الظلام." />
-        </div>
-      </>
-    ),
-    btnStyle: 'secondarybtn',
-    btnCta: 'عودة للعب',
-  },
-  // {
-  //   key: 'fix',
-  //   content: () => (
-  //     <>
-  //       <div className="howtoFlex" style={{ marginTop: '12px' }}>
-  //       <img  style={{ width: '97px' }} src={air} alt="" />
+          <div className="howtoFlex floatIn" style={{ margin: '16px 0 26px 0' }}>
+            <img style={{ marginRight: '10px' }} className='float' src={bat} alt="" />
+            <Textbox heading="! انتبه  " text="الوطاويط تحب الظلام." />
+          </div>
+        </>
+      ),
+      btnStyle: 'secondarybtn',
+      btnCta: 'عودة للعب',
+    },
+  ],
 
-  //         <Textbox heading="انتبه !" text="فالرباح تطفئ أنوار الفوانيس!" />
-  //       </div>
-  //       <div className="howtoFlex" style={{ marginTop: '16px' }}>
-  //       <img style={{ width: '70px' }} src={fix} alt="" />
-  //         <Textbox heading="أصلح" text="بعض الأدوار تطلب منك إصلاح الفانوس!" />
-  //       </div>
-  //     </>
-  //   ),
-  //   btnStyle: 'primaryBtn homeBtn',
-  //   btnCta: 'ألعب الآن!',
-  // },
+  // Level 2 — المرسي ابو العباس
+  [
+    {
+      key: 'collect',
+      content: () => (
+        <>
+          <div className="howtoFlex ">
+            <div className="flex2">
+              {/* TODO: confirm collect target/time for level 2 */}
+              <Textbox heading="! جمع  " text="   جمع ثمان شهب في 60 ثانية" />
+            </div>
+          </div>
+          <div className="flex2">
+            <div style={{ position: 'relative', bottom: 'unset', right: 'unset', fontSize: '40px' }} className="timer">
+              60 <span>ثانية</span>
+            </div>
+            <img src={stars} alt="" />
+          </div>
+          <div className="howtoFlex" style={{ marginTop: '12px' }}>
+            <img style={{ width: '97px' }} src={air} alt="" />
+            <Textbox heading="انتبه !" text="فالرباح تطفئ أنوار الفوانيس!" />
+          </div>
+          <div className="howtoFlex" style={{ marginTop: '16px' }}>
+            <img style={{ width: '70px' }} src={fix} alt="" />
+            <Textbox heading="أصلح" text="بعض الأدوار تطلب منك إصلاح الفانوس!" />
+          </div>
+        </>
+      ),
+      btnStyle: 'secondarybtn',
+      btnCta: 'عودة للعب',
+    },
+  ],
+
+  // Level 3 — القلعة
+  [
+    {
+      key: 'collect',
+      content: () => (
+        <>
+          <div className="howtoFlex ">
+            <div className="flex2">
+              {/* TODO: level 3 mission content */}
+              <Textbox heading="! جمع  " text="   جمع ثمان شهب في 60 ثانية" />
+            </div>
+          </div>
+        </>
+      ),
+      btnStyle: 'secondarybtn',
+      btnCta: 'عودة للعب',
+    },
+  ],
+
+  // Level 4 — ياقوت العرش
+  [
+    {
+      key: 'collect',
+      content: () => (
+        <>
+          <div className="howtoFlex ">
+            <div className="flex2">
+              {/* TODO: level 4 mission content */}
+              <Textbox heading="! جمع  " text="   جمع ثمان شهب في 60 ثانية" />
+            </div>
+          </div>
+        </>
+      ),
+      btnStyle: 'secondarybtn',
+      btnCta: 'عودة للعب',
+    },
+  ],
 ];
 
 const Mission = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
+  const level = getSelectedLevel();
+  const slides = missionsByLevel[level - 1] || missionsByLevel[0];
   const currentSlide = slides[step];
   const isLast = step === slides.length - 1;
 
@@ -86,8 +141,6 @@ const Mission = () => {
   };
 
   return (
-
-    
     <>
       <div style={{ paddingTop: '50px' }} className="fixed-mobile-wrapper">
         <img className='splashBg' src={splash} alt="" />

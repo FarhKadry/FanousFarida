@@ -6,20 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import depth from './../assets/onboardDepth.svg'
-
 import menu from './../assets/menu.svg'
-
 import character from './../assets/onboardchar.png'
-
-
-
 import splash from './../assets/onboardbg.png'
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 import TapAnimation from '../components/common/tap';
+import { getSelectedLevel } from '../utils/progress';
 
 const Onboarding = () => {
-       const navigate = useNavigate();
+    const navigate = useNavigate();
     const [started, setStarted] = useState(false);
 
     const handleStart = () => {
@@ -28,9 +24,10 @@ const Onboarding = () => {
 
     useEffect(() => {
         if (!started) return;
+        const level = getSelectedLevel();
         const timer = setTimeout(() => {
-            navigate('/gameplay1');
-        }, null);
+            navigate(`/gameplay${level}`);
+        }, 1500);
         return () => clearTimeout(timer);
     }, [started, navigate]);
 

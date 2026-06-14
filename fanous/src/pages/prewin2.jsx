@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState,  } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './home.css';
 import './../animations.css';
 import './prewin.css';
@@ -8,7 +9,6 @@ import './../components/layout/header.css';
 import depth from './../assets/onboardDepth.svg';
 import fanous from './../assets/fanous_empty.png';
 import pause from './../assets/pause.svg';
-
 
 import splash from './../assets/mosque2bg.jpg';
 
@@ -20,10 +20,10 @@ import adhan from './../assets/audio/adhan.mp3';
 import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
-import { Navigate , useNavigate  } from 'react-router-dom';
 
 const PreWin2 = () => {
-       const navigate = useNavigate();
+    
+    const navigate = useNavigate();
 
     const starsCollected = parseInt(
         localStorage.getItem('lastStarsCollected') ?? '0',
@@ -31,19 +31,18 @@ const PreWin2 = () => {
     );
 
     const [scene, setScene] = useState(0);
-
+const [hideDepth, setHideDepth] = useState(false);
     const audioRef = useRef(null);
 
     const narrations = [
-        ' لقد اقتربنا من ابي  العباس المرسي!  '
-        ,
-        ' أحسنت! بفضلك سيمكن للمصلين دخول بيت الله   '
+        'لقد اقتربنا من ابي العباس',
+        'استمع... لقد بدأ الأذان'
     ];
 
     useEffect(() => {
     const timers = [];
 
-    // MOSQUE
+    // Reach the mosque
     timers.push(
         setTimeout(() => {
             setScene(1);
@@ -51,13 +50,21 @@ const PreWin2 = () => {
             if (audioRef.current) {
                 audioRef.current.play().catch(() => {});
             }
+
+            // Fade out the depth layer 1 second later
+            timers.push(
+                setTimeout(() => {
+                    setHideDepth(true);
+                }, 1000)
+            );
+
         }, 8000)
     );
 
-    // NAVIGATION
+    // Navigate after adhan finishes
     timers.push(
         setTimeout(() => {
-            Navigate('/win');
+            navigate('/win');
         }, 22000)
     );
 
@@ -70,7 +77,6 @@ const PreWin2 = () => {
         }
     };
 }, [navigate]);
-
     return (
         <>
             <div className="fixed-mobile-wrapper">
@@ -98,12 +104,13 @@ const PreWin2 = () => {
                     alt=""
                 />
 
-                <img
-                    className="splashBg"
-                    src={depth}
-                    alt=""
-                />
-
+               <img
+            className={`splashBg depthOverlay ${
+                hideDepth ? 'depthFadeOut' : ''
+            }`}
+            src={depth}
+            alt=""
+        />
                 <div
                     key={scene}
                     className="floatIn narration prewinNarration"

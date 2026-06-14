@@ -4,6 +4,7 @@ import './win.css'
 
 import './../animations.css'
 import  { useEffect } from 'react';
+import { unlockNextLevel, getSelectedLevel } from '../utils/progress';
 import './../components/layout/header.css'
 import top from './../assets/wintypo2.svg'
 import star from './../assets/goldstar.svg'
@@ -30,6 +31,7 @@ const starsCollected = parseInt(localStorage.getItem('lastStarsCollected') ?? '0
       const navigate = useNavigate();
 
     useEffect(() => {
+         unlockNextLevel(getSelectedLevel());
         const audio = new Audio(winAudio);
 
         const timer = setTimeout(() => {

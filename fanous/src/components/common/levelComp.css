@@ -29,7 +29,7 @@
 .current{
     color: #FFF;
     text-shadow: 0 0.871px 0 #000;
-    background-image: url(./../../assets/leveliconinactive.svg);
+    background-image: url(./../../assets/leveliconactive.svg);
 }
 .inactive{
     opacity: 0.8;

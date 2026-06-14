@@ -34,9 +34,6 @@ justify-self: start;
 }
 
 .standingCharacter {
-    /* bottom: 160px;
-    left: 40px; */
-
     width: 160px;
     animation:
         characterAppear 0.8s ease forwards,

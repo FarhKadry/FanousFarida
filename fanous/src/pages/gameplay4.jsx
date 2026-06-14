@@ -41,11 +41,17 @@ const STAR_H = 68;
 
 const NEAR_GROUND_THRESHOLD = 100;
 
-// Wind spritesheet animation: how many game ticks each frame is held for
+//WIND ANIMATION
 const WIND_FRAME_HOLD = 6;
 
-export default function Gameplay2() {
+// DEPTH SETTINGS
+const DEPTH_RADIUS = 160; 
+const DEPTH_INNER_STOP = '10%'; 
+const DEPTH_COLOR = 'rgba(15, 10, 21, 0.52)'; 
+
+export default function Gameplay4() {
     const canvasRef = useRef(null);
+    const depthRef = useRef(null);
     const navigate = useNavigate();
     const gameState = useRef({
         bird: { x: 40, y: CANVAS_H / 2, w: 200, h: 260, vy: 0, hbOffX: 40, hbOffY: 50, hbW: 120, hbH: 140 },
@@ -353,6 +359,13 @@ export default function Gameplay2() {
                 ctx.fillStyle = '#111';
                 ctx.fillRect(gs.bird.x, gs.bird.y, drawW, drawH);
             }
+
+            if (depthRef.current) {
+                const charCenterX = gs.bird.x + drawW / 2;
+                const charCenterY = gs.bird.y + drawH / 2;
+                depthRef.current.style.background =
+                    `radial-gradient(circle ${DEPTH_RADIUS}px at ${charCenterX}px ${charCenterY}px, transparent 0%, transparent ${DEPTH_INNER_STOP}, ${DEPTH_COLOR} 100%)`;
+            }
         }
 
         function loop(now) {
@@ -383,6 +396,7 @@ export default function Gameplay2() {
                 onClick={handleInput}
                 onTouchStart={e => { e.preventDefault(); handleInput(); }}
             />
+            <div ref={depthRef} className="depth-layer" />
         </div>
     );
 }

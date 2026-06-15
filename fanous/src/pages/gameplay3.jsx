@@ -44,7 +44,7 @@ const NEAR_GROUND_THRESHOLD = 100;
 // Wind spritesheet animation: how many game ticks each frame is held for
 const WIND_FRAME_HOLD = 6;
 
-export default function Gameplay2() {
+export default function Gameplay3() {
     const canvasRef = useRef(null);
     const navigate = useNavigate();
     const gameState = useRef({

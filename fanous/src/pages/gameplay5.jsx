@@ -4,7 +4,7 @@ import './home.css';
 import './trivia.css';
 import './../animations.css';
 
-import star from './../assets/shootingstar2.png';
+import star from './../assets/goldstar.svg';
 import bat from './../assets/bat1.png';
 import bg from './../assets/menuBg.jpg';
 import char from './../assets/questionchar.png';
@@ -24,7 +24,7 @@ import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
-const WIN_STARS = 5;
+const WIN_STARS = 4;
 const GAME_DURATION = 60;
 // const BG_WIDTH = 5481;
 // const CANVAS_W = 430;
@@ -36,7 +36,6 @@ const GAME_DURATION = 60;
 
 export default function Gameplay5() {
     const [display, setDisplay] = useState({ stars: 0, time: GAME_DURATION });
-    const rafRef = useRef(null);
     const isPressedRef = useRef(false);
     const isNearGroundRef = useRef(false);
     const pressTimerRef = useRef(null);
@@ -102,7 +101,6 @@ export default function Gameplay5() {
                     <IconBtn icon={pause} style1="iconbtnmian" link="/pause" />
                     <Music />
                 </div>
-                <Progress counter={display.stars} counter2={WIN_STARS} fanous={fanous} />
             </header>
             <Timer time={display.time} />
             <img className='splashBg' src={bg} alt="" />
@@ -114,6 +112,7 @@ export default function Gameplay5() {
 
 <div className="answersFlex">
     <div className="answer">
+        <img className='answerStar' src={star} alt="" />
         حنين
 </div>
 <div className="answer">
@@ -122,6 +121,7 @@ export default function Gameplay5() {
 <div className="answer">
         حنين
 </div>
+
 </div>
             </div>
         </div>

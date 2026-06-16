@@ -1,45 +1,151 @@
-.questionBg{
-    background-image: url(./../assets/questionpanel.png);
-    width: 301px;
-    height: 584px;
-    padding-left: 28px;
-    padding-right: 28px;
-    padding-bottom: 88px;
+/* Add these to trivia.css */
+
+.questionBg {
+  background-image: url(./../assets/questionpanel.png);
+  width: 301px;
+  height: 584px;
+  padding-left: 28px;
+  padding-right: 28px;
+  padding-bottom: 88px;
 }
-.questionBg h4{
-    font-weight: 100;
-        font-size: 22px;
+
+.questionBg h4 {
+  font-weight: 100;
+  font-size: 22px;
 }
-.qChar{
-    width: 95px;
-    height: auto;
+
+.qChar {
+  width: 95px;
+  height: auto;
 }
-.answer{
-        width: 100%;
-    /* height: 89px; */
-    background-image: url(./../assets/answerbg.png);
-    background-size: 100% 100%;
-    font-size: 22px;
-    color: #FFE6CB;
-    text-align: center;
-    font-family: Mirza;
-    font-size: 24px;
-    font-style: normal;
-    line-height: 90%;
-    font-weight: 400;
-    font-variant: small-caps;
-    padding: 11px 20px 22px 20px;
-    position: relative;
+
+.answer {
+  width: 100%;
+  background-image: url(./../assets/answerbg.png);
+  background-size: 100% 100%;
+  font-size: 22px;
+  color: #FFE6CB;
+  text-align: center;
+  font-family: Mirza;
+  font-size: 24px;
+  font-style: normal;
+  line-height: 90%;
+  font-weight: 400;
+  font-variant: small-caps;
+  padding: 11px 20px 22px 20px;
+  position: relative;
+  /* Press/click glow effect */
+  transition: filter 0.15s ease, transform 0.1s ease;
 }
-.answersFlex{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 20px ;
+
+.answer:active {
+  filter: drop-shadow(0 0 14px #ffe066aa) brightness(1.1);
+  transform: scale(0.97);
 }
-.answerStar{
-    position: absolute;
-    scale: 0;
-    top: 0;
-    left: 0;
+
+.answersFlex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px;
+}
+
+.answerStar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Shake animation for wrong answer */
+@keyframes shake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-8px); }
+  40%  { transform: translateX(8px); }
+  60%  { transform: translateX(-6px); }
+  80%  { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+.answer.shake {
+  animation: shake 0.45s ease;
+}
+/* Add these to trivia.css */
+
+.questionBg {
+  background-image: url(./../assets/questionpanel.png);
+  width: 301px;
+  height: 584px;
+  padding-left: 28px;
+  padding-right: 28px;
+  padding-bottom: 88px;
+}
+
+.questionBg h4 {
+  font-weight: 100;
+  font-size: 22px;
+}
+
+.qChar {
+  width: 95px;
+  height: auto;
+}
+
+.answer {
+  width: 100%;
+  background-image: url(./../assets/answerbg.png);
+  background-size: 100% 100%;
+  font-size: 22px;
+  color: #FFE6CB;
+  text-align: center;
+  font-family: Mirza;
+  font-size: 24px;
+  font-style: normal;
+  line-height: 90%;
+  font-weight: 400;
+  font-variant: small-caps;
+  padding: 11px 20px 22px 20px;
+  position: relative;
+  /* Press/click glow effect */
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.answer:active {
+  filter: drop-shadow(0 0 14px #ffe066aa) brightness(1.1);
+  transform: scale(0.97);
+}
+
+.answersFlex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px;
+}
+
+.answerStar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Shake animation for wrong answer */
+@keyframes shake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-8px); }
+  40%  { transform: translateX(8px); }
+  60%  { transform: translateX(-6px); }
+  80%  { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+.answer.shake {
+  animation: shake 0.45s ease;
+}
+
+/* Float up animation for correct answer star */
+@keyframes floatUp {
+  0%   { transform: translateY(0) scale(0.5); opacity: 1; }
+  60%  { opacity: 1; }
+  100% { transform: translateY(-160px) scale(1.2); opacity: 0; }
 }

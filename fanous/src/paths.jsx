@@ -20,6 +20,7 @@ import Onboarding2 from './pages/onboarding2';
 import Mission2 from './pages/mission2';
 import Gameplay4 from './pages/gameplay4';
 import Gameplay3 from './pages/gameplay3';
+import Gameplay5 from './pages/gameplay5';
 
 
 function Paths() {
@@ -49,6 +50,7 @@ function Paths() {
         <Route path="/gameplay1" element={<Gameplay1 />} />
         <Route path="/gameplay2" element={<Gameplay2 />} />
         <Route path="/gameplay3" element={<Gameplay3 />} />
+        <Route path="/gameplay5" element={<Gameplay5 />} />
 
         <Route path="/gameplay4" element={<Gameplay4 />} />
 

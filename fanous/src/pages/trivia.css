@@ -1,0 +1,9 @@
+.questionBg{
+    background-image: url(./../assets/questionpanel.png);
+    width: 301px;
+    height: 584px;
+}
+.qChar{
+    width: 95px;
+    height: auto;
+}

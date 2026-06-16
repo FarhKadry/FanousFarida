@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
+import './trivia.css';
 import './../animations.css';
 
 import star from './../assets/shootingstar2.png';
 import bat from './../assets/bat1.png';
-import bg from './../assets/splashbg.jpg';
+import bg from './../assets/menuBg.jpg';
+import char from './../assets/questionchar.png';
+
 import charNormal from './../assets/gameplaychar.png';
 import charPress from './../assets/gameplaycharpress.png';
 import charFall from './../assets/gameplaycharfall.png';
@@ -103,6 +106,12 @@ export default function Gameplay5() {
             </header>
             <Timer time={display.time} />
             <img className='splashBg' src={bg} alt="" />
+            <div className="menuPanel questionBg">
+            <img className='qChar' src={char} alt="" />
+<h4>
+    أين وقعت أول غزوة في الاسلام؟
+</h4>
+            </div>
         </div>
     );
 }

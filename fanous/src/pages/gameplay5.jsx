@@ -24,7 +24,7 @@ import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
-const WIN_STARS = 8;
+const WIN_STARS = 5;
 const GAME_DURATION = 60;
 // const BG_WIDTH = 5481;
 // const CANVAS_W = 430;
@@ -111,6 +111,18 @@ export default function Gameplay5() {
 <h4>
     أين وقعت أول غزوة في الاسلام؟
 </h4>
+
+<div className="answersFlex">
+    <div className="answer">
+        حنين
+</div>
+<div className="answer">
+        حنين
+</div>
+<div className="answer">
+        حنين
+</div>
+</div>
             </div>
         </div>
     );

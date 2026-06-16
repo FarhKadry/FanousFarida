@@ -2,8 +2,37 @@
     background-image: url(./../assets/questionpanel.png);
     width: 301px;
     height: 584px;
+    padding-left: 28px;
+    padding-right: 28px;
+    padding-bottom: 88px;
+}
+.questionBg h4{
+    font-weight: 100;
+        font-size: 22px;
 }
 .qChar{
     width: 95px;
     height: auto;
+}
+.answer{
+        width: 100%;
+    /* height: 89px; */
+    background-image: url(./../assets/answerbg.png);
+    background-size: 100% 100%;
+    font-size: 22px;
+    color: #FFE6CB;
+    text-align: center;
+    font-family: Mirza;
+    font-size: 24px;
+    font-style: normal;
+    line-height: 90%;
+    font-weight: 400;
+    font-variant: small-caps;
+    padding: 11px 20px 22px 20px;
+}
+.answersFlex{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px ;
 }

@@ -365,8 +365,8 @@ export default function InfiniteCollection() {
                 }
             }
 
-            ctx.fillStyle = 'rgba(0,0,0,0.25)';
-            ctx.fillRect(0, CANVAS_H - 50, CANVAS_W, 50);
+            // ctx.fillStyle = 'rgba(0,0,0,0.25)';
+            // ctx.fillRect(0, CANVAS_H - 50, CANVAS_W, 50);
 
             for (const c of gs.collectibles) {
                 if (!c.active) continue;

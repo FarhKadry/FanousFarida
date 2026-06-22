@@ -255,8 +255,8 @@ export default function Gameplay1() {
                 }
             }
 
-            ctx.fillStyle = 'rgba(0,0,0,0.25)';
-            ctx.fillRect(0, CANVAS_H - 50, CANVAS_W, 50);
+            // ctx.fillStyle = 'rgba(0,0,0,0.25)';
+            // ctx.fillRect(0, CANVAS_H - 50, CANVAS_W, 50);
 
             for (const s of gs.stars) {
                 if (!s.active) continue;

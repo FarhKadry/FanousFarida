@@ -7,7 +7,7 @@ import './../components/layout/header.css';
 import menu from './../assets/menu.svg';
 
 import levelsbgimg1 from './../assets/levelsbg.jpg';
-import levelsbgimg2 from './../assets/levelsbg2.jpg';
+import levelsbgimg2 from './../assets/levelsbg1.jpg';
 import levelsbgimg3 from './../assets/levelsbg3.jpg';
 import levelsbgimg4 from './../assets/levelsbg4.jpg';
 import levelsbgimg5 from './../assets/levelsbg5.jpg';

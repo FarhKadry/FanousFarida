@@ -12,7 +12,8 @@ import air from './../assets/wind.gif'
 
 import bat from './../assets/bat1.png'
 import stars from './../assets/fanousprogress.png'
-import star from './../assets/shootingstar1.png'
+import diamond from './../assets/diamond.png'
+
 import fix from './../assets/fixframe.png'
 
 import Button from '../components/common/button';
@@ -61,23 +62,20 @@ const missionsByLevel = [
           <div className="howtoFlex ">
             <div className="flex2">
               {/* TODO: confirm collect target/time for level 2 */}
-              <Textbox heading="! جمع  " text="   جمع ثمان شهب في 60 ثانية" />
+              <Textbox heading="! أجب  " text="   جمع 12 نجمة في 55 ثانية" />
             </div>
           </div>
           <div className="flex2">
             <div style={{ position: 'relative', bottom: 'unset', right: 'unset', fontSize: '40px' }} className="timer">
-              60 <span>ثانية</span>
+              55 <span>ثانية</span>
             </div>
             <img src={stars} alt="" />
           </div>
-          <div className="howtoFlex" style={{ marginTop: '12px' }}>
+          {/* <div className="howtoFlex" style={{ marginTop: '12px' }}>
             <img style={{ width: '97px' }} src={air} alt="" />
             <Textbox heading="انتبه !" text="فالرباح تطفئ أنوار الفوانيس!" />
-          </div>
-          <div className="howtoFlex" style={{ marginTop: '16px' }}>
-            <img style={{ width: '70px' }} src={fix} alt="" />
-            <Textbox heading="أصلح" text="بعض الأدوار تطلب منك إصلاح الفانوس!" />
-          </div>
+          </div> */}
+          
         </>
       ),
       btnStyle: 'secondarybtn',
@@ -91,11 +89,21 @@ const missionsByLevel = [
       key: 'collect',
       content: () => (
         <>
-          <div className="howtoFlex ">
+         <div className="howtoFlex ">
             <div className="flex2">
-              {/* TODO: level 3 mission content */}
-              <Textbox heading="! جمع  " text="   جمع ثمان شهب في 60 ثانية" />
+              {/* TODO: confirm collect target/time for level 2 */}
+              <Textbox heading="! جمع  " text="   جمع 12 نجمة في 55 ثانية" />
             </div>
+          </div>
+          <div className="flex2">
+            <div style={{ position: 'relative', bottom: 'unset', right: 'unset', fontSize: '40px' }} className="timer">
+              55 <span>ثانية</span>
+            </div>
+            <img src={diamond} alt="" />
+          </div>
+          <div className="howtoFlex" style={{ marginTop: '12px' }}>
+            <img style={{ width: '97px' }} src={air} alt="" />
+            <Textbox heading="انتبه !" text="فالرباح تطفئ أنوار الفوانيس!" />
           </div>
         </>
       ),

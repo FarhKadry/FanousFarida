@@ -27,7 +27,7 @@ const Onboarding = () => {
         const level = getSelectedLevel();
         const timer = setTimeout(() => {
             navigate(`/gameplay${level}`);
-        }, 1500);
+        }, null);
         return () => clearTimeout(timer);
     }, [started, navigate]);
 

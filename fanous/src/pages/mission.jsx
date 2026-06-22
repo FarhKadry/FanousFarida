@@ -122,6 +122,24 @@ const missionsByLevel = [
       btnCta: 'عودة للعب',
     },
   ],
+  // Level 5 — الأزهر
+  [
+    {
+      key: 'collect',
+      content: () => (
+        <>
+          <div className="howtoFlex ">
+            <div className="flex2">
+              {/* TODO: level 5 mission content */}
+              <Textbox heading="! أجب  " text=" أجب أربعة اسئلة لتجمع أربع نجوم في 60 ثانية" />
+            </div>
+          </div>
+        </>
+      ),
+      btnStyle: 'secondarybtn',
+      btnCta: 'عودة للعب',
+    },
+  ],
 ];
 
 const Mission = () => {

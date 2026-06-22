@@ -4,7 +4,6 @@ import './levels.css'
 import './../animations.css'
 import './../components/layout/header.css'
 
-import depth from './../assets/depth2.svg'
 
 import farida from './../assets/logo/farida.svg'
 import starz from './../assets/logo/starz 2.svg'
@@ -17,6 +16,8 @@ import levelsbgimg1 from './../assets/levelsbg.jpg'
 import levelsbgimg2 from './../assets/levelsbg2.jpg'
 import levelsbgimg3 from './../assets/levelsbg3.jpg'
 import levelsbgimg4 from './../assets/levelsbg4.jpg'
+import levelsbgimg5 from './../assets/levelsbg5.jpg'
+
 
 import { Link } from 'react-router-dom';
 import Button from '../components/common/button';
@@ -24,7 +25,7 @@ import IconBtn from '../components/common/iconbtn';
 import LevelComp from '../components/common/levelComp';
 import { getUnlockedLevel, setSelectedLevel } from '../utils/progress';
 
-const levelBackgrounds = [levelsbgimg1, levelsbgimg2, levelsbgimg3, levelsbgimg4];
+const levelBackgrounds = [levelsbgimg1, levelsbgimg2, levelsbgimg3, levelsbgimg4, levelsbgimg5];
 
 const Levels = () => {
     const unlockedLevel = getUnlockedLevel();
@@ -42,11 +43,11 @@ const Levels = () => {
 
     return ( <>
     <div className="fixed-mobile-wrapper">
-        <header>
-    <IconBtn
-        icon={menu}
-        style1="iconbtnmian"
-        link="/menu" />
+        <header style={{ width: 'fit-content', alignSelf: 'flex-start' }}>
+            <IconBtn
+                icon={menu}
+                style1="iconbtnmian"
+                link="/menu" />
         </header>
         <img className='splashBg levelsBg' src={bg} alt="" />
         <div className="splashBg depth"></div>
@@ -71,17 +72,15 @@ const Levels = () => {
     <LevelComp 
     link={unlockedLevel >= 4 ? "/onboarding" : undefined}
     {...getLevelStyles(4)}
-    name="  ياقوت
-    العرش"
+    name="ياقوت العرش"
     number="4"
     />
     <LevelComp 
-    cont="lvlBg lvl5 levelCompInactive"
-    stylepos="levelComp floatIn "
-    style1="levelCont inactive"
-    name=" الأزهر "
-    number="5"
-    />
+  link={unlockedLevel >= 5 ? "/onboarding" : undefined}
+  {...getLevelStyles(5)}
+  name=" الأزهر "
+  number="5"
+/>
         </div>
         </> );
     }

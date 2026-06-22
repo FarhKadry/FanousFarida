@@ -93,6 +93,7 @@ const [hideDepth, setHideDepth] = useState(false);
                     </div>
 
                     <Progress
+                        over="overHidden"
                         counter={starsCollected}
                         fanous={fanous}
                     />

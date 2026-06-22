@@ -13,7 +13,7 @@ const LevelComp = (props) => {
     return ( <>
     <div className={props.cont}>
         <div className="light scaleIn"></div>
-        <Link to={props.link} id="link" onClick={handleClick}>
+        <Link id="levelLink" to={props.link} id="link" onClick={handleClick}>
         <button className={props.stylepos}>
         <h4 className='h4dropShadow'>{props.name}</h4>
         <div className={props.style1}>

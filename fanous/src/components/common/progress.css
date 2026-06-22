@@ -25,3 +25,6 @@ background-image: url(./../../assets/progress.png);
     object-fit: cover;
     right: -10px
 }
+.overHidden{
+    display: none;
+}

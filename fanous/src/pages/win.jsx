@@ -10,7 +10,6 @@ import top from './../assets/wintypo2.svg'
 import star from './../assets/goldstar.svg'
 import fanous from './../assets/wintypo1.svg'
 import depth from './../assets/gendepth.svg'
-import count1 from './../assets/collectedcount-1.png'
 import count2 from './../assets/collectedcount.png'
 import winAudio from './../assets/win.mp3';
 import menu from './../assets/menu.svg'

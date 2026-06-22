@@ -10,7 +10,7 @@ import depth from './../assets/onboardDepth.svg';
 import fanous from './../assets/fanous_empty.png';
 import pause from './../assets/pause.svg';
 
-import splash from './../assets/mosque2bg.jpg';
+import splash from './../assets/mosque5bg.jpg';
 
 import characterFlying from './../assets/gameplaycharpress.png';
 import characterStanding from './../assets/charsplash2.png';
@@ -21,7 +21,7 @@ import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
-const PreWin2 = () => {
+const PreWin5 = () => {
     
     const navigate = useNavigate();
 
@@ -94,7 +94,6 @@ const [hideDepth, setHideDepth] = useState(false);
 
                     <Progress
                         over="overHidden"
-
                         counter={starsCollected}
                         fanous={fanous}
                     />
@@ -149,4 +148,4 @@ const [hideDepth, setHideDepth] = useState(false);
     );
 };
 
-export default PreWin2;
+export default PreWin5;

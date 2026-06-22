@@ -3,7 +3,7 @@ import './progress.css'
 const Progress = (props) => {
     return ( <>
     <div className="progress">
-        {props.counter} / {props.counter2}  
+        {props.counter} <span className={props.over}>   / </span> {props.counter2}  
         <img src={props.fanous} alt="" />
     </div>
     </> );

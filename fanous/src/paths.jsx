@@ -21,6 +21,9 @@ import Mission2 from './pages/mission2';
 import Gameplay4 from './pages/gameplay4';
 import Gameplay3 from './pages/gameplay3';
 import Gameplay5 from './pages/gameplay5';
+import PreWin5 from './pages/prewin5';
+import PreWin3 from './pages/prewin3';
+import PreWin4 from './pages/prewin4';
 
 
 function Paths() {
@@ -46,15 +49,14 @@ function Paths() {
         <Route path="/lose" element={<Lose />} />
         <Route path="/prewin" element={<PreWin />} />
         <Route path="/prewin2" element={<PreWin2 />} />
-        
+        <Route path="/prewin3" element={<PreWin3 />} />
+        <Route path="/prewin4" element={<PreWin4 />} />
+        <Route path="/prewin5" element={<PreWin5 />} />
         <Route path="/gameplay1" element={<Gameplay1 />} />
         <Route path="/gameplay2" element={<Gameplay2 />} />
         <Route path="/gameplay3" element={<Gameplay3 />} />
-        <Route path="/gameplay5" element={<Gameplay5 />} />
-
         <Route path="/gameplay4" element={<Gameplay4 />} />
-
-
+        <Route path="/gameplay5" element={<Gameplay5 />} />
 
     </Routes>
     </BrowserRouter>

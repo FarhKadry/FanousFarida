@@ -4,6 +4,7 @@ import './home.css';
 import './../animations.css';
 
 import star from './../assets/shootingstar2.png';
+import hilal from './../assets/hilal.png';
 import bat from './../assets/bat1.png';
 import wind1 from './../assets/wind1.png';
 import wind2 from './../assets/wind2.png';
@@ -26,8 +27,8 @@ import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
-const WIN_STARS = 9;
-const GAME_DURATION = 30;
+const WIN_STARS = 23;
+const GAME_DURATION = 40;
 const BG_WIDTH = 5481;
 const CANVAS_W = 430;
 const CANVAS_H = 932;
@@ -38,10 +39,11 @@ const BG_SPEED = 1.7;
 
 const STAR_W = 130;
 const STAR_H = 68;
+const HILAL_W = 45;
+const HILAL_H = 45;
 
 const NEAR_GROUND_THRESHOLD = 100;
 
-// Wind spritesheet animation: how many game ticks each frame is held for
 const WIND_FRAME_HOLD = 6;
 
 export default function Gameplay3() {
@@ -52,6 +54,7 @@ export default function Gameplay3() {
         bats: [],
         winds: [],
         stars: [],
+        hilals: [],
         bgX: 0,
         frameCount: 0,
         starsCollected: 0,
@@ -81,6 +84,7 @@ export default function Gameplay3() {
             return img;
         };
         imgs.current.star = load(star);
+        imgs.current.hilal = load(hilal);
         imgs.current.bat = load(bat);
         imgs.current.wind1 = load(wind1);
         imgs.current.wind2 = load(wind2);
@@ -122,7 +126,7 @@ export default function Gameplay3() {
         const w = 56;
         const y = 60 + Math.random() * (CANVAS_H - h - 120);
         const gs = gameState.current;
-        const tooClose = [...gs.stars, ...gs.bats, ...gs.winds].some(o =>
+        const tooClose = [...gs.stars, ...gs.hilals, ...gs.bats, ...gs.winds].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
         if (!tooClose) gs.bats.push({ x: CANVAS_W + 20, y, w, h });
@@ -133,7 +137,7 @@ export default function Gameplay3() {
         const w = 100;
         const y = 60 + Math.random() * (CANVAS_H - h - 120);
         const gs = gameState.current;
-        const tooClose = [...gs.stars, ...gs.bats, ...gs.winds].some(o =>
+        const tooClose = [...gs.stars, ...gs.hilals, ...gs.bats, ...gs.winds].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 140 && Math.abs(o.y - y) < 100
         );
         if (!tooClose) gs.winds.push({ x: CANVAS_W + 20, y, w, h });
@@ -146,6 +150,15 @@ export default function Gameplay3() {
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
         if (!tooCloseToObstacle) gs.stars.push({ x: CANVAS_W + 20, y, w: STAR_W, h: STAR_H, active: true });
+    }
+
+    function spawnHilal() {
+        const y = 60 + Math.random() * (CANVAS_H - HILAL_H - 120);
+        const gs = gameState.current;
+        const tooCloseToObstacle = [...gs.bats, ...gs.winds].some(o =>
+            Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
+        );
+        if (!tooCloseToObstacle) gs.hilals.push({ x: CANVAS_W + 20, y, w: HILAL_W, h: HILAL_H, active: true });
     }
 
     function handleInput() {
@@ -223,10 +236,9 @@ export default function Gameplay3() {
             gs.bgX -= BG_SPEED;
             if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
 
-            // Spawn: bats every 95f, winds every 80f (offset), stars every 65f
-            // if (gs.frameCount % 95 === 0) spawnBat();
             if (gs.frameCount % 80 === 40) spawnWind();
             if (gs.frameCount % 35 === 30) spawnStar();
+            if (gs.frameCount % 35 === 10) spawnHilal();
 
             for (const b of gs.bats) {
                 b.x -= SPEED;
@@ -270,12 +282,31 @@ export default function Gameplay3() {
                     if (gs.starsCollected >= WIN_STARS) {
                         gs.over = true;
                         localStorage.setItem('lastStarsCollected', gs.starsCollected);
-                        navigate('/prewin2');
+                        navigate('/prewin3');
                         return;
                     }
                 }
             }
             gs.stars = gs.stars.filter(s => s.x + s.w > -10);
+
+            for (const h of gs.hilals) {
+                h.x -= SPEED;
+                if (h.active && collides(getBirdHitbox(), h)) {
+                    h.active = false;
+                    gs.starsCollected++;
+                    if (collectAudio.current) {
+                        collectAudio.current.currentTime = 0;
+                        collectAudio.current.play().catch(() => {});
+                    }
+                    if (gs.starsCollected >= WIN_STARS) {
+                        gs.over = true;
+                        localStorage.setItem('lastStarsCollected', gs.starsCollected);
+                        navigate('/prewin3');
+                        return;
+                    }
+                }
+            }
+            gs.hilals = gs.hilals.filter(h => h.x + h.w > -10);
 
             setDisplay({ stars: gs.starsCollected, time: Math.ceil(gs.timeLeft) });
         }
@@ -302,6 +333,16 @@ export default function Gameplay3() {
                 } else {
                     ctx.fillStyle = '#ffd700';
                     ctx.fillRect(s.x, s.y, s.w, s.h);
+                }
+            }
+
+            for (const h of gs.hilals) {
+                if (!h.active) continue;
+                if (imgs.current.hilal?.complete) {
+                    ctx.drawImage(imgs.current.hilal, h.x, h.y, h.w, h.h);
+                } else {
+                    ctx.fillStyle = '#ffd700';
+                    ctx.fillRect(h.x, h.y, h.w, h.h);
                 }
             }
 
@@ -339,7 +380,6 @@ export default function Gameplay3() {
             const baseAspect = baseImg?.naturalWidth && baseImg?.naturalHeight
                 ? baseImg.naturalWidth / baseImg.naturalHeight
                 : 0.811;
-
             const drawH = charKey === 'charFall'
                 ? gs.bird.h * FALL_H_CORRECTION
                 : gs.bird.h;

@@ -4,20 +4,15 @@ import './home.css';
 import './../animations.css';
 
 import star from './../assets/shootingstar2.png';
-import bat from './../assets/bat1.png';
-import wind1 from './../assets/wind1.png';
-import wind2 from './../assets/wind2.png';
-import wind3 from './../assets/wind3.png';
-import wind4 from './../assets/wind4.png';
-import bgImage from './../assets/environment2.jpg';
+import raven from './../assets/raven.png';
+import bgImage from './../assets/environment1.jpg';
 import charNormal from './../assets/gameplaychar.png';
 import charPress from './../assets/gameplaycharpress.png';
 import charFall from './../assets/gameplaycharfall.png';
 import popSfx from './../assets/audio/pop.mp3';
 import fallSfx from './../assets/audio/grunt.m4a';
-import batSfx from './../assets/audio/bat1.mp3';
+import ravenSfx from './../assets/audio/bat1.mp3';
 import flapSfx from './../assets/audio/flap.mp3';
-import windSfx from './../assets/audio/flap.mp3';
 import fanous from './../assets/fanous_empty.png';
 import pause from './../assets/pause.svg';
 import collectSfx from './../assets/audio/collect.mp3';
@@ -26,31 +21,27 @@ import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
-const WIN_STARS = 9;
-const GAME_DURATION = 30;
+const WIN_STARS = 8;
+const GAME_DURATION = 60;
 const BG_WIDTH = 5481;
 const CANVAS_W = 430;
 const CANVAS_H = 932;
 const GRAVITY = 0.1;
 const FLAP_STRENGTH = -9;
 const SPEED = 3;
-const BG_SPEED = 1.7;
+const BG_SPEED = 1.5;
 
 const STAR_W = 130;
 const STAR_H = 68;
 
 const NEAR_GROUND_THRESHOLD = 100;
 
-// Wind spritesheet animation: how many game ticks each frame is held for
-const WIND_FRAME_HOLD = 6;
-
 export default function Gameplay2() {
     const canvasRef = useRef(null);
     const navigate = useNavigate();
     const gameState = useRef({
         bird: { x: 40, y: CANVAS_H / 2, w: 200, h: 260, vy: 0, hbOffX: 40, hbOffY: 50, hbW: 120, hbH: 140 },
-        bats: [],
-        winds: [],
+        ravens: [],
         stars: [],
         bgX: 0,
         frameCount: 0,
@@ -68,9 +59,8 @@ export default function Gameplay2() {
     const popAudio = useRef(null);
     const collectAudio = useRef(null);
     const fallAudio = useRef(null);
-    const batAudio = useRef(null);
+    const ravenAudio = useRef(null);
     const flapAudio = useRef(null);
-    const windAudio = useRef(null);
     const fallAudioPlayingRef = useRef(false);
 
     const imgs = useRef({});
@@ -81,11 +71,7 @@ export default function Gameplay2() {
             return img;
         };
         imgs.current.star = load(star);
-        imgs.current.bat = load(bat);
-        imgs.current.wind1 = load(wind1);
-        imgs.current.wind2 = load(wind2);
-        imgs.current.wind3 = load(wind3);
-        imgs.current.wind4 = load(wind4);
+        imgs.current.raven = load(raven);
         imgs.current.bg = load(bgImage);
         imgs.current.charNormal = load(charNormal);
         imgs.current.charPress = load(charPress);
@@ -96,12 +82,10 @@ export default function Gameplay2() {
         collectAudio.current.preload = 'auto';
         fallAudio.current = new Audio(fallSfx);
         fallAudio.current.preload = 'auto';
-        batAudio.current = new Audio(batSfx);
-        batAudio.current.preload = 'auto';
+        ravenAudio.current = new Audio(ravenSfx);
+        ravenAudio.current.preload = 'auto';
         flapAudio.current = new Audio(flapSfx);
         flapAudio.current.preload = 'auto';
-        windAudio.current = new Audio(windSfx);
-        windAudio.current.preload = 'auto';
     }, []);
 
     function getBirdHitbox() {
@@ -117,35 +101,24 @@ export default function Gameplay2() {
                a.y + a.h - pad > b.y + pad;
     }
 
-    // function spawnBat() {
-    //     const h = 48 + Math.random() * 32;
-    //     const w = 56;
-    //     const y = 60 + Math.random() * (CANVAS_H - h - 120);
-    //     const gs = gameState.current;
-    //     const tooClose = [...gs.stars, ...gs.bats, ...gs.winds].some(o =>
-    //         Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
-    //     );
-    //     if (!tooClose) gs.bats.push({ x: CANVAS_W + 20, y, w, h });
-    // }
-
-    function spawnWind() {
-        const h = 80 + Math.random() * 40;
-        const w = 100;
+    function spawnRaven() {
+        const h = 48 + Math.random() * 32;
+        const w = 56;
         const y = 60 + Math.random() * (CANVAS_H - h - 120);
         const gs = gameState.current;
-        const tooClose = [...gs.stars, ...gs.bats, ...gs.winds].some(o =>
-            Math.abs(o.x - (CANVAS_W + 20)) < 140 && Math.abs(o.y - y) < 100
+        const tooClose = [...gs.stars, ...gs.ravens].some(o =>
+            Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
-        if (!tooClose) gs.winds.push({ x: CANVAS_W + 20, y, w, h });
+        if (!tooClose) gs.ravens.push({ x: CANVAS_W + 20, y, w, h });
     }
 
     function spawnStar() {
         const y = 60 + Math.random() * (CANVAS_H - STAR_H - 120);
         const gs = gameState.current;
-        const tooCloseToObstacle = [...gs.bats, ...gs.winds].some(o =>
+        const tooClose = [...gs.stars, ...gs.ravens].some(o =>
             Math.abs(o.x - (CANVAS_W + 20)) < 120 && Math.abs(o.y - y) < 80
         );
-        if (!tooCloseToObstacle) gs.stars.push({ x: CANVAS_W + 20, y, w: STAR_W, h: STAR_H, active: true });
+        if (!tooClose) gs.stars.push({ x: CANVAS_W + 20, y, w: STAR_W, h: STAR_H, active: true });
     }
 
     function handleInput() {
@@ -157,6 +130,7 @@ export default function Gameplay2() {
             flapAudio.current.currentTime = 0;
             flapAudio.current.play().catch(() => {});
         }
+
         if (popAudio.current) {
             popAudio.current.currentTime = 0;
             popAudio.current.play().catch(() => {});
@@ -197,6 +171,7 @@ export default function Gameplay2() {
             gs.bird.vy += GRAVITY;
             gs.bird.y += gs.bird.vy;
 
+            const hb = getBirdHitbox();
             if (gs.bird.y <= 0) { gs.bird.y = 0; gs.bird.vy = 0; }
 
             if (gs.bird.y >= CANVAS_H) {
@@ -223,40 +198,23 @@ export default function Gameplay2() {
             gs.bgX -= BG_SPEED;
             if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
 
-            // Spawn: bats every 95f, winds every 80f (offset), stars every 65f
-            // if (gs.frameCount % 95 === 0) spawnBat();
-            if (gs.frameCount % 80 === 40) spawnWind();
-            if (gs.frameCount % 35 === 30) spawnStar();
+            if (gs.frameCount % 95 === 0) spawnRaven();
+            if (gs.frameCount % 65 === 30) spawnStar();
 
-            for (const b of gs.bats) {
-                b.x -= SPEED;
-                if (collides(getBirdHitbox(), b)) {
+            for (const r of gs.ravens) {
+                r.x -= SPEED;
+                if (collides(getBirdHitbox(), r)) {
                     gs.over = true;
-                    if (batAudio.current) {
-                        batAudio.current.currentTime = 0;
-                        batAudio.current.play().catch(() => {});
+                    if (ravenAudio.current) {
+                        ravenAudio.current.currentTime = 0;
+                        ravenAudio.current.play().catch(() => {});
                     }
                     localStorage.setItem('lastStarsCollected', gs.starsCollected);
                     navigate('/lose');
                     return;
                 }
             }
-            gs.bats = gs.bats.filter(b => b.x + b.w > -10);
-
-            for (const w of gs.winds) {
-                w.x -= SPEED;
-                if (collides(getBirdHitbox(), w)) {
-                    gs.over = true;
-                    if (windAudio.current) {
-                        windAudio.current.currentTime = 0;
-                        windAudio.current.play().catch(() => {});
-                    }
-                    localStorage.setItem('lastStarsCollected', gs.starsCollected);
-                    navigate('/lose');
-                    return;
-                }
-            }
-            gs.winds = gs.winds.filter(w => w.x + w.w > -10);
+            gs.ravens = gs.ravens.filter(r => r.x + r.w > -10);
 
             for (const s of gs.stars) {
                 s.x -= SPEED;
@@ -305,24 +263,12 @@ export default function Gameplay2() {
                 }
             }
 
-            for (const b of gs.bats) {
-                if (imgs.current.bat?.complete) {
-                    ctx.drawImage(imgs.current.bat, b.x, b.y, b.w, b.h);
+            for (const r of gs.ravens) {
+                if (imgs.current.raven?.complete) {
+                    ctx.drawImage(imgs.current.raven, r.x, r.y, r.w, r.h);
                 } else {
                     ctx.fillStyle = '#222';
-                    ctx.fillRect(b.x, b.y, b.w, b.h);
-                }
-            }
-
-            const windFrames = [imgs.current.wind1, imgs.current.wind2, imgs.current.wind3, imgs.current.wind4];
-            const windFrame = windFrames[Math.floor(gs.frameCount / WIND_FRAME_HOLD) % windFrames.length];
-
-            for (const w of gs.winds) {
-                if (windFrame?.complete) {
-                    ctx.drawImage(windFrame, w.x, w.y, w.w, w.h);
-                } else {
-                    ctx.fillStyle = '#88ccff';
-                    ctx.fillRect(w.x, w.y, w.w, w.h);
+                    ctx.fillRect(r.x, r.y, r.w, r.h);
                 }
             }
 

@@ -18,9 +18,9 @@ import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 import { unlockNextLevel } from '../utils/progress';
 
-const WIN_STARS = 3;
-const GAME_DURATION = 65;
-const QUESTIONS_PER_GAME = 3;
+const WIN_STARS = 4;
+const GAME_DURATION = 50;
+const QUESTIONS_PER_GAME = 4;
 
 const ALL_QUESTIONS = [
   { q: 'في أي شهر يأتي رمضان؟', answers: ['التاسع', 'الثامن', 'العاشر'], correct: 0 },
@@ -101,7 +101,7 @@ function pickRandom(arr, n) {
   return shuffled.slice(0, n);
 }
 
-export default function Gameplay2() {
+export default function InfiniteTrivia() {
   const navigate = useNavigate();
 
   // Pick 4 random questions once on mount
@@ -155,8 +155,8 @@ export default function Gameplay2() {
     if (lost) {
       setTimeout(() => navigate('/lose'), 400);
     } else {
-      unlockNextLevel(2);
-      setTimeout(() => navigate('/prewin2'), 400);
+      unlockNextLevel(4);
+      setTimeout(() => navigate('/infinite-prewin'), 400);
     }
   }, [gameOver, lost]);
 

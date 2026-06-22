@@ -77,3 +77,11 @@ button{
     justify-self: end;
     margin: 28px 28px 28px 28px;
 }
+.skipBtn{
+    background: none;
+    text-decoration: underline;
+        font-size: 18px;
+    align-self: flex-start;
+    color: #DFD5E2;
+    background-color: transparent;
+}

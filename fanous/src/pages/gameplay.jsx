@@ -22,14 +22,14 @@ import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
 const WIN_STARS = 8;
-const GAME_DURATION = 60;
+const GAME_DURATION = 65;
 const BG_WIDTH = 5481;
 const CANVAS_W = 430;
 const CANVAS_H = 932;
 const GRAVITY = 0.1;
 const FLAP_STRENGTH = -9;
 const SPEED = 3;
-const BG_SPEED = 1.5;
+const BG_SPEED = 1.35;
 
 const STAR_W = 130;
 const STAR_H = 68;
@@ -202,8 +202,8 @@ export default function Gameplay1() {
             gs.bgX -= BG_SPEED;
             if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
 
-            if (gs.frameCount % 95 === 0) spawnBat();
-            if (gs.frameCount % 65 === 30) spawnStar();
+            if (gs.frameCount % 115 === 0) spawnBat();
+            if (gs.frameCount % 58 === 25) spawnStar();
 
             for (const b of gs.bats) {
                 b.x -= SPEED;

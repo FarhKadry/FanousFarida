@@ -12,7 +12,7 @@ import splash from './../assets/onboardbg.png'
 import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 import TapAnimation from '../components/common/tap';
-import { getSelectedLevel } from '../utils/progress';
+import { getSelectedLevel, getGameplayRoute } from '../utils/progress';
 
 const Onboarding = () => {
     const navigate = useNavigate();
@@ -26,8 +26,8 @@ const Onboarding = () => {
         if (!started) return;
         const level = getSelectedLevel();
         const timer = setTimeout(() => {
-            navigate(`/gameplay${level}`);
-        }, null);
+            navigate(getGameplayRoute(level));
+        }, 0);
         return () => clearTimeout(timer);
     }, [started, navigate]);
 

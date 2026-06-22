@@ -24,7 +24,9 @@ import Gameplay5 from './pages/gameplay5';
 import PreWin5 from './pages/prewin5';
 import PreWin3 from './pages/prewin3';
 import PreWin4 from './pages/prewin4';
-
+import InfiniteCollection from './pages/infiniteCollection';
+import InfiniteTrivia from './pages/infiniteTrivia';
+import InfinitePreWin from './pages/infinitePrewin';
 
 function Paths() {
     return (
@@ -58,6 +60,9 @@ function Paths() {
         <Route path="/gameplay4" element={<Gameplay4 />} />
         <Route path="/gameplay5" element={<Gameplay5 />} />
 
+        <Route path="/infinite-collection" element={<InfiniteCollection />} />
+        <Route path="/infinite-trivia" element={<InfiniteTrivia />} />
+        <Route path="/infinite-prewin" element={<InfinitePreWin />} />
     </Routes>
     </BrowserRouter>
     );

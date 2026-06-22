@@ -1,87 +1,133 @@
-import React from 'react';
-import './home.css'
-import './levels.css'
-import './../animations.css'
-import './../components/layout/header.css'
+import React, { useMemo, useState } from 'react';
+import './home.css';
+import './levels.css';
+import './../animations.css';
+import './../components/layout/header.css';
 
+import menu from './../assets/menu.svg';
 
-import farida from './../assets/logo/farida.svg'
-import starz from './../assets/logo/starz 2.svg'
-import menu from './../assets/menu.svg'
+import levelsbgimg1 from './../assets/levelsbg.jpg';
+import levelsbgimg2 from './../assets/levelsbg2.jpg';
+import levelsbgimg3 from './../assets/levelsbg3.jpg';
+import levelsbgimg4 from './../assets/levelsbg4.jpg';
+import levelsbgimg5 from './../assets/levelsbg5.jpg';
 
-import starshine from './../assets/logo/star shine.svg'
-import character from './../assets/charsplash2.png'
-
-import levelsbgimg1 from './../assets/levelsbg.jpg'
-import levelsbgimg2 from './../assets/levelsbg2.jpg'
-import levelsbgimg3 from './../assets/levelsbg3.jpg'
-import levelsbgimg4 from './../assets/levelsbg4.jpg'
-import levelsbgimg5 from './../assets/levelsbg5.jpg'
-
-
-import { Link } from 'react-router-dom';
-import Button from '../components/common/button';
 import IconBtn from '../components/common/iconbtn';
 import LevelComp from '../components/common/levelComp';
-import { getUnlockedLevel, setSelectedLevel } from '../utils/progress';
+import {
+    getUnlockedLevel,
+    MOSQUE_NAMES,
+    getMosqueIndex,
+} from '../utils/progress';
 
-const levelBackgrounds = [levelsbgimg1, levelsbgimg2, levelsbgimg3, levelsbgimg4, levelsbgimg5];
+const levelBackgrounds = [
+    levelsbgimg1,
+    levelsbgimg2,
+    levelsbgimg3,
+    levelsbgimg4,
+    levelsbgimg5,
+];
+
+const LEVELS_PER_PAGE = 5;
 
 const Levels = () => {
     const unlockedLevel = getUnlockedLevel();
-    const bg = levelBackgrounds[unlockedLevel - 1] || levelBackgrounds[0];
 
-    const getLevelStyles = (levelNum) => {
+    const initialPage = Math.max(
+        0,
+        Math.floor((unlockedLevel - 1) / LEVELS_PER_PAGE)
+    );
+
+    const [page, setPage] = useState(initialPage);
+
+    const pageStart = page * LEVELS_PER_PAGE + 1;
+
+    const visibleLevels = useMemo(
+        () => Array.from({ length: LEVELS_PER_PAGE }, (_, i) => pageStart + i),
+        [pageStart]
+    );
+
+    const currentLevelOnPage = Math.min(
+        Math.max(unlockedLevel, pageStart),
+        pageStart + LEVELS_PER_PAGE - 1
+    );
+
+    const bg =
+        levelBackgrounds[getMosqueIndex(currentLevelOnPage)] ||
+        levelBackgrounds[0];
+
+    const getLevelStyles = (levelNum, visualNum) => {
         const locked = levelNum > unlockedLevel;
         const isCurrent = levelNum === unlockedLevel;
+
         return {
-            cont: `lvlBg lvl${levelNum}${locked ? ' levelCompInactive' : ''}`,
+            cont: `lvlBg lvl${visualNum}${locked ? ' levelCompInactive' : ''}`,
             stylepos: `levelComp floatIn${isCurrent ? ' glow' : ''}`,
             style1: `levelCont ${locked ? 'inactive' : 'current'}`,
         };
     };
 
-    return ( <>
-    <div className="fixed-mobile-wrapper">
-        <header style={{ width: 'fit-content', alignSelf: 'flex-start' }}>
-            <IconBtn
-                icon={menu}
-                style1="iconbtnmian"
-                link="/menu" />
-        </header>
-        <img className='splashBg levelsBg' src={bg} alt="" />
-        <div className="splashBg depth"></div>
-    <LevelComp 
-    link={unlockedLevel >= 1 ? "/onboarding" : undefined}
-    {...getLevelStyles(1)}
-    name=" ابن طولون"
-    number="1"
-    />
-    <LevelComp 
-    link={unlockedLevel >= 2 ? "/onboarding" : undefined}
-    {...getLevelStyles(2)}
-    name=" المرسي ابو العباس "
-    number="2"
-    />
-    <LevelComp 
-    link={unlockedLevel >= 3 ? "/onboarding" : undefined}
-    {...getLevelStyles(3)}
-    name=" القلعة"
-    number="3"
-    />
-    <LevelComp 
-    link={unlockedLevel >= 4 ? "/onboarding" : undefined}
-    {...getLevelStyles(4)}
-    name="ياقوت العرش"
-    number="4"
-    />
-    <LevelComp 
-  link={unlockedLevel >= 5 ? "/onboarding" : undefined}
-  {...getLevelStyles(5)}
-  name=" الأزهر "
-  number="5"
-/>
-        </div>
-        </> );
-    }
+    return (
+        <>
+            <div className="fixed-mobile-wrapper">
+                <header style={{ width: 'fit-content', alignSelf: 'flex-start' }}>
+                    <IconBtn
+                        icon={menu}
+                        style1="iconbtnmian"
+                        link="/menu"
+                    />
+                </header>
+
+                <img className="splashBg levelsBg" src={bg} alt="" />
+                <div className="splashBg depth"></div>
+
+                {visibleLevels.map((levelNum, index) => {
+                    const visualNum = index + 1;
+                    const unlocked = unlockedLevel >= levelNum;
+
+                    return (
+                        <LevelComp
+                            key={levelNum}
+                            link={unlocked ? "/onboarding" : undefined}
+                            {...getLevelStyles(levelNum, visualNum)}
+                            name={` ${MOSQUE_NAMES[getMosqueIndex(levelNum)]} `}
+                            number={String(levelNum)}
+                        />
+                    );
+                })}
+
+                <button
+                    className="skipBtn"
+                    style={{
+                        position: 'absolute',
+                        right: 24,
+                        bottom: 34,
+                        zIndex: 20,
+                        minWidth: 105,
+                    }}
+                    onClick={() => setPage(prev => prev + 1)}
+                >
+                    التالي
+                </button>
+
+                {page > 0 && (
+                    <button
+                        className="skipBtn"
+                        style={{
+                            position: 'absolute',
+                            left: 24,
+                            bottom: 34,
+                            zIndex: 20,
+                            minWidth: 105,
+                        }}
+                        onClick={() => setPage(prev => Math.max(0, prev - 1))}
+                    >
+                        السابق
+                    </button>
+                )}
+            </div>
+        </>
+    );
+};
+
 export default Levels;

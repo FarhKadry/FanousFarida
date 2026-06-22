@@ -8,7 +8,7 @@ const GameMusic = ({ className = '', style = {} }) => {
 
   return (
     <button
-      className={`iconbtnmian iconSettings ${className}`}
+      className={`iconbtnmian  ${className}`}
       style={style}
       onClick={toggle}
     >

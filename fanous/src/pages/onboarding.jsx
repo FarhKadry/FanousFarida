@@ -38,12 +38,12 @@ const Onboarding = () => {
                             اضغط للبدء
                             </div>
                         )}
-        <header>
+        <header onClick={(e) => e.stopPropagation()}>
     <IconBtn
         icon={menu}
         style1="iconbtnmian"
         link="/menu" />
-        </header>
+</header>
         <img className='splashBg ' src={splash} alt="" />
         <img className='splashBg' src={depth} alt="" />
        <div className='floatIn'>

@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import './../animations.css'
 import './../components/layout/header.css'
 
-import menu from './../assets/menu.svg'
 
 import back from './../assets/back.svg'
 

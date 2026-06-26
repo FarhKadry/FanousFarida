@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './home.css';
 import './../animations.css';
 import './prewin.css';
@@ -36,7 +36,7 @@ const [hideDepth, setHideDepth] = useState(false);
 
     const narrations = [
         'لقد اقتربنا من ابن طولون',
-        'استمع... لقد بدأ الأذان'
+        'أحسنت ! بفضلك سيمكن للناس دخول بيت الله '
     ];
 
     useEffect(() => {
@@ -80,7 +80,11 @@ const [hideDepth, setHideDepth] = useState(false);
     return (
         <>
             <div className="fixed-mobile-wrapper">
-
+ <Link className='skipBtn' to="/win">
+        <button className='submitbtn '>
+          تخطي
+        </button>
+        </Link>
                 <header>
                     <div className="flex2">
                         <IconBtn

@@ -38,8 +38,8 @@ import { getPreWinRoute, getSelectedLevel } from '../utils/progress';
 const BG_WIDTH = 5481;
 const CANVAS_W = 430;
 const CANVAS_H = 932;
-const GRAVITY = 0.1;
-const FLAP_STRENGTH = -9;
+const GRAVITY = 0.08;         // was 0.1 — floatier feel
+const FLAP_STRENGTH = -7.5;   // was -9 — less snappy, more controlled
 
 const STAR_W = 130;
 const STAR_H = 68;
@@ -64,12 +64,12 @@ const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 function getDifficulty(level) {
     const infiniteIndex = Math.max(0, level - 6);
     return {
-        winStars: Math.min(26, 12 + Math.floor(infiniteIndex )),
+        winStars: Math.min(26, 12 + Math.floor(infiniteIndex)),
         duration: Math.max(32, 55 - Math.floor(infiniteIndex / 3) * 2),
         speed: Math.min(5.4, 3.6 + infiniteIndex * 0.08),
         bgSpeed: Math.min(2.6, 1.75 + infiniteIndex * 0.04),
-        obstacleEvery: Math.max(58, 92 - Math.floor(infiniteIndex / 2)),
-        collectibleEvery: Math.max(46, 66 - Math.floor(infiniteIndex / 3)),
+        obstacleEvery: Math.max(80, 120 - Math.floor(infiniteIndex / 2)),   // was max 58, base 92
+        collectibleEvery: Math.max(30, 48 - Math.floor(infiniteIndex / 3)), // was max 46, base 66
         diamondEvery: Math.max(210, 300 - infiniteIndex * 4),
     };
 }
@@ -159,7 +159,7 @@ export default function InfiniteCollection() {
     }
 
     function collides(a, b) {
-        const pad = 4;
+        const pad = 14;  // was 4 — much more forgiving on obstacles
         return a.x + pad < b.x + b.w - pad &&
             a.x + a.w - pad > b.x + pad &&
             a.y + pad < b.y + b.h - pad &&
@@ -309,9 +309,9 @@ export default function InfiniteCollection() {
             gs.bgX -= difficulty.bgSpeed;
             if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
 
-            if (gs.frameCount % difficulty.obstacleEvery === Math.floor(difficulty.obstacleEvery / 2)) spawnObstacle();
-            if (gs.frameCount % difficulty.collectibleEvery === 28) spawnCollectible();
-            if (gs.frameCount % difficulty.diamondEvery === 120) trySpawnDiamond();
+            if (gs.frameCount % difficulty.obstacleEvery === Math.floor(difficulty.obstacleEvery / 12)) spawnObstacle();
+            if (gs.frameCount % difficulty.collectibleEvery === 5) spawnCollectible();
+            if (gs.frameCount % difficulty.diamondEvery === 10) trySpawnDiamond();
 
             for (const o of gs.obstacles) {
                 o.x -= difficulty.speed;
@@ -364,9 +364,6 @@ export default function InfiniteCollection() {
                     ctx.drawImage(bgImg, gs.bgX + BG_WIDTH, 0, BG_WIDTH, CANVAS_H);
                 }
             }
-
-            // ctx.fillStyle = 'rgba(0,0,0,0.25)';
-            // ctx.fillRect(0, CANVAS_H - 50, CANVAS_W, 50);
 
             for (const c of gs.collectibles) {
                 if (!c.active) continue;

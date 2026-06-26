@@ -36,7 +36,7 @@ const [hideDepth, setHideDepth] = useState(false);
 
     const narrations = [
         'لقد اقتربنا من ابي العباس',
-        'استمع... لقد بدأ الأذان'
+        'أحسنت ! بفضلك سيمكن للناس دخول بيت الله '
     ];
 
     useEffect(() => {
@@ -51,7 +51,6 @@ const [hideDepth, setHideDepth] = useState(false);
                 audioRef.current.play().catch(() => {});
             }
 
-            // Fade out the depth layer 1 second later
             timers.push(
                 setTimeout(() => {
                     setHideDepth(true);
@@ -81,7 +80,7 @@ const [hideDepth, setHideDepth] = useState(false);
         <>
             <div className="fixed-mobile-wrapper">
         <Link className='skipBtn' to="/win">
-        <button className='submitbtn'>
+        <button className='submitbtn '>
           تخطي
         </button>
         </Link>

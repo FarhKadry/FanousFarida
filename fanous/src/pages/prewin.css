@@ -8,7 +8,7 @@
     height: 99px;
 
     padding: 0 18px 10px;
-justify-self: start;
+    justify-self: start;
     justify-content: center;
     align-items: center;
 
@@ -126,4 +126,20 @@ justify-self: start;
     animation:
         mosqueJourney 8s ease-in-out forwards,
         mosqueBreathing 14s ease-in-out 8s forwards;
+}
+.depthOverlay {
+    opacity: 1;
+    transition: opacity 1.5s ease;
+    pointer-events: none;
+}
+.depthFadeOut {
+    /* scale: 2; */
+    opacity: 0;
+}
+.skipBtn{
+    position: fixed;
+    z-index: 9999;
+    right: 24px;
+    bottom: 34px;
+    filter: drop-shadow(30px 10px 4px #141422d5);
 }

@@ -23,7 +23,7 @@ import IconBtn from '../components/common/iconbtn';
 import Music from '../components/common/music';
 import Progress from '../components/common/progress';
 
-const WIN_STARS = 12;
+const WIN_STARS = 9;
 const GAME_DURATION = 55;
 const BG_WIDTH = 5481;
 const CANVAS_W = 430;
@@ -222,7 +222,7 @@ export default function Gameplay3() {
             if (gs.bgX <= -(BG_WIDTH - CANVAS_W)) gs.bgX = 0;
 
             if (gs.frameCount % 90 === 0) spawnRaven();
-            if (gs.frameCount % 50 === 28) spawnStar();
+            if (gs.frameCount % 30 === 28) spawnStar();
             if (gs.frameCount % 220 === 90) spawnDiamond();
 
 

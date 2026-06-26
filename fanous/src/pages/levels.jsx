@@ -99,10 +99,6 @@ const Levels = () => {
                 <button
                     className="skipBtn"
                     style={{
-                        position: 'absolute',
-                        right: 24,
-                        bottom: 34,
-                        zIndex: 20,
                         minWidth: 105,
                     }}
                     onClick={() => setPage(prev => prev + 1)}
@@ -114,8 +110,8 @@ const Levels = () => {
                     <button
                         className="skipBtn"
                         style={{
-                            position: 'absolute',
                             left: 24,
+                            right:"unset" ,
                             bottom: 34,
                             zIndex: 20,
                             minWidth: 105,
